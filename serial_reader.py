@@ -58,3 +58,14 @@ except serial.SerialException, e:
     sys.exit(1)
     
     
+while True:
+    try:
+        s = SerialReader()
+        s.shortcut()
+    except KeyboardInterrupt:
+        break
+     except socket.error, msg:
+        sys.stderr.write('ERROR: %s\n' % msg)
+
+sys.stderr.write('\n--- exit ---\n')
+    
