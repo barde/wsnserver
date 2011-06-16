@@ -29,12 +29,12 @@ class SerialReader:
                     if True:
                         sys.stdout.write(codecs.escape_encode(data)[0])
                         sys.stdout.flush()
+                    '''                    
                     if self.ser_newline and self.net_newline:
                         # do the newline conversion
                         # XXX fails for CR+LF in input when it is cut in half at the begin or end of the string
                         data = net_newline.join(data.split(ser_newline))
                     # escape outgoing data when needed (Telnet IAC (0xff) character)
-                    '''                    
                     self._write_lock.acquire()                    
                     try:
                         self.socket.sendall(data)           # send it over TCP
@@ -47,7 +47,7 @@ class SerialReader:
 #if __name__ == '__main__':
 # connect to serial port
 ser = serial.Serial()
-ser.port     = "/dev/ttyUSB0"
+ser.port     = "/dev/ttyUSB1"
 ser.baudrate = 38400
 
 
