@@ -1,5 +1,5 @@
 import serial
-import thread
+import threading
 import sys
 
 class SerialReader:
