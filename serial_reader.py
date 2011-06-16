@@ -5,8 +5,9 @@ import codecs
 import time
 
 class SerialReader:
-    def __init__(self,serial_instance):
+    def __init__(self,serial_instance,verbose=True):
         self.serial = serial_instance
+	self.verbose = verbose
         
     def shortcut(self):
         """connect the serial port to the TCP port by copying everything
@@ -103,7 +104,7 @@ except serial.SerialException, e:
     
 while True:
     try:
-        s = SerialReader(ser)
+        s = SerialReader(ser,options.spy)
         s.shortcut()
         time.sleep(1)
     except KeyboardInterrupt:
