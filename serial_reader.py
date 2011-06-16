@@ -2,6 +2,7 @@ import serial
 import threading
 import sys
 import codecs
+import time
 
 class SerialReader:
     def __init__(self,serial_instance):
@@ -62,6 +63,7 @@ while True:
     try:
         s = SerialReader(ser)
         s.shortcut()
+	time.sleep(1)
     except KeyboardInterrupt:
         break
 
