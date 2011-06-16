@@ -39,8 +39,6 @@ class SerialReader:
                     finally:
                         self._write_lock.release()
                         '''
-            except socket.error, msg:
-                sys.stderr.write('ERROR: %s\n' % msg)
                 # probably got disconnected
                 break
         self.alive = False
