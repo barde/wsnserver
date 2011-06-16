@@ -89,6 +89,7 @@ parser.add_option("--v",
         default = False
     )
 
+(options, args) = parser.parse_args()
 
 ser = serial.Serial()
 ser.port     = "/dev/ttyUSB1"
