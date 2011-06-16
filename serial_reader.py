@@ -14,9 +14,8 @@ class SerialReader:
         
 
     def reader(self):
-        """loop forever and copy serial->socket"""
+        """loop forever and copy serial->command i/o"""
         while self.alive:
-            try:
                 data = self.serial.read(1)              # read one, blocking
                 n = self.serial.inWaiting()             # look if there is more
                 if n:
@@ -39,10 +38,8 @@ class SerialReader:
                     finally:
                         self._write_lock.release()
                         '''
-                # probably got disconnected
-                break
-        self.alive = False
 
+#if __name__ == '__main__':
 # connect to serial port
 ser = serial.Serial()
 ser.port     = "/dev/ttyUSB0"
