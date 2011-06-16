@@ -105,7 +105,7 @@ except serial.SerialException, e:
     
 while True:
     try:
-        s = SerialReader(ser,options.spy)
+        s = SerialReader(ser,options.verbose)
         s.shortcut()
         time.sleep(1)
     except KeyboardInterrupt:
