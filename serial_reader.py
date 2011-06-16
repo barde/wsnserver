@@ -3,6 +3,8 @@ import threading
 import sys
 
 class SerialReader:
+    def __init__(self,serial_instance):
+        self.serial = serial_instance
     def shortcut(self):
         """connect the serial port to the TCP port by copying everything
            from one side to the other"""
@@ -55,7 +57,7 @@ except serial.SerialException, e:
     
 while True:
     try:
-        s = SerialReader()
+        s = SerialReader(ser)
         s.shortcut()
     except KeyboardInterrupt:
         break
