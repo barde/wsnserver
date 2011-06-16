@@ -1,10 +1,12 @@
 import serial
 import threading
 import sys
+import codecs
 
 class SerialReader:
     def __init__(self,serial_instance):
         self.serial = serial_instance
+        
     def shortcut(self):
         """connect the serial port to the TCP port by copying everything
            from one side to the other"""
@@ -24,7 +26,7 @@ class SerialReader:
                     data = data + self.serial.read(n)   # and get as much as possible
                 if data:
                     # the spy shows what's on the serial port, so log it before converting newlines
-                    if self.spy:
+                    if True:
                         sys.stdout.write(codecs.escape_encode(data)[0])
                         sys.stdout.flush()
                     if self.ser_newline and self.net_newline:
@@ -32,7 +34,6 @@ class SerialReader:
                         # XXX fails for CR+LF in input when it is cut in half at the begin or end of the string
                         data = net_newline.join(data.split(ser_newline))
                     # escape outgoing data when needed (Telnet IAC (0xff) character)
-
                     '''                    
                     self._write_lock.acquire()                    
                     try:
@@ -40,6 +41,8 @@ class SerialReader:
                     finally:
                         self._write_lock.release()
                         '''
+	self.alive = False
+	
 
 #if __name__ == '__main__':
 # connect to serial port
