@@ -64,8 +64,6 @@ while True:
         s.shortcut()
     except KeyboardInterrupt:
         break
-    except socket.error, msg:
-        sys.stderr.write('ERROR: %s\n' % msg)
 
 sys.stderr.write('\n--- exit ---\n')
     
