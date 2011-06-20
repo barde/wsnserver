@@ -1,7 +1,7 @@
 import serial
 import threading
 import sys
-import codecs
+import codecs 
 import time
 
 class SerialReader:
@@ -13,15 +13,18 @@ class SerialReader:
         """connect the serial port to the TCP port by copying everything
            from one side to the other"""
         self.alive = True
-        self.thread_read = threading.Thread(target=self.reader)
-        self.thread_read.setDaemon(True)
-        self.thread_read.setName('socket reader')
-        self.thread_read.start()
-        
+        self._write_lock = threading.Lock()
 
+        while True:
+            self.thread_read = threading.Thread(target=self.reader)
+            self.thread_read.setDaemon(True)
+            self.thread_read.setName('socket reader')
+            self.thread_read.start()
+        
     def reader(self):
         """loop forever and copy serial->command i/o"""
         while self.alive:
+            self._write_lock.acquire()
             data = self.serial.read(1)              # read one, blocking
             n = self.serial.inWaiting()             # look if there is more
             if n:
@@ -39,6 +42,7 @@ class SerialReader:
                 finally:
                     self._write_lock.release()
                 '''
+            self._write_lock.release()
         self.alive = False
 
 
@@ -65,51 +69,46 @@ class SerialReader:
 
     
 
-#if __name__ == '__main__':
-# connect to serial port
+
+if __name__ == '__main__':
+# connect to serial port and do some test if not run as module
 
 #Commandline parsing
-import optparse
+    import optparse
 
-parser = optparse.OptionParser(
-    usage = "%prog [options]",
-    description = "Wireless Sensor Network to TCP bridge with puffering",
-    epilog = """\
-NOTE: no security measures are implemented. Anyone can remotely connect
-to this service over the network.
+    parser = optparse.OptionParser(
+     usage = "%prog [options]",
+     description = "Wireless Sensor Network to TCP bridge with puffering",
+     epilog = """\
+        NOTE: no security measures are implemented. Anyone can remotely connect
+        to this service over the network.
 
-Only one connection at once is supported. When the connection is terminated
-it waits for the next connect.
-""")
+        Only one connection at once is supported. When the connection is terminated
+        it waits for the next connect.
+        """)
 
-parser.add_option("--v",
+    parser.add_option("--v",
         dest = "verbose",
         action = "store_true",
         help = "write all serial in- and output to the console",
         default = False
     )
 
-(options, args) = parser.parse_args()
+    (options, args) = parser.parse_args()
 
-ser = serial.Serial()
-ser.port     = "/dev/ttyUSB1"
-ser.baudrate = 38400
+    ser = serial.Serial()
+    ser.port     = "/dev/ttyUSB0"
+    ser.baudrate = 38400
 
 
-try:
-    ser.open()
-except serial.SerialException, e:
-    sys.stderr.write("Could not open serial port %s: %s\n" % (ser.portstr, e))
-    sys.exit(1)
-    
-    
-while True:
     try:
-        s = SerialReader(ser,options.verbose)
-        s.shortcut()
-        time.sleep(1)
-    except KeyboardInterrupt:
-        break
-
-sys.stderr.write('\n--- exit ---\n')
+        ser.open()
+    except serial.SerialException, e:
+        sys.stderr.write("Could not open serial port %s: %s\n" % (ser.portstr, e))
+        sys.exit(1)
     
+    
+    s = SerialReader(ser,options.verbose)
+    s.shortcut()
+
+    sys.stderr.write('\n--- exit ---\n')
