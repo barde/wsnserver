@@ -3,11 +3,21 @@ import threading
 import sys
 import codecs 
 import time
+import glob
 
 class SerialReader:
-    def __init__(self,serial_instance,verbose=True):
-        self.serial = serial_instance
+    def __init__(self, verbose=True):
 	self.verbose = verbose
+
+        self.serial = serial.Serial()
+        self.serial.port     = self.find_port()
+        self.serial.baudrate = 38400
+
+        try:
+            self.serial.open()
+        except serial.SerialException, e:
+            sys.stderr.write("Could not open serial port %s: %s\n" % (ser.portstr, e))
+            sys.exit(1)
         
     def shortcut(self):
         """connect the serial port to the TCP port by copying everything
@@ -15,11 +25,18 @@ class SerialReader:
         self.alive = True
         self._write_lock = threading.Lock()
 
-        while True:
-            self.thread_read = threading.Thread(target=self.reader)
-            self.thread_read.setDaemon(True)
-            self.thread_read.setName('socket reader')
-            self.thread_read.start()
+        self.thread_read = threading.Thread(target=self.reader)
+        self.thread_read.setDaemon(True)
+        self.thread_read.setName('socket reader')
+        self.thread_read.start()
+
+    def find_port(self):
+        port = glob.glob('/dev/ttyUSB*')
+        if len(port) != 1:
+            print "Only one USB-FDDI adapter required - no more or less"
+            sys.exit(1)
+        else:
+            return port[0]
         
     def reader(self):
         """loop forever and copy serial->command i/o"""
@@ -96,19 +113,16 @@ if __name__ == '__main__':
 
     (options, args) = parser.parse_args()
 
-    ser = serial.Serial()
-    ser.port     = "/dev/ttyUSB0"
-    ser.baudrate = 38400
-
-
-    try:
-        ser.open()
-    except serial.SerialException, e:
-        sys.stderr.write("Could not open serial port %s: %s\n" % (ser.portstr, e))
-        sys.exit(1)
     
-    
-    s = SerialReader(ser,options.verbose)
-    s.shortcut()
+    s = SerialReader(options.verbose)
+
+    while True:
+        try:
+            s.shortcut()
+            #Put the stuff into database
+            s.stop()
+        except KeyboardInterrupt:
+            break
+
 
     sys.stderr.write('\n--- exit ---\n')
