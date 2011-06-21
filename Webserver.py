@@ -11,8 +11,24 @@ from cherrypy import expose
 class Webserver:
     @expose
     def index(self):
-        return "Hello World!"
+        return "WSN-Server is up and running"
+    
+    @expose
+    def sendCmd(self, target, cmd):
+        return "Target: " + target + "<br>CMD: " + cmd
+    
+    @expose
+    def readAll(self):
+        return "Here are all messeges from the db"
+    
+    @expose
+    def removeAll(self):
+        return "All messeges removed"
+    
+    @expose
+    def saveData(self):
+        return "Should we realy implement this?<br>client should only read or send commands"
 
 cherrypy.quickstart(Webserver())
-#http://localhost:8080/celc_to_fahr?degrees=50
+#http://localhost:8080/index
         

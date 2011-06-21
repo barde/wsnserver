@@ -7,9 +7,6 @@ Created on 20.06.2011
 import sqlite3
 
 class DataRepository(object):
-    '''
-    classdocs
-    '''
 
     def removeAllFromDB(self):
         connection = self.__returnConnection()
@@ -17,7 +14,7 @@ class DataRepository(object):
         cursor.execute("DELETE FROM data")
         connection.commit()
         
-    # not impemented yet
+    # not implemented yet
     def removeFromDB(self):
         return True
     
