@@ -44,7 +44,7 @@ class DataRepository(object):
         connection.commit()
         
         
-    ''' opens the database and returns the cursor to work with it '''
+    ''' opens the database and returns the connection to work with'''
     def __returnConnection(self):
         return sqlite3.connect("data.db")
 
