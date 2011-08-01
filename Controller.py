@@ -20,21 +20,21 @@ class Controller(object):
         pass
     
     def saveDataAction(self, id, value):
-        self.dataRepository.DataRepository.saveData(id, value)
+        self.dataRepository.saveData(id, value)
     
     ''' Return value must be implemented (formated).'''
     def readAllAction(self, id):
-        return self.dataRepository.DataRepository.readAllData(id)
+        return self.dataRepository.readAllData(id)
     
     def readLeatestAction(self):
         pass
     
     def removeAllAction(self):
-        pass
+        self.dataRepository.removeAllData()
         
     def __init__(self):
         '''
         Constructor
         '''
-        self.dataRepository = DataRepository()
+        self.dataRepository = DataRepository.DataRepository()
         

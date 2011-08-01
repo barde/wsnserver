@@ -8,7 +8,7 @@ import sqlite3
 
 class DataRepository(object):
 
-    def removeAllFromDB(self):
+    def removeAllData(self):
         connection = self.__returnConnection()
         cursor = connection.cursor()
         cursor.execute("DELETE FROM data")

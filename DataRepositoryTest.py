@@ -15,11 +15,11 @@ class DataRepositoryTest(unittest.TestCase):
         dr = DataRepository.DataRepository()
         dr.saveData("wsn01", "testdata")
     
-    def testRemoveAllFromDB(self):
+    def testRemoveAllData(self):
         dr = DataRepository.DataRepository()
-        dr.removeAllFromDB()
+        dr.removeAllData()
         self.assertEqual(0, len(dr.readAllData("wsn01")), 
-                         "RemoveAllFromDB failed")
+                         "RemoveAllData failed")
        
     def testRemoveFromDB(self):
         dr = DataRepository.DataRepository()
@@ -40,7 +40,7 @@ class DataRepositoryTest(unittest.TestCase):
         self.assertEqual(2, len(dr.readAllData("wsn01")), "SaveToDB failed")
 
     def tearDown(self):
-        DataRepository.DataRepository().removeAllFromDB()
+        DataRepository.DataRepository().removeAllData()
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
