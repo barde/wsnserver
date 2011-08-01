@@ -18,7 +18,7 @@ class DataRepository(object):
     def removeFromDB(self):
         return True
     
-    def readAllFromDB(self, id):
+    def readAllData(self, id):
         connection = self.__returnConnection()
         cursor = connection.cursor()
 

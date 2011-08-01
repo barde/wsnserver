@@ -18,16 +18,16 @@ class DataRepositoryTest(unittest.TestCase):
     def testRemoveAllFromDB(self):
         dr = DataRepository.DataRepository()
         dr.removeAllFromDB()
-        self.assertEqual(0, len(dr.readAllFromDB("wsn01")), 
+        self.assertEqual(0, len(dr.readAllData("wsn01")), 
                          "RemoveAllFromDB failed")
        
     def testRemoveFromDB(self):
         dr = DataRepository.DataRepository()
         self.assertTrue(dr.removeFromDB(), "RemoveFromDB failed")
 
-    def testReadAllFromDB(self):
+    def testReadAllData(self):
         dr = DataRepository.DataRepository()
-        self.assertEqual(1, len(dr.readAllFromDB("wsn01")), 
+        self.assertEqual(1, len(dr.readAllData("wsn01")), 
                          "ReadAllFromDB failed")
       
     def testReadLeatestFromDB(self):
@@ -37,7 +37,7 @@ class DataRepositoryTest(unittest.TestCase):
     def testSaveData(self):
         dr = DataRepository.DataRepository()
         dr.saveData("wsn01", "testdata")
-        self.assertEqual(2, len(dr.readAllFromDB("wsn01")), "SaveToDB failed")
+        self.assertEqual(2, len(dr.readAllData("wsn01")), "SaveToDB failed")
 
     def tearDown(self):
         DataRepository.DataRepository().removeAllFromDB()

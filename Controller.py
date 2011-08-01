@@ -2,8 +2,12 @@
 Created on 22.06.2011
 @author: Kamil Wozniak
 '''
+import DataRepository
 
 class Controller(object):
+    
+    ''' Object for the dataRepository '''
+    dataRepository = 0
     
     ''' 
     Only the WSN should request this action. 
@@ -15,8 +19,12 @@ class Controller(object):
     def saveCMDAction(self):
         pass
     
-    def readAllAction(self):
-        pass
+    def saveDataAction(self, id, value):
+        self.dataRepository.DataRepository.saveData(id, value)
+    
+    ''' Return value must be implemented (formated).'''
+    def readAllAction(self, id):
+        return self.dataRepository.DataRepository.readAllData(id)
     
     def readLeatestAction(self):
         pass
@@ -28,4 +36,5 @@ class Controller(object):
         '''
         Constructor
         '''
+        self.dataRepository = DataRepository()
         
