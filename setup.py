@@ -16,6 +16,11 @@ if __name__ == '__main__':
         id TEXT, value TEXT, read INTEGER, createdOn TEXT)""")
     
     cursor.execute("""CREATE TABLE devices(id TEXT)""")
+    
+    cursor.execute("""CREATE TABLE commands(id TEXT, cmd TEXT, createdOn TEXT)""")
         
     connection.commit()
     connection.close()
+    
+    print("Setup was successful.")
+    
