@@ -34,7 +34,7 @@ class DataRepositoryTest(unittest.TestCase):
         dr = DataRepository.DataRepository()
         self.assertTrue(dr.readLeatestFromDB(), "ReadLeatestFromDB failed")
         
-    def testSaveToDB(self):
+    def testSaveData(self):
         dr = DataRepository.DataRepository()
         dr.saveToDB("wsn01", "testdata")
         self.assertEqual(2, len(dr.readAllFromDB("wsn01")), "SaveToDB failed")

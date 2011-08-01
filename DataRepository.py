@@ -34,7 +34,7 @@ class DataRepository(object):
        type: can be "cmd" or "data"
        value: value can be the command or data
     '''
-    def saveToDB(self, id, value):
+    def saveData(self, id, value):
         values = (id, value, False, sqlite3.datetime.datetime.now()) 
         sql = "INSERT INTO data VALUES (?, ?, ?, ?)" 
         
