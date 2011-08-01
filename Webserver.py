@@ -24,10 +24,6 @@ class Webserver:
     @expose
     def removeAll(self):
         return "All messeges removed"
-    
-    @expose
-    def saveData(self):
-        return "Should we realy implement this?<br>client should only read or send commands"
 
 cherrypy.quickstart(Webserver())
 #http://localhost:8080/index
