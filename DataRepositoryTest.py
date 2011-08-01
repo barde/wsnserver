@@ -20,10 +20,6 @@ class DataRepositoryTest(unittest.TestCase):
         dr.removeAllData()
         self.assertEqual(0, len(dr.readAllData("wsn01")), 
                          "RemoveAllData failed")
-       
-    def testRemoveFromDB(self):
-        dr = DataRepository.DataRepository()
-        self.assertTrue(dr.removeFromDB(), "RemoveFromDB failed")
 
     def testReadAllData(self):
         dr = DataRepository.DataRepository()

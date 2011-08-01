@@ -13,10 +13,6 @@ class DataRepository(object):
         cursor = connection.cursor()
         cursor.execute("DELETE FROM data")
         connection.commit()
-        
-    # not implemented yet
-    def removeFromDB(self):
-        return True
     
     def readAllData(self, id):
         connection = self.__returnConnection()
