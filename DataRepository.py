@@ -18,11 +18,11 @@ class DataRepository(object):
     def removeFromDB(self):
         return True
     
-    def readAllFromDB(self, createdBy):
+    def readAllFromDB(self, id):
         connection = self.__returnConnection()
         cursor = connection.cursor()
 
-        cursor.execute("SELECT * FROM data WHERE data.createdBy = ?", [createdBy])
+        cursor.execute("SELECT * FROM data WHERE data.id = ?", [id])
         return cursor.fetchall()
         #connection.commit()
     
@@ -34,9 +34,9 @@ class DataRepository(object):
        type: can be "cmd" or "data"
        value: value can be the command or data
     '''
-    def saveToDB(self, type, value, createdBy):
-        values = (type, value, False, sqlite3.datetime.datetime.now(), createdBy) 
-        sql = "INSERT INTO data VALUES (?, ?, ?, ?, ?)" 
+    def saveToDB(self, id, value):
+        values = (id, value, False, sqlite3.datetime.datetime.now()) 
+        sql = "INSERT INTO data VALUES (?, ?, ?, ?)" 
         
         connection = self.__returnConnection()
         cursor = connection.cursor()

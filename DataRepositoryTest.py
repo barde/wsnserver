@@ -13,12 +13,12 @@ class DataRepositoryTest(unittest.TestCase):
     ''' Setup sets up the fixtures in the database for every testrun '''
     def setUp(self):
         dr = DataRepository.DataRepository()
-        dr.saveToDB("data", "testdata", "tester")
+        dr.saveToDB("wsn01", "testdata")
     
     def testRemoveAllFromDB(self):
         dr = DataRepository.DataRepository()
         dr.removeAllFromDB()
-        self.assertEqual(0, len(dr.readAllFromDB("tester")), 
+        self.assertEqual(0, len(dr.readAllFromDB("wsn01")), 
                          "RemoveAllFromDB failed")
        
     def testRemoveFromDB(self):
@@ -27,7 +27,7 @@ class DataRepositoryTest(unittest.TestCase):
 
     def testReadAllFromDB(self):
         dr = DataRepository.DataRepository()
-        self.assertEqual(1, len(dr.readAllFromDB("tester")), 
+        self.assertEqual(1, len(dr.readAllFromDB("wsn01")), 
                          "ReadAllFromDB failed")
       
     def testReadLeatestFromDB(self):
@@ -36,8 +36,8 @@ class DataRepositoryTest(unittest.TestCase):
         
     def testSaveToDB(self):
         dr = DataRepository.DataRepository()
-        dr.saveToDB("data", "test", "tester")
-        self.assertEqual(2, len(dr.readAllFromDB("tester")), "SaveToDB failed")
+        dr.saveToDB("wsn01", "testdata")
+        self.assertEqual(2, len(dr.readAllFromDB("wsn01")), "SaveToDB failed")
 
     def tearDown(self):
         DataRepository.DataRepository().removeAllFromDB()

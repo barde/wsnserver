@@ -13,8 +13,9 @@ if __name__ == '__main__':
     cursor = connection.cursor()
         
     cursor.execute("""CREATE TABLE data(
-        type TEXT, value TEXT, read INTEGER, createdOn TEXT, 
-        createdBy TEXT)""")
+        id TEXT, value TEXT, read INTEGER, createdOn TEXT)""")
+    
+    cursor.execute("""CREATE TABLE devices(id TEXT)""")
         
     connection.commit()
     connection.close()
