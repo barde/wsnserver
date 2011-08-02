@@ -28,7 +28,7 @@ class Controller(object):
     def readAllAction(self, id):
         return self.dataRepository.readAllData(id)
     
-    def readLeatestAction(self):
+    def readLeatestAction(self, id):
         pass
     
     def removeAllAction(self):

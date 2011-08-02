@@ -10,7 +10,10 @@ import DataRepository
 
 class ControllerTest(unittest.TestCase):
     
-    ''' Create new instance of controller for the tests. '''
+    ''' 
+    Create new instance of the controller and the datarepository for the tests. 
+    Only one instance of each class is needed, so they are outside the setUp method.
+    '''
     controller = Controller.Controller()
     dataRepository = DataRepository.DataRepository()
     
@@ -33,7 +36,7 @@ class ControllerTest(unittest.TestCase):
         pass
     
     def testReadLeatestAction(self):
-        pass
+        self.controller.readLeatestAction("wsn01")
     
     def testRemoveAllAction(self):
         self.controller.removeAllAction()

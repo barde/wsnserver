@@ -30,7 +30,7 @@ class DataRepository(object):
         return data
     
     # not implemented yet
-    def readLeatestFromDB(self):
+    def readLeatestData(self, id):
         return True
     
     '''
