@@ -8,7 +8,9 @@ import DataRepository
 
 class Controller(object):
     
-    ''' Object for the dataRepository '''
+    ''' 
+    Object for the dataRepository 
+    '''
     dataRepository = 0
     
     ''' 
@@ -24,7 +26,9 @@ class Controller(object):
     def saveDataAction(self, id, value):
         self.dataRepository.saveData(id, value)
     
-    ''' Todo: Return value must be formated.'''
+    ''' 
+    Todo: Return value must be formated.
+    '''
     def readAllAction(self, id):
         return self.dataRepository.readAllData(id)
     

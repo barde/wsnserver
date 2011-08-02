@@ -34,8 +34,8 @@ class DataRepository(object):
         return True
     
     '''
-        id: should contain the wsn-id
-        value: should contain the data.
+    id: should contain the wsn-id
+    value: should contain the data.
     '''
     def saveData(self, id, value):
         values = (id, value, False, sqlite3.datetime.datetime.now()) 
@@ -46,8 +46,9 @@ class DataRepository(object):
         cursor.execute(sql, values)
         connection.commit()
         
-        
-    ''' opens the database and returns the connection to work with'''
+    ''' 
+    opens the database and returns the connection to work with
+    '''
     def __returnConnection(self):
         return sqlite3.connect("data.db")
 

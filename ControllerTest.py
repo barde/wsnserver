@@ -18,7 +18,9 @@ class ControllerTest(unittest.TestCase):
     dataRepository = DataRepository.DataRepository()
     
     def setUp(self):
-        ''' DataRepository is directly used for fixtures. '''
+        ''' 
+        DataRepository is directly used for fixtures. 
+        '''
         self.dataRepository.saveData("wsn01", "10")
 
     def testReadCMDAction(self):
