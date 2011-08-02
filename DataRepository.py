@@ -7,6 +7,12 @@ Created on 20.06.2011
 import sqlite3
 
 class DataRepository(object):
+    
+    def readCMD(self):
+        pass
+    
+    def saveCMD(self):
+        pass
 
     def removeAllData(self):
         connection = self.__returnConnection()

@@ -14,16 +14,22 @@ class DataRepositoryTest(unittest.TestCase):
     def setUp(self):
         dr = DataRepository.DataRepository()
         dr.saveData("wsn01", "testdata")
+        
+    def testReadCMD(self):
+        pass
+    
+    def testSaveCMD(self):
+        pass
     
     def testRemoveAllData(self):
         dr = DataRepository.DataRepository()
         dr.removeAllData()
-        self.assertEqual(0, len(dr.readAllData("wsn01")), 
+        self.assertEqual(0, len(dr.readAllData("wsn01")),
                          "RemoveAllData failed")
 
     def testReadAllData(self):
         dr = DataRepository.DataRepository()
-        self.assertEqual(1, len(dr.readAllData("wsn01")), 
+        self.assertEqual(1, len(dr.readAllData("wsn01")),
                          "ReadAllFromDB failed")
       
     def testReadLeatestFromDB(self):

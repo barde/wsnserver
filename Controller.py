@@ -24,7 +24,7 @@ class Controller(object):
     def saveDataAction(self, id, value):
         self.dataRepository.saveData(id, value)
     
-    ''' Return value must be implemented (formated).'''
+    ''' Todo: Return value must be formated.'''
     def readAllAction(self, id):
         return self.dataRepository.readAllData(id)
     
