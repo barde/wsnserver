@@ -34,8 +34,8 @@ class DataRepository(object):
         return True
     
     '''
-       type: can be "cmd" or "data"
-       value: value can be the command or data
+        id: should contain the wsn-id
+        value: should contain the data.
     '''
     def saveData(self, id, value):
         values = (id, value, False, sqlite3.datetime.datetime.now()) 
