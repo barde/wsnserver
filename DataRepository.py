@@ -25,8 +25,9 @@ class DataRepository(object):
         cursor = connection.cursor()
 
         cursor.execute("SELECT * FROM data WHERE data.id = ?", [id])
-        return cursor.fetchall()
-        #connection.commit()
+        data = cursor.fetchall()
+        connection.commit()
+        return data
     
     # not implemented yet
     def readLeatestFromDB(self):
