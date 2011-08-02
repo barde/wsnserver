@@ -1,6 +1,6 @@
 '''
-DataRepositoryTest
-This class is used to test the repository
+Name: DataRepositoryTest
+Purpose: This class is used to test the repository
 Created on 20.06.2011
 @author: Kamil Wozniak
 '''

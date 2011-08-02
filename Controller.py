@@ -1,4 +1,6 @@
 '''
+Name: Controller
+Purpose: Handle requests from the view and the wsn
 Created on 22.06.2011
 @author: Kamil Wozniak
 '''
