@@ -1,3 +1,32 @@
+#!/usr/bin/env python
+#
+#wsnserver - the serial hardware component
+#
+#written 2011 by Bartholomaeus Dedersen
+##http://selbstapotheose.de
+#
+#for
+#
+#FH Kiel
+#Prof. Dispert
+#Master IT
+#Ubiquitous Computing
+#Project for a RESTful http bridge for Wireless Sensor Nodes
+#
+#Purpose of this file:
+#
+#Mainly work by me. I included two objects.
+#
+#The first one, EnchacedSerial, is from the 
+#repositories of PySerial.
+#
+#The second one is for accessing a Renesas
+#ZigBee controller over a USB2Serial connector.
+#Use the source, Luke.
+ #
+  #
+   ############
+
 import serial
 import threading
 import sys
@@ -6,10 +35,13 @@ import time
 import glob
 import time
 
-#From the wsnserver project
+#From the wsnserver project - the controller for the database
+#and sexy http-interface
 import Controller
 
-#Better Serial access with Python
+#Better Serial access with Python - taken
+#from PySerial's cvs
+
 from serial import Serial
 class EnhancedSerial(Serial):
     def __init__(self, *args, **kwargs):
@@ -35,13 +67,51 @@ class EnhancedSerial(Serial):
         line, self.buf = self.buf, ''
         return line
 
+
+
+
+#Prepare for the most ingenious
+#and sophisticated Serial reader you
+#ever read. Full of Adapter design patterns,
+#a hell of a facade and the most most useless all-seeing,
+#omnipotent servant called "shortcut" - all made with loosest coupling
+#you can ever imagine.
+#It is the first python code I ever wrote in my life.
+
+#tl;dr: this Object defines an interface for accessing WSN or if used
+#as an executable it uses anti-threads to handle all hardware-stuff
+
 class SerialReader:
-    def __init__(self, verbose=True):
+    def __init__(self, verbose, aggressive_mode, wsnport):
+	#Save the ID of the controller WSN here
 	self.controllerId = ''
+	
+	#controller object is instanced here
+	self.controller = Controller.Controller()
+
+	#Tell me more on output
 	self.verbose = verbose
 
-        self.serial = EnhancedSerial(1)
-        self.serial.port     = self.find_port()
+	#Save the port of the WSN if there was any
+	self.wsnport = wsnport
+
+	#Ask for more speed and less reliability?
+	self.aggressive_mode = aggressive_mode
+
+	#configuration for the serial port
+	#which is given by an FTDI usb converter
+	if self.aggressive_mode:
+		self.serial = serial.Serial()
+	else:
+        	self.serial = EnhancedSerial(1)
+
+	#auto detection of WSN connection works only for FTDI usb->serial
+	#with linux
+	if not self.wsnport:
+        	self.wsnport     = self.find_port()
+
+
+       	self.serial.port     = self.wsnport
         self.serial.baudrate = 38400
 
         try:
@@ -50,14 +120,15 @@ class SerialReader:
             sys.stderr.write("Could not open serial port %s: %s\n" % (self.serial.portstr, e))
             sys.exit(1)
 
-	#Read buffer first time to flush
+	#Read buffer first 10 times to flush
 	i = 0;
 	while i < 10:
 		self.reader()
 		i = i + 1
 
-	self.controller = Controller.Controller()
+
         
+    #servant for the object if ran as executable
     def shortcut(self):
 	#Get ID from WSN
 	if len(self.controllerId) == 0:
@@ -71,30 +142,49 @@ class SerialReader:
 	outdata = self.reader()
 	if len(outdata) > 0:
 		self.controller.saveDataAction(self.controllerId, outdata)
+
 	#send data
 	indata = self.controller.readCMDAction(self.controllerId);
+	#sometimes there is nothing to write. We are fine with it.
 	if indata:
 		self.write(indata)
 		sleep(1)
+	#but sometimes there will be more than one command so we
+	#just wait for a new round.
+	#12.5 Hertz on our 3Ghz Celeron 
+	#with 420 MB RAM(Rest to 512 got killed by age)!
+
 		
 
+    #FTDI-USB gets connected by /dev/ttyUSB[0-9]
+    #Serial gets connected by /dev/ttyS[0-9]
+    #Windows and Mac --> http://pyserial.sourceforge.net/
     def find_port(self):
         port = glob.glob('/dev/ttyUSB*')
         if len(port) != 1:
-            print "Only one USB-FDDI adapter required - no more or less"
+            sys.stderr.write("Only _one_ USB-FTDI adapter required - no more or less")
             sys.exit(1)
         else:
             return port[0]
+
+
         
     def reader(self):
 	data = ''
-	#while self.serial.inWaiting() > 0:
-	#	data += self.serial.read(1)
-	data = self.serial.readline()
+
+	if self.aggressive_mode:
+		while self.serial.inWaiting() > 0:
+			data += self.serial.read(1)
+	else:
+		data = self.serial.readline()
+
+        # Verbose mode prints everthing to console
 	if self.verbose and len(data) > 0:
 		sys.stdout.write("input:" + data)
 		sys.stdout.flush()
 	return data.strip()
+
+
 	
     def write(self,data):
 	self.serial.write(data)                 # get a bunch of bytes and send them
@@ -103,40 +193,51 @@ class SerialReader:
        		sys.stdout.write("output:" + data)
                 sys.stdout.flush()
 
+
+
+
+#Bienvenue and welcome to our small main()
 if __name__ == '__main__':
-# connect to serial port and do some test if not run as module
+
 
 #Commandline parsing
     import optparse
 
     parser = optparse.OptionParser(
      usage = "%prog [options]",
-     description = "Wireless Sensor Network to TCP bridge with puffering",
-     epilog = """\
-        NOTE: no security measures are implemented. Anyone can remotely connect
-        to this service over the network.
-
-        Only one connection at once is supported. When the connection is terminated
-        it waits for the next connect.
-        """)
+     description = "Hardware component of wsnserver",
+     epilog = """ Run me stand alone and I will serve the Serial Hardware WSN
+		for you. Maybe I will need some frontend like a http-server but 
+		look at the controller object Controller.py!
+		
+		This file contains also a usable interface as an object. For 
+		modification and interface use the source code.
+        	""")
 
     parser.add_option("-v",
         dest = "verbose",
         action = "store_true",
         help = "write all serial in- and output to the console",
-        default = False
-    )
+        default = False)
+
+    parser.add_option("-a",
+	dest = "aggressive_mode",
+	action = "store_true",
+	help = "do not wait for serial data new line and rely on fast WSN",
+	default = False)
+
+    parser.add_option("-p", 
+	dest="port",
+        help="use PORT for communication and skip auto detection", 
+	metavar="PORT")
 
     (options, args) = parser.parse_args()
 
     
-    s = SerialReader(options.verbose)
+    s = SerialReader(options.verbose, options.aggressive_mode,options.port)
 
     while True:
         try:
             s.shortcut()
         except KeyboardInterrupt:
             break
-
-
-    sys.stderr.write('\n--- exit ---\n')
