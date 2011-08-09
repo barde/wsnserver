@@ -14,14 +14,24 @@ class DataRepositoryTest(unittest.TestCase):
     def setUp(self):
         dr = DataRepository.DataRepository()
         dr.saveData("wsn01", "testdata")
+        dr.saveCMD("wsn01", "pause")
         
     def testReadCMD(self):
         dr = DataRepository.DataRepository()
-        dr.readCMD()
+        self.assertEqual(1, len(dr.readCMD("wsn01")), 
+                         "ReadCMD does not work.")
     
     def testSaveCMD(self):
         dr = DataRepository.DataRepository()
         dr.saveCMD("wsn01", "pause")
+        self.assertEqual(2, len(dr.readCMD("wsn01")), 
+                         "SaveCMD does not work.")
+        
+    def testRemoveAllCMD(self):
+        dr = DataRepository.DataRepository()
+        dr.removeAllCMD()
+        self.assertEqual(0, len(dr.readCMD("wsn01")), 
+                         "removeAllCMD does not work.")
     
     def testRemoveAllData(self):
         dr = DataRepository.DataRepository()
@@ -44,7 +54,9 @@ class DataRepositoryTest(unittest.TestCase):
         self.assertEqual(2, len(dr.readAllData("wsn01")), "SaveToDB failed")
 
     def tearDown(self):
-        DataRepository.DataRepository().removeAllData()
+        dr = DataRepository.DataRepository()
+        dr.removeAllData()
+        dr.removeAllCMD()
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']

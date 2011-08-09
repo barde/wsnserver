@@ -12,10 +12,10 @@ class DataRepository(object):
         connection = self.__returnConnection()
         cursor = connection.cursor()
 
-        cursor.execute("SELECT * FROM commands WHERE data.id = ?", [id])
-        data = cursor.fetchall()
+        cursor.execute("SELECT * FROM commands WHERE commands.id = ?", [id])
+        cmd = cursor.fetchall()
         connection.commit()
-        return data
+        return cmd
     
     def saveCMD(self, id, cmd):
         values = (id, cmd, False, sqlite3.datetime.datetime.now()) 
@@ -24,6 +24,12 @@ class DataRepository(object):
         connection = self.__returnConnection()
         cursor = connection.cursor()
         cursor.execute(sql, values)
+        connection.commit()
+        
+    def removeAllCMD(self):
+        connection = self.__returnConnection()
+        cursor = connection.cursor()
+        cursor.execute("DELETE FROM commands")
         connection.commit()
 
     def removeAllData(self):
