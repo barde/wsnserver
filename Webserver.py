@@ -6,8 +6,6 @@ Created on 21.06.2011
 '''
 
 import Controller
-
-import json
 import cherrypy
 from cherrypy import expose
 
