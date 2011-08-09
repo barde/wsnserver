@@ -16,6 +16,16 @@ class DataRepositoryTest(unittest.TestCase):
         dr.saveData("wsn01", "testdata")
         dr.saveCMD("wsn01", "pause")
         
+    def testSaveDevice(self):
+        dr = DataRepository.DataRepository()
+        dr.saveDevice("wsn01")
+        
+    def testReadDeviceList(self):
+        dr = DataRepository.DataRepository()
+        dr.saveDevice("wsn01")
+        self.assertEqual(1, len(dr.readDeviceList()), 
+                         "device number is not equal")
+        
     def testReadCMD(self):
         dr = DataRepository.DataRepository()
         dr.saveCMD("wsn01", "pause")
@@ -59,6 +69,7 @@ class DataRepositoryTest(unittest.TestCase):
         dr = DataRepository.DataRepository()
         dr.removeAllData()
         dr.removeAllCMD()
+        dr.removeAllDevices()
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']

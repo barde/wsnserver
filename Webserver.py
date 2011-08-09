@@ -27,6 +27,12 @@ class Webserver:
         return string
     
     @expose
+    def readDeviceList(self):
+        controller = Controller.Controller()
+        devices = format(controller.readDeviceList())
+        return devices
+    
+    @expose
     def removeAll(self):
         controller = Controller.Controller()
         controller.removeAllAction()

@@ -9,10 +9,20 @@ import sqlite3
 class DataRepository(object):
     
     def saveDevice(self, id):
-        pass
+        connection = self.__returnConnection()
+        cursor = connection.cursor()
+        
+        cursor.execute("INSERT INTO devices VALUES (?)", [id])
+        connection.commit()
     
-    def readDevice(self):
-        pass
+    def readDeviceList(self):
+        connection = self.__returnConnection()
+        cursor = connection.cursor()
+        
+        cursor.execute("SELECT * FROM devices")
+        devices = cursor.fetchall()
+        connection.commit()
+        return devices
     
     '''
     readCMD reads only the last cmd for a wsn id, sets all commands as read 
@@ -40,6 +50,12 @@ class DataRepository(object):
         connection = self.__returnConnection()
         cursor = connection.cursor()
         cursor.execute("DELETE FROM commands")
+        connection.commit()
+        
+    def removeAllDevices(self):
+        connection = self.__returnConnection()
+        cursor = connection.cursor()
+        cursor.execute("DELETE FROM devices")
         connection.commit()
 
     def removeAllData(self):
