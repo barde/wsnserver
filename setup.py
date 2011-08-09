@@ -17,7 +17,8 @@ if __name__ == '__main__':
     
     cursor.execute("""CREATE TABLE devices(id TEXT)""")
     
-    cursor.execute("""CREATE TABLE commands(id TEXT, cmd TEXT, createdOn TEXT)""")
+    cursor.execute("""CREATE TABLE commands(id TEXT, cmd TEXT, 
+                      read INTEGER, createdOn TEXT)""")
         
     connection.commit()
     connection.close()
