@@ -11,7 +11,7 @@ class DataRepository(object):
     def readCMD(self, id):
         connection = self.__returnConnection()
         cursor = connection.cursor()
-
+        
         cursor.execute("SELECT * FROM commands WHERE commands.id = ?", [id])
         cmd = cursor.fetchall()
         connection.commit()

@@ -15,8 +15,10 @@ class Webserver:
         return "WSN-Server is up and running"
     
     @expose
-    def sendCmd(self, target, cmd):
-        return "Target: " + target + "<br>CMD: " + cmd
+    def sendCmd(self, id, cmd):
+        controller = Controller.Controller()
+        controller.saveCMDAction(id, cmd)
+        return "Target: " + id + "<br>CMD: " + cmd
     
     @expose
     def readAll(self):
