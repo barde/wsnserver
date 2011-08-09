@@ -27,7 +27,10 @@ class Controller(object):
         self.dataRepository.saveData(id, value)
         
     def saveDevice(self, id):
-        pass
+        self.dataRepository.saveDevice(id)
+    
+    def readDeviceList(self):
+        return self.dataRepository.readDeviceList()
     
     ''' 
     Todo: Return value must be formated.

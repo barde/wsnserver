@@ -16,6 +16,15 @@ class DataRepositoryTest(unittest.TestCase):
         dr.saveData("wsn01", "testdata")
         dr.saveCMD("wsn01", "pause")
         
+    def testSaveDevice(self):
+        dr = DataRepository.DataRepository()
+        dr.saveDevice("wsn01")
+        
+    def testReadDeviceList(self):
+        dr = DataRepository.DataRepository()
+        self.assertEqual(1, len(dr.readDeviceList()), 
+                         "device number is not equal")
+        
     def testReadCMD(self):
         dr = DataRepository.DataRepository()
         dr.saveCMD("wsn01", "pause")
