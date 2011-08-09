@@ -33,7 +33,7 @@ class Controller(object):
         return self.dataRepository.readAllData(id)
     
     def readLeatestAction(self, id):
-        pass
+        self.dataRepository.readLeatestData(id)
     
     def removeAllAction(self):
         self.dataRepository.removeAllData()

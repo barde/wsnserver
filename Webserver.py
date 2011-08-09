@@ -21,11 +21,14 @@ class Webserver:
         return "Target: " + id + "<br>CMD: " + cmd
     
     @expose
-    def readAll(self):
-        return "Here are all messeges from the db"
+    def readAll(self, id):
+        controller = Controller.Controller()
+        return controller.readAllAction(id)
     
     @expose
     def removeAll(self):
+        controller = Controller.Controller()
+        controller.removeAllAction()
         return "All messeges removed"
 
 cherrypy.quickstart(Webserver())
