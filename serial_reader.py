@@ -4,15 +4,43 @@ import sys
 import codecs 
 import time
 import glob
+import time
 
+#From the wsnserver project
 import Controller
+
+#Better Serial access with Python
+from serial import Serial
+class EnhancedSerial(Serial):
+    def __init__(self, *args, **kwargs):
+        #ensure that a reasonable timeout is set
+        timeout = kwargs.get('timeout',0.1)
+        if timeout < 0.01: timeout = 0.1
+        kwargs['timeout'] = timeout
+        Serial.__init__(self, *args, **kwargs)
+        self.buf = ''
+        
+    def readline(self, maxsize=None, timeout=1):
+        """maxsize is ignored, timeout in seconds is the max time that is way for a complete line"""
+        tries = 0
+        while 1:
+            self.buf += self.read(512)
+            pos = self.buf.find('\n')
+            if pos >= 0:
+                line, self.buf = self.buf[:pos+1], self.buf[pos+1:]
+                return line
+            tries += 1
+            if tries * self.timeout > timeout:
+                break
+        line, self.buf = self.buf, ''
+        return line
 
 class SerialReader:
     def __init__(self, verbose=True):
 	self.controllerId = ''
 	self.verbose = verbose
 
-        self.serial = serial.Serial()
+        self.serial = EnhancedSerial(1)
         self.serial.port     = self.find_port()
         self.serial.baudrate = 38400
 
@@ -22,12 +50,21 @@ class SerialReader:
             sys.stderr.write("Could not open serial port %s: %s\n" % (self.serial.portstr, e))
             sys.exit(1)
 
+	#Read buffer first time to flush
+	i = 0;
+	while i < 10:
+		self.reader()
+		i = i + 1
+
 	self.controller = Controller.Controller()
         
     def shortcut(self):
-	if self.controllerId.count == 0:
-		self.write("+WPANID")
+	#Get ID from WSN
+	if len(self.controllerId) == 0:
+		self.write("+WPANID\r")
+		time.sleep(1)
 		self.controllerId = self.reader()
+		self.controller.saveDevice(self.controllerId)
 		return
 
 	#receive data
@@ -38,6 +75,7 @@ class SerialReader:
 	indata = self.controller.readCMDAction(self.controllerId);
 	if indata:
 		self.write(indata)
+		sleep(1)
 		
 
     def find_port(self):
@@ -50,23 +88,19 @@ class SerialReader:
         
     def reader(self):
 	data = ''
-	while self.serial.inWaiting() > 0:
-		data += self.serial.read(1)
+	#while self.serial.inWaiting() > 0:
+	#	data += self.serial.read(1)
+	data = self.serial.readline()
 	if self.verbose and len(data) > 0:
 		sys.stdout.write("input:" + data)
 		sys.stdout.flush()
-	return data
-
+	return data.strip()
 	
-
-
     def write(self,data):
-        """loop forever and copy socket->serial"""
-        while self.alive:
-            self.serial.write(data)                 # get a bunch of bytes and send them
-            # Verbose mode prints everthing to console
-            if self.verbose:
-                sys.stdout.write("output:" + data)
+	self.serial.write(data)                 # get a bunch of bytes and send them
+        # Verbose mode prints everthing to console
+        if self.verbose:
+       		sys.stdout.write("output:" + data)
                 sys.stdout.flush()
 
 if __name__ == '__main__':
