@@ -16,10 +16,12 @@ class DataRepositoryTest(unittest.TestCase):
         dr.saveData("wsn01", "testdata")
         
     def testReadCMD(self):
-        pass
+        dr = DataRepository.DataRepository()
+        dr.readCMD()
     
     def testSaveCMD(self):
-        pass
+        dr = DataRepository.DataRepository()
+        dr.saveCMD("wsn01", "pause")
     
     def testRemoveAllData(self):
         dr = DataRepository.DataRepository()
