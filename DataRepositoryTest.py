@@ -22,6 +22,7 @@ class DataRepositoryTest(unittest.TestCase):
         
     def testReadDeviceList(self):
         dr = DataRepository.DataRepository()
+        dr.saveDevice("wsn01")
         self.assertEqual(1, len(dr.readDeviceList()), 
                          "device number is not equal")
         
@@ -68,6 +69,7 @@ class DataRepositoryTest(unittest.TestCase):
         dr = DataRepository.DataRepository()
         dr.removeAllData()
         dr.removeAllCMD()
+        dr.removeAllDevices()
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']

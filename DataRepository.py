@@ -51,6 +51,12 @@ class DataRepository(object):
         cursor = connection.cursor()
         cursor.execute("DELETE FROM commands")
         connection.commit()
+        
+    def removeAllDevices(self):
+        connection = self.__returnConnection()
+        cursor = connection.cursor()
+        cursor.execute("DELETE FROM devices")
+        connection.commit()
 
     def removeAllData(self):
         connection = self.__returnConnection()
