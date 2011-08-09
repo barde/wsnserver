@@ -8,11 +8,23 @@ import sqlite3
 
 class DataRepository(object):
     
-    def readCMD(self):
-        pass
+    def readCMD(self, id):
+        connection = self.__returnConnection()
+        cursor = connection.cursor()
+
+        cursor.execute("SELECT * FROM commands WHERE data.id = ?", [id])
+        data = cursor.fetchall()
+        connection.commit()
+        return data
     
-    def saveCMD(self):
-        pass
+    def saveCMD(self, id, cmd):
+        values = (id, cmd, False, sqlite3.datetime.datetime.now()) 
+        sql = "INSERT INTO commands VALUES (?, ?, ?, ?)" 
+        
+        connection = self.__returnConnection()
+        cursor = connection.cursor()
+        cursor.execute(sql, values)
+        connection.commit()
 
     def removeAllData(self):
         connection = self.__returnConnection()
