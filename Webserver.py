@@ -5,8 +5,10 @@ Created on 21.06.2011
 @author: Kamil Wozniak
 '''
 
-import cherrypy
 import Controller
+
+import json
+import cherrypy
 from cherrypy import expose
 
 class Webserver:
@@ -23,7 +25,8 @@ class Webserver:
     @expose
     def readAll(self, id):
         controller = Controller.Controller()
-        return controller.readAllAction(id)
+        string = format(controller.readAllAction(id))
+        return string
     
     @expose
     def removeAll(self):
