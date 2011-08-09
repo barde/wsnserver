@@ -17,11 +17,11 @@ class Controller(object):
     Only the WSN should request this action. 
     ReadCMDAction looks into the database for new CMDs
     '''
-    def readCMDAction(self):
-        pass
+    def readCMDAction(self, id):
+        self.dataRepository.readCMD(id)
     
-    def saveCMDAction(self):
-        pass
+    def saveCMDAction(self, id, cmd):
+        self.dataRepository.saveCMD(id, cmd)
     
     def saveDataAction(self, id, value):
         self.dataRepository.saveData(id, value)

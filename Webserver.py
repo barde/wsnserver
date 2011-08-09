@@ -6,6 +6,7 @@ Created on 21.06.2011
 '''
 
 import cherrypy
+import Controller
 from cherrypy import expose
 
 class Webserver:
