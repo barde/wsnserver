@@ -18,13 +18,14 @@ class DataRepositoryTest(unittest.TestCase):
         
     def testReadCMD(self):
         dr = DataRepository.DataRepository()
+        dr.saveCMD("wsn01", "pause")
         self.assertEqual(1, len(dr.readCMD("wsn01")), 
                          "ReadCMD does not work.")
     
     def testSaveCMD(self):
         dr = DataRepository.DataRepository()
         dr.saveCMD("wsn01", "pause")
-        self.assertEqual(2, len(dr.readCMD("wsn01")), 
+        self.assertEqual(1, len(dr.readCMD("wsn01")), 
                          "SaveCMD does not work.")
         
     def testRemoveAllCMD(self):
@@ -46,7 +47,8 @@ class DataRepositoryTest(unittest.TestCase):
       
     def testReadLeatestData(self):
         dr = DataRepository.DataRepository()
-        self.assertTrue(dr.readLeatestData("wsn01"), "ReadLeatestFromDB failed")
+        self.assertEqual(1, len(dr.readLeatestData("wsn01")), 
+                         "ReadLeatestFromDB failed")
         
     def testSaveData(self):
         dr = DataRepository.DataRepository()

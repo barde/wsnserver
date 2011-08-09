@@ -8,12 +8,16 @@ import sqlite3
 
 class DataRepository(object):
     
+    '''
+    readCMD reads only the last cmd for a wsn id, sets all commands as read 
+    '''
     def readCMD(self, id):
         connection = self.__returnConnection()
         cursor = connection.cursor()
         
-        cursor.execute("SELECT * FROM commands WHERE commands.id = ?", [id])
+        cursor.execute("SELECT * FROM commands WHERE id = ? AND read = 0 ORDER BY createdOn DESC LIMIT 1", [id])
         cmd = cursor.fetchall()
+        cursor.execute("UPDATE commands set read = 1")
         connection.commit()
         return cmd
     
@@ -44,12 +48,20 @@ class DataRepository(object):
 
         cursor.execute("SELECT * FROM data WHERE data.id = ?", [id])
         data = cursor.fetchall()
+        cursor.execute("UPDATE data set read = 1")
         connection.commit()
         return data
     
     # not implemented yet
     def readLeatestData(self, id):
-        return True
+        connection = self.__returnConnection()
+        cursor = connection.cursor()
+        
+        cursor.execute("SELECT * FROM data WHERE id = ? AND read = 0", [id])
+        data = cursor.fetchall()
+        cursor.execute("UPDATE data set read = 1")
+        connection.commit()
+        return data
     
     '''
     id: should contain the wsn-id
