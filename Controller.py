@@ -25,6 +25,9 @@ class Controller(object):
     
     def saveDataAction(self, id, value):
         self.dataRepository.saveData(id, value)
+        
+    def saveDevice(self, id):
+        pass
     
     ''' 
     Todo: Return value must be formated.

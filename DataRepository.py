@@ -8,6 +8,12 @@ import sqlite3
 
 class DataRepository(object):
     
+    def saveDevice(self, id):
+        pass
+    
+    def readDevice(self):
+        pass
+    
     '''
     readCMD reads only the last cmd for a wsn id, sets all commands as read 
     '''
