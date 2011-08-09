@@ -32,10 +32,10 @@ class SerialReader:
 
 	#receive data
 	outdata = self.reader()
-	if outdata:
-		self.controller.saveDataAction(controllerId, outdata)
+	if len(outdata) > 0:
+		self.controller.saveDataAction(self.controllerId, outdata)
 	#send data
-	indata = self.controller.readCMD(controllerId);
+	indata = self.controller.readCMDAction(self.controllerId);
 	if indata:
 		self.write(indata)
 		
@@ -52,7 +52,7 @@ class SerialReader:
 	data = ''
 	while self.serial.inWaiting() > 0:
 		data += self.serial.read(1)
-	if self.verbose:
+	if self.verbose and len(data) > 0:
 		sys.stdout.write("input:" + data)
 		sys.stdout.flush()
 	return data
