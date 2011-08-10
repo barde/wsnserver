@@ -114,7 +114,14 @@ class SerialReader:
         	self.wsnport     = self.find_port()
 
 
+	#Either the auto find or via console parametre
        	self.serial.port     = self.wsnport
+
+	#Use them if you need'em
+	#self.serial.parity=serial.PARITY_ODD,
+	#self.serial.stopbits=serial.STOPBITS_TWO,
+	#self.serial.bytesize=serial.SEVENBITS
+
 	
 	#change Baudrate and other options for serial access here
         self.serial.baudrate = 38400
