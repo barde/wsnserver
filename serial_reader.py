@@ -15,13 +15,14 @@
 #
 #Purpose of this file:
 #
-#Mainly work by me. I included two objects.
+#Mainly work by me except the first class. I included two objects.
 #
 #The first one, EnchacedSerial, is from the 
-#repositories of PySerial.
+#repositories of PySerial. It is under the Python-License.
 #
-#The second one is for accessing a Renesas
-#ZigBee controller over a USB2Serial connector.
+#
+#
+#The second class is about the real communication.
 #Use the source, Luke.
  #
   #
@@ -112,6 +113,8 @@ class SerialReader:
 
 
        	self.serial.port     = self.wsnport
+	
+	#change Baudrate and other options for serial access here
         self.serial.baudrate = 38400
 
         try:
@@ -230,6 +233,15 @@ if __name__ == '__main__':
 	dest="port",
         help="use PORT for communication and skip auto detection", 
 	metavar="PORT")
+
+    parser.add_option("-i",
+	dest="interactive",
+	help="use %prog as terminal emulator",
+	default = False)
+
+    parser.add_option("-b",
+	dest="baudrate",
+	help="
 
     (options, args) = parser.parse_args()
 
