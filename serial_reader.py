@@ -2,7 +2,7 @@
 #
 #wsnserver - the serial hardware component
 #
-#written 2011 by Bartholomaeus Dedersen
+#written 7.2011 by Bartholomaeus Dedersen
 ##http://selbstapotheose.de
 #
 #for
