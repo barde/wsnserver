@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+#TODO: Command $data read every tick
+#	Look at other parsing stuff
 #
 #wsnserver - the serial hardware component
 #
@@ -217,36 +219,48 @@ if __name__ == '__main__':
 		modification and interface use the source code.
         	""")
 
-    parser.add_option("-v",
+    parser.add_option("-v", "--verbose",
         dest = "verbose",
         action = "store_true",
         help = "write all serial in- and output to the console",
         default = False)
 
-    parser.add_option("-a",
+    parser.add_option("-a", "--aggressive",
 	dest = "aggressive_mode",
 	action = "store_true",
 	help = "do not wait for serial data new line and rely on fast WSN",
 	default = False)
 
-    parser.add_option("-p", 
+    parser.add_option("-p", "--port", 
 	dest="port",
         help="use PORT for communication and skip auto detection", 
 	metavar="PORT")
 
-    parser.add_option("-i",
+    parser.add_option("-i", "--interactive",
 	dest="interactive",
 	help="use %prog as terminal emulator",
 	default = False)
+
+    parser.add_option("-c", "--command",
+        action="store",
+        type="string",
+        help = "pass a string as input to the WSN",
+        dest="command")
+
 
     parser.add_option("-b",
 	dest="baudrate",
 	help="
 
+
     (options, args) = parser.parse_args()
 
     
     s = SerialReader(options.verbose, options.aggressive_mode,options.port)
+
+    if options.interactive:
+        input = raw_input()
+        data = input
 
     while True:
         try:
