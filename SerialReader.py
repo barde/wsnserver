@@ -1,6 +1,4 @@
 #!/usr/bin/env python
-#TODO: Command $data read every tick
-#	Look at other parsing stuff
 #
 #wsnserver - the serial hardware component
 #
@@ -37,6 +35,9 @@ import codecs
 import time
 import glob
 import time
+
+#Refactored Singleton
+import LazyData
 
 #From the wsnserver project - the controller for the database
 #and sexy http-interface
@@ -77,7 +78,7 @@ class EnhancedSerial(Serial):
 #and sophisticated Serial reader you
 #ever read. Full of Adapter design patterns,
 #a hell of a facade and the most most useless all-seeing,
-#omnipotent servant called "shortcut" - all made with loosest coupling
+#omnipotent servant called "servant" - all made with loosest coupling
 #you can ever imagine.
 #It is the first python code I ever wrote in my life.
 
@@ -85,7 +86,12 @@ class EnhancedSerial(Serial):
 #as an executable it uses anti-threads to handle all hardware-stuff
 
 class SerialReader:
-    def __init__(self, verbose, aggressive_mode, wsnport):
+
+    def __init__(self, verbose, aggressive_mode, wsnport, command, baud):
+	#Our buffer
+	lazyData = LazyData()
+	__data = lazyData.content
+	
 	#Save the ID of the controller WSN here
 	self.controllerId = ''
 	
@@ -98,9 +104,14 @@ class SerialReader:
 	#Save the port of the WSN if there was any
 	self.wsnport = wsnport
 
+	#One line of command was passed - please expl0it and inj3ct me!
+	__data = command
+
 	#Ask for more speed and less reliability?
 	self.aggressive_mode = aggressive_mode
 
+
+	
 	#configuration for the serial port
 	#which is given by an FTDI usb converter
 	if self.aggressive_mode:
@@ -123,8 +134,11 @@ class SerialReader:
 	#self.serial.bytesize=serial.SEVENBITS
 
 	
-	#change Baudrate and other options for serial access here
-        self.serial.baudrate = 38400
+	#change Baudrate on command line or take our variable - Basta!
+	if baud:
+		self.serial.baudrate = baud
+	else:
+        	self.serial.baudrate = 38400
 
         try:
             self.serial.open()
@@ -132,16 +146,18 @@ class SerialReader:
             sys.stderr.write("Could not open serial port %s: %s\n" % (self.serial.portstr, e))
             sys.exit(1)
 
+	"""
 	#Read buffer first 10 times to flush
 	i = 0;
 	while i < 10:
 		self.reader()
 		i = i + 1
+	"""
 
 
         
     #servant for the object if ran as executable
-    def shortcut(self):
+    def servant(self):
 	#Get ID from WSN
 	if len(self.controllerId) == 0:
 		self.write("+WPANID\r")
@@ -161,10 +177,20 @@ class SerialReader:
 	if indata:
 		self.write(indata)
 		sleep(1)
+		return
 	#but sometimes there will be more than one command so we
 	#just wait for a new round.
 	#12.5 Hertz on our 3Ghz Celeron 
 	#with 420 MB RAM(Rest to 512 got killed by age)!
+
+	#Wait, we have sometimes data to write in one cycle!
+	#But please only one write so everytime a return is 
+	#adviced
+	if len(data.content) != 0:
+		self.write(data.content)
+		data.content = ""
+		return
+		
 
 		
 
@@ -192,7 +218,7 @@ class SerialReader:
 
         # Verbose mode prints everthing to console
 	if self.verbose and len(data) > 0:
-		sys.stdout.write("input:" + data)
+		sys.stdout.write("rx:" + data)
 		sys.stdout.flush()
 	return data.strip()
 
@@ -202,8 +228,9 @@ class SerialReader:
 	self.serial.write(data)                 # get a bunch of bytes and send them
         # Verbose mode prints everthing to console
         if self.verbose:
-       		sys.stdout.write("output:" + data)
+       		sys.stdout.write("tx:" + data)
                 sys.stdout.flush()
+
 
 
 
@@ -251,26 +278,38 @@ if __name__ == '__main__':
     parser.add_option("-c", "--command",
         action="store",
         type="string",
-        help = "pass a string as input to the WSN",
+        help = "pass COMMAND as input to the WSN",
+	metavar="COMMAND",
         dest="command")
 
 
     parser.add_option("-b",
-	dest="baudrate",
-	help="
+	action="store",
+	type="string",
+	help="set baudrate to BAUD(9600,38400,115200)",
+	metavar="BAUD",
+	dest="baud")
+	
 
-
+    #Get our command line parameters
     (options, args) = parser.parse_args()
 
-    
-    s = SerialReader(options.verbose, options.aggressive_mode,options.port)
+    #Create one of our objects
+    s = SerialReader(options.verbose, 
+		options.aggressive_mode,
+		options.port,
+		options.command,
+		options.baud)
 
-    if options.interactive:
-        input = raw_input()
-        data = input
+    #Enable our buffer
+    data = LazyData()
+
 
     while True:
         try:
-            s.shortcut()
+            if options.interactive:
+        	input = raw_input()
+        	data.content = input
+            s.servant()
         except KeyboardInterrupt:
             break
