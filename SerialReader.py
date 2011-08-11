@@ -88,57 +88,58 @@ class EnhancedSerial(Serial):
 class SerialReader:
 
     def __init__(self, verbose, aggressive_mode, wsnport, command, baud):
-	#Our buffer
-	lazyData = LazyData.LazyData()
-	__data = lazyData.content
-	
-	#Save the ID of the controller WSN here
-	self.controllerId = ''
-	
-	#controller object is instanced here
-	self.controller = Controller.Controller()
+        #Our buffer
+        lazyData = LazyData.LazyData()
+        __data = lazyData.content
+    
+        #Save the ID of the controller WSN here
+        self.controllerId = ''
+    
+        #controller object is instanced here
+        self.controller = Controller.Controller()
 
-	#Tell me more on output
-	self.verbose = verbose
+        #Tell me more on output
+        self.verbose = verbose
 
-	#Save the port of the WSN if there was any
-	self.wsnport = wsnport
+        #Save the port of the WSN if there was any
+        self.wsnport = wsnport
 
-	#One line of command was passed - please expl0it and inj3ct me!
-	__data = command
+        #One line of command was passed - please expl0it and inj3ct me!
+        __data = command
 
-	#Ask for more speed and less reliability?
-	self.aggressive_mode = aggressive_mode
+        #Ask for more speed and less reliability?
+        self.aggressive_mode = aggressive_mode
 
+        #configuration for the serial port
+        #which is given by an FTDI usb converter
+        if self.aggressive_mode:
+            self.serial = serial.Serial()
+        else:
+            self.serial = EnhancedSerial(timeout=1)
 
-	
-	#configuration for the serial port
-	#which is given by an FTDI usb converter
-	if self.aggressive_mode:
-		self.serial = serial.Serial()
-	else:
-        	self.serial = EnhancedSerial(1)
-
-	#auto detection of WSN connection works only for FTDI usb->serial
-	#with linux
-	if not self.wsnport:
-        	self.wsnport     = self.find_port()
+        #auto detection of WSN connection works only for FTDI usb->serial
+        #with linux
+        if not self.wsnport:
+            self.wsnport     = self.find_port()
 
 
-	#Either the auto find or via console parametre
-       	self.serial.port     = self.wsnport
+        #Either the auto find or via console parametre
+        print "Port: " + self.wsnport
+        self.serial.port     = self.wsnport
 
-	#Use them if you need'em
-	#self.serial.parity=serial.PARITY_ODD,
-	#self.serial.stopbits=serial.STOPBITS_TWO,
-	#self.serial.bytesize=serial.SEVENBITS
 
-	
-	#change Baudrate on command line or take our variable - Basta!
-	if baud:
-		self.serial.baudrate = baud
-	else:
-        	self.serial.baudrate = 38400
+        #Use them if you need'em
+        #self.serial.parity=serial.PARITY_ODD,
+        #self.serial.stopbits=serial.STOPBITS_TWO,
+        #self.serial.bytesize=serial.SEVENBITS
+
+        
+        #change Baudrate on command line or take our variable - Basta!
+        if baud:
+            self.serial.baudrate = baud
+        else:
+            self.serial.baudrate = 38400
+
 
         try:
             self.serial.open()
@@ -146,53 +147,53 @@ class SerialReader:
             sys.stderr.write("Could not open serial port %s: %s\n" % (self.serial.portstr, e))
             sys.exit(1)
 
-	"""
-	#Read buffer first 10 times to flush
-	i = 0;
-	while i < 10:
-		self.reader()
-		i = i + 1
-	"""
+        """
+        #Read buffer first 10 times to flush
+        i = 0;
+        while i < 10:
+            self.reader()
+            i = i + 1
+        """
 
 
-        
+            
     #servant for the object if ran as executable
     def servant(self):
-	#Get ID from WSN
-	if len(self.controllerId) == 0:
-		self.write("+WPANID\r")
-		time.sleep(1)
-		self.controllerId = self.reader()
-		self.controller.saveDevice(self.controllerId)
-		return
+        #Get ID from WSN
+        if len(self.controllerId) == 0:
+            self.write("+WPANID\r")
+            time.sleep(1)
+            self.controllerId = self.reader()
+            self.controller.saveDevice(self.controllerId)
+            return
 
-	#receive data
-	outdata = self.reader()
-	if len(outdata) > 0:
-		self.controller.saveDataAction(self.controllerId, outdata)
+        #receive data
+        outdata = self.reader()
+        if len(outdata) > 0:
+            self.controller.saveDataAction(self.controllerId, outdata)
 
-	#send data
-	indata = self.controller.readCMDAction(self.controllerId);
-	#sometimes there is nothing to write. We are fine with it.
-	if indata:
-		self.write(indata)
-		sleep(1)
-		return
-	#but sometimes there will be more than one command so we
-	#just wait for a new round.
-	#12.5 Hertz on our 3Ghz Celeron 
-	#with 420 MB RAM(Rest to 512 got killed by age)!
+        #send data
+        indata = self.controller.readCMDAction(self.controllerId);
+        #sometimes there is nothing to write. We are fine with it.
+        if indata:
+            self.write(indata)
+            sleep(1)
+            return
+        #but sometimes there will be more than one command so we
+        #just wait for a new round.
+        #12.5 Hertz on our 3Ghz Celeron 
+        #with 420 MB RAM(Rest to 512 got killed by age)!
 
-	#Wait, we have sometimes data to write in one cycle!
-	#But please only one write so everytime a return is 
-	#adviced
-	if len(data.content) != 0:
-		self.write(data.content)
-		data.content = ""
-		return
-		
+        #Wait, we have sometimes data to write in one cycle!
+        #But please only one write so everytime a return is 
+        #adviced
+        if len(data.content) != 0:
+            self.write(data.content)
+            data.content = ""
+            return
+            
 
-		
+        
 
     #FTDI-USB gets connected by /dev/ttyUSB[0-9]
     #Serial gets connected by /dev/ttyS[0-9]
@@ -208,28 +209,28 @@ class SerialReader:
 
         
     def reader(self):
-	data = ''
+        data = ''
 
-	if self.aggressive_mode:
-		while self.serial.inWaiting() > 0:
-			data += self.serial.read(1)
-	else:
-		data = self.serial.readline()
+        if self.aggressive_mode:
+            while self.serial.inWaiting() > 0:
+                data += self.serial.read(1)
+        else:
+            data = self.serial.readline()
 
-        # Verbose mode prints everthing to console
-	if self.verbose and len(data) > 0:
-		sys.stdout.write("rx:" + data)
-		sys.stdout.flush()
-	return data.strip()
+            # Verbose mode prints everthing to console
+        if self.verbose and len(data) > 0:
+            sys.stdout.write("rx:" + data)
+            sys.stdout.flush()
+        return data.strip()
 
 
-	
+    
     def write(self,data):
-	self.serial.write(data)                 # get a bunch of bytes and send them
+        self.serial.write(data)                 # get a bunch of bytes and send them
         # Verbose mode prints everthing to console
         if self.verbose:
-       		sys.stdout.write("tx:" + data)
-                sys.stdout.flush()
+           sys.stdout.write("tx:" + data)
+           sys.stdout.flush()
 
 
 
@@ -246,12 +247,12 @@ if __name__ == '__main__':
      usage = "%prog [options]",
      description = "Hardware component of wsnserver",
      epilog = """ Run me stand alone and I will serve the Serial Hardware WSN
-		for you. Maybe I will need some frontend like a http-server but 
-		look at the controller object Controller.py!
-		
-		This file contains also a usable interface as an object. For 
-		modification and interface use the source code.
-        	""")
+        for you. Maybe I will need some frontend like a http-server but 
+        look at the controller object Controller.py!
+        
+        This file contains also a usable interface as an object. For 
+        modification and interface use the source code.
+            """)
 
     parser.add_option("-v", "--verbose",
         dest = "verbose",
@@ -260,46 +261,46 @@ if __name__ == '__main__':
         default = False)
 
     parser.add_option("-a", "--aggressive",
-	dest = "aggressive_mode",
-	action = "store_true",
-	help = "do not wait for serial data new line and rely on fast WSN",
-	default = False)
+    dest = "aggressive_mode",
+    action = "store_true",
+    help = "do not wait for serial data new line and rely on fast WSN",
+    default = False)
 
     parser.add_option("-p", "--port", 
-	dest="port",
-        help="use PORT for communication and skip auto detection", 
-	metavar="PORT")
+    dest="port",
+    help="use PORT for communication and skip auto detection", 
+    metavar="PORT")
 
     parser.add_option("-i", "--interactive",
-	dest="interactive",
-	help="use %prog as terminal emulator",
-	default = False)
+    dest="interactive",
+    help="use %prog as terminal emulator",
+    default = False)
 
     parser.add_option("-c", "--command",
         action="store",
         type="string",
         help = "pass COMMAND as input to the WSN",
-	metavar="COMMAND",
+    metavar="COMMAND",
         dest="command")
 
 
     parser.add_option("-b",
-	action="store",
-	type="string",
-	help="set baudrate to BAUD(9600,38400,115200)",
-	metavar="BAUD",
-	dest="baud")
-	
+    action="store",
+    type="string",
+    help="set baudrate to BAUD(9600,38400,115200)",
+    metavar="BAUD",
+    dest="baud")
+
 
     #Get our command line parameters
     (options, args) = parser.parse_args()
 
     #Create one of our objects
     s = SerialReader(options.verbose, 
-		options.aggressive_mode,
-		options.port,
-		options.command,
-		options.baud)
+        options.aggressive_mode,
+        options.port,
+        options.command,
+        options.baud)
 
     #Enable our buffer
     data = LazyData.LazyData()
@@ -308,8 +309,8 @@ if __name__ == '__main__':
     while True:
         try:
             if options.interactive:
-        	input = raw_input()
-        	data.content = input
+                input = raw_input()
+                data.content = input
             s.servant()
         except KeyboardInterrupt:
             break
