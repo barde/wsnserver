@@ -89,7 +89,7 @@ class SerialReader:
 
     def __init__(self, verbose, aggressive_mode, wsnport, command, baud):
 	#Our buffer
-	lazyData = LazyData()
+	lazyData = LazyData.LazyData()
 	__data = lazyData.content
 	
 	#Save the ID of the controller WSN here
@@ -302,7 +302,7 @@ if __name__ == '__main__':
 		options.baud)
 
     #Enable our buffer
-    data = LazyData()
+    data = LazyData.LazyData()
 
 
     while True:
