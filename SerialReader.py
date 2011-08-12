@@ -41,6 +41,9 @@ import LazyData
 #More reliable read from console
 import EnhancedSerial
 
+#Translator for genericCommand -> [WSN-Dialect]
+import Translator
+
 #From the wsnserver project - the controller for the database
 #and sexy http-interface
 import Controller
@@ -59,15 +62,21 @@ import Controller
 class SerialReader:
 
     def __init__(self, verbose, aggressive_mode, wsnport, command, baud):
-        #Our buffer which is sometimes filled by parametre
+        
+
+        #Our buffer which is sometimes filled by parametres send by command line
+        #or pushed by the database
         self.lazyData = LazyData.LazyData()
-	
-	if command is not None:
-		print "not none"
-		self.lazyData.content = command
-	
-	if verbose:
-		print "Initial Command: " + self.lazyData.content
+    
+        if command is not None:
+            self.lazyData.content = command
+    
+        if verbose:
+            print "Initial Command: " + self.lazyData.content
+
+
+        #The translator for generic commands with Renesas WSN
+        self.translator = Translator.RenesasTranslator()
     
         #Save the ID of the controller WSN here
         self.controllerId = ''
@@ -98,8 +107,8 @@ class SerialReader:
 
 
         #Either the auto find or via console parametre
-	if self.verbose:
-		print "Port: " + self.wsnport
+        if self.verbose:
+            print "Port: " + self.wsnport
 
         self.serial.port     = self.wsnport
 
@@ -123,14 +132,14 @@ class SerialReader:
             sys.stderr.write("Could not open serial port %s: %s\n" % (self.serial.portstr, e))
             sys.exit(1)
 
-	"""
+    """
         #Read buffer first 10 times to flush
-	#Good for first start or debugging
+    #Good for first start or debugging
         i = 0;
         while i < 10:
             self.reader()
             i = i + 1
-	"""
+    """
 
 
             
@@ -138,7 +147,7 @@ class SerialReader:
     def servant(self):
         #Get ID from WSN
         if len(self.controllerId) == 0:
-            self.write("+WPANID\r")
+            self.write(self.translator.tag("GetId"))
             time.sleep(1)
             self.controllerId = self.reader()
             self.controller.saveDevice(self.controllerId)
@@ -159,7 +168,7 @@ class SerialReader:
             return
 
         #If there is data waiting in the SQL-Queue -> include it in the 
-	#next cycle
+    #next cycle
         self.lazyData.content = self.controller.readCMDAction(self.controllerId);
         #but sometimes there will be more than one command so we
         #just wait for a new round.
@@ -214,7 +223,7 @@ class SerialReader:
 def readInput():
     global keyboard_data
     while True:
-	    keyboard_data = raw_input("? ")
+        keyboard_data = raw_input("? ")
 
 
 #Bienvenue and welcome to our small main()
