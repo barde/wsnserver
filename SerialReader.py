@@ -63,7 +63,6 @@ class SerialReader:
         self.lazyData = LazyData.LazyData()
 	
 	if command is not None:
-		print "not none"
 		self.lazyData.content = command
 	
 	if verbose:
