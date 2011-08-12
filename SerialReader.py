@@ -68,11 +68,11 @@ class SerialReader:
         #or pushed by the database
         self.lazyData = LazyData.LazyData()
 
-    if command is not None:
-        self.lazyData.content = command
+        if command is not None:
+            self.lazyData.content = command
 
-    if verbose:
-        print "Initial Command: " + self.lazyData.content
+        if verbose:
+            print "Initial Command: " + self.lazyData.content
     
 
         #The translator for generic commands with Renesas WSN
