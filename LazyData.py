@@ -14,27 +14,28 @@ class LazyData(object):
     __instance = None  # the unique instance
     __content = ""
 
-    def __new__(cls, *args, **kargs):
-        return cls.getInstance(cls, *args, **kargs)
+    def __new__(self):
+        return self.getInstance()
 
     def __init__(self):
         pass
 
-    def getInstance(cls, *args, **kargs):
+    def getInstance(self):
         '''Static method to have a reference to **THE UNIQUE** instance'''
         # Critical section start
-        cls.__lockObj.acquire()
+        self.__lockObj.acquire()
         try:
-            if cls.__instance is None:
+            if self.__instance is None:
                 # (Some exception may be thrown...)
                 # Initialize **the unique** instance
-                cls.__instance = object.__new__(cls, *args, **kargs)
+                self.__instance = object.__new__(self)
+		self.__content = ""
         finally:
             #  Exit from critical section whatever happens
-            cls.__lockObj.release()
+            self.__lockObj.release()
         # Critical section end
 
-        return cls.__instance
+        return self.__instance
 
     def getData(self):
         return self.__content

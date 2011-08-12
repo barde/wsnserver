@@ -1,6 +1,5 @@
 #!/usr/bin/env python
-#
-#wsnserver - the serial hardware component
+# #wsnserver - the serial hardware component
 #
 #written 7.2011 by Bartholomaeus Dedersen
 ##http://selbstapotheose.de
@@ -36,43 +35,15 @@ import time
 import glob
 import time
 
-#Refactored Singleton
+#Singleton for sharing data
 import LazyData
+
+#More reliable read from console
+import EnhancedSerial
 
 #From the wsnserver project - the controller for the database
 #and sexy http-interface
 import Controller
-
-#Better Serial access with Python - taken
-#from PySerial's cvs
-
-from serial import Serial
-class EnhancedSerial(Serial):
-    def __init__(self, *args, **kwargs):
-        #ensure that a reasonable timeout is set
-        timeout = kwargs.get('timeout',0.1)
-        if timeout < 0.01: timeout = 0.1
-        kwargs['timeout'] = timeout
-        Serial.__init__(self, *args, **kwargs)
-        self.buf = ''
-        
-    def readline(self, maxsize=None, timeout=1):
-        """maxsize is ignored, timeout in seconds is the max time that is way for a complete line"""
-        tries = 0
-        while 1:
-            self.buf += self.read(512)
-            pos = self.buf.find('\n')
-            if pos >= 0:
-                line, self.buf = self.buf[:pos+1], self.buf[pos+1:]
-                return line
-            tries += 1
-            if tries * self.timeout > timeout:
-                break
-        line, self.buf = self.buf, ''
-        return line
-
-
-
 
 #Prepare for the most ingenious
 #and sophisticated Serial reader you
@@ -88,9 +59,15 @@ class EnhancedSerial(Serial):
 class SerialReader:
 
     def __init__(self, verbose, aggressive_mode, wsnport, command, baud):
-        #Our buffer
-        lazyData = LazyData.LazyData()
-        __data = lazyData.content
+        #Our buffer which is sometimes filled by parametre
+        self.lazyData = LazyData.LazyData()
+	
+	if command is not None:
+		print "not none"
+		self.lazyData.content = command
+	
+	if verbose:
+		print "Initial Command: " + self.lazyData.content
     
         #Save the ID of the controller WSN here
         self.controllerId = ''
@@ -104,9 +81,6 @@ class SerialReader:
         #Save the port of the WSN if there was any
         self.wsnport = wsnport
 
-        #One line of command was passed - please expl0it and inj3ct me!
-        __data = command
-
         #Ask for more speed and less reliability?
         self.aggressive_mode = aggressive_mode
 
@@ -115,7 +89,7 @@ class SerialReader:
         if self.aggressive_mode:
             self.serial = serial.Serial()
         else:
-            self.serial = EnhancedSerial(timeout=1)
+            self.serial = EnhancedSerial.EnhancedSerial(timeout=0.5)
 
         #auto detection of WSN connection works only for FTDI usb->serial
         #with linux
@@ -124,7 +98,9 @@ class SerialReader:
 
 
         #Either the auto find or via console parametre
-        print "Port: " + self.wsnport
+	if self.verbose:
+		print "Port: " + self.wsnport
+
         self.serial.port     = self.wsnport
 
 
@@ -147,13 +123,14 @@ class SerialReader:
             sys.stderr.write("Could not open serial port %s: %s\n" % (self.serial.portstr, e))
             sys.exit(1)
 
-        """
+	"""
         #Read buffer first 10 times to flush
+	#Good for first start or debugging
         i = 0;
         while i < 10:
             self.reader()
             i = i + 1
-        """
+	"""
 
 
             
@@ -167,30 +144,28 @@ class SerialReader:
             self.controller.saveDevice(self.controllerId)
             return
 
-        #receive data
+        #receive data and save it to the database with ID of WSN
         outdata = self.reader()
         if len(outdata) > 0:
             self.controller.saveDataAction(self.controllerId, outdata)
 
-        #send data
-        indata = self.controller.readCMDAction(self.controllerId);
-        #sometimes there is nothing to write. We are fine with it.
-        if indata:
-            self.write(indata)
-            sleep(1)
+        #Send the data which is waiting
+        #But please only one write so everytime a return is 
+        #adviced
+
+        if self.lazyData.content:
+            self.write(self.lazyData.content)
+            self.lazyData.content = ""
             return
+
+        #If there is data waiting in the SQL-Queue -> include it in the 
+	#next cycle
+        self.lazyData.content = self.controller.readCMDAction(self.controllerId);
         #but sometimes there will be more than one command so we
         #just wait for a new round.
         #12.5 Hertz on our 3Ghz Celeron 
-        #with 420 MB RAM(Rest to 512 got killed by age)!
+        #with 420 MB RAM(Remaining RAM to 512 MB got killed by age)!
 
-        #Wait, we have sometimes data to write in one cycle!
-        #But please only one write so everytime a return is 
-        #adviced
-        if len(data.content) != 0:
-            self.write(data.content)
-            data.content = ""
-            return
             
 
         
@@ -234,6 +209,12 @@ class SerialReader:
 
 
 
+#Small helper function for interactive input/output
+#necessary because of threading
+def readInput():
+    global keyboard_data
+    while True:
+	    keyboard_data = raw_input("? ")
 
 
 #Bienvenue and welcome to our small main()
@@ -273,15 +254,16 @@ if __name__ == '__main__':
 
     parser.add_option("-i", "--interactive",
     dest="interactive",
-    help="use %prog as terminal emulator",
+    action = "store_true",
+    help="use keyboard to send commands to WSN",
     default = False)
 
     parser.add_option("-c", "--command",
-        action="store",
-        type="string",
-        help = "pass COMMAND as input to the WSN",
+    action="store",
+    type="string",
+    help = "pass COMMAND as input to the WSN",
     metavar="COMMAND",
-        dest="command")
+    dest="command")
 
 
     parser.add_option("-b",
@@ -303,14 +285,21 @@ if __name__ == '__main__':
         options.baud)
 
     #Enable our buffer
-    data = LazyData.LazyData()
+    lazyData = LazyData.LazyData()
+
+    #Debug purposes
+    if options.interactive:
+        import thread
+        keyboard_data = ""
+        thread.start_new_thread(readInput,())
 
 
     while True:
         try:
-            if options.interactive:
-                input = raw_input()
-                data.content = input
+            if options.interactive and len(keyboard_data) != 0:
+                lazyData.content = keyboard_data
+                keyboard_data = ""
             s.servant()
         except KeyboardInterrupt:
             break
+
