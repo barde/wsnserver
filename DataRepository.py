@@ -33,7 +33,7 @@ class DataRepository(object):
         
         cursor.execute("SELECT * FROM commands WHERE id = ? AND read = 0 ORDER BY createdOn DESC LIMIT 1", [id])
         cmd = cursor.fetchall()
-        cursor.execute("UPDATE commands set read = 1")
+        cursor.execute("UPDATE commands set read = 1 WHERE id = ?", [id])
         connection.commit()
         return cmd
     
