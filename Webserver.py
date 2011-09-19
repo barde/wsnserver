@@ -18,7 +18,7 @@ class Webserver:
     def sendCmd(self, id, cmd):
         controller = Controller.Controller()
         controller.saveCMDAction(id, cmd)
-        return "Target: " + id + "<br>CMD: " + cmd
+        return "Command \"" + cmd + " \" was sent to target \"" + id + "\"." 
     
     @expose
     def readAll(self, id):

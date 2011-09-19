@@ -20,7 +20,11 @@ class DataRepository(object):
         cursor = connection.cursor()
         
         cursor.execute("SELECT id FROM devices")
-        devices = cursor.fetchall()        
+        
+        devices = []
+        for row in cursor:
+            devices.append(row[0])
+        
         connection.commit()        
         return devices
     
@@ -33,7 +37,7 @@ class DataRepository(object):
         
         cursor.execute("SELECT cmd FROM commands WHERE id = ? AND read = 0 ORDER BY createdOn DESC LIMIT 1", [id])
         
-        cmd = []
+        cmd = ''
         for row in cursor:
             cmd = row[0]
             
@@ -78,7 +82,6 @@ class DataRepository(object):
         connection.commit()
         return data
     
-    # not implemented yet
     def readLeatestData(self, id):
         connection = self.__returnConnection()
         cursor = connection.cursor()
