@@ -21,7 +21,7 @@ class DataRepository(object):
         
         cursor.execute("SELECT id FROM devices")
         devices = cursor.fetchall()        
-        connection.commit()
+        connection.commit()        
         return devices
     
     '''
@@ -32,7 +32,11 @@ class DataRepository(object):
         cursor = connection.cursor()
         
         cursor.execute("SELECT cmd FROM commands WHERE id = ? AND read = 0 ORDER BY createdOn DESC LIMIT 1", [id])
-        cmd = cursor.fetchall()
+        
+        cmd = []
+        for row in cursor:
+            cmd = row[0]
+            
         cursor.execute("UPDATE commands set read = 1 WHERE id = ?", [id])
         connection.commit()
         return cmd

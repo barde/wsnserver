@@ -23,19 +23,20 @@ class DataRepositoryTest(unittest.TestCase):
     def testReadDeviceList(self):
         dr = DataRepository.DataRepository()
         dr.saveDevice("wsn01")
-        self.assertEqual(1, len(dr.readDeviceList()), 
+        dr.saveDevice("wsn02")
+        self.assertEqual(2, len(dr.readDeviceList()), 
                          "device number is not equal")
         
     def testReadCMD(self):
         dr = DataRepository.DataRepository()
         dr.saveCMD("wsn01", "pause")
-        self.assertEqual(1, len(dr.readCMD("wsn01")), 
+        self.assertEqual("pause", dr.readCMD("wsn01"), 
                          "ReadCMD does not work.")
     
     def testSaveCMD(self):
         dr = DataRepository.DataRepository()
         dr.saveCMD("wsn01", "pause")
-        self.assertEqual(1, len(dr.readCMD("wsn01")), 
+        self.assertEqual("pause", dr.readCMD("wsn01"), 
                          "SaveCMD does not work.")
         
     def testRemoveAllCMD(self):
