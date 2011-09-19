@@ -16,11 +16,11 @@ class DataRepository(object):
         connection.commit()
     
     def readDeviceList(self):
-        connection = self.__returnConnection()
+        connection = self.__returnConnection()        
         cursor = connection.cursor()
         
-        cursor.execute("SELECT * FROM devices")
-        devices = cursor.fetchall()
+        cursor.execute("SELECT id FROM devices")
+        devices = cursor.fetchall()        
         connection.commit()
         return devices
     
@@ -105,15 +105,6 @@ class DataRepository(object):
         conn =  sqlite3.connect("data.db")
         conn.text_factory = str
         return conn
-    
-    '''
-    formats the output of the sqlite db
-    '''
-    def rowFormating(self, cursor, line): 
-        result = {} 
-        for rownr, row in enumerate(cursor.description): 
-            result[row[0]] = line[rownr] 
-        return result
 
     def __init__(self):
         '''
