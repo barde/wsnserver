@@ -31,7 +31,7 @@ class DataRepository(object):
         connection = self.__returnConnection()
         cursor = connection.cursor()
         
-        cursor.execute("SELECT * FROM commands WHERE id = ? AND read = 0 ORDER BY createdOn DESC LIMIT 1", [id])
+        cursor.execute("SELECT cmd FROM commands WHERE id = ? AND read = 0 ORDER BY createdOn DESC LIMIT 1", [id])
         cmd = cursor.fetchall()
         cursor.execute("UPDATE commands set read = 1 WHERE id = ?", [id])
         connection.commit()
@@ -102,7 +102,18 @@ class DataRepository(object):
     opens the database and returns the connection to work with
     '''
     def __returnConnection(self):
-        return sqlite3.connect("data.db")
+        conn =  sqlite3.connect("data.db")
+        conn.text_factory = str
+        return conn
+    
+    '''
+    formats the output of the sqlite db
+    '''
+    def rowFormating(self, cursor, line): 
+        result = {} 
+        for rownr, row in enumerate(cursor.description): 
+            result[row[0]] = line[rownr] 
+        return result
 
     def __init__(self):
         '''
