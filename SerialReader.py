@@ -12,6 +12,9 @@
 #Ubiquitous Computing
 #Project for a RESTful http bridge for Wireless Sensor Nodes
 #
+#TODO:
+# - prepare for PKCS11 support
+#
 #Purpose of this file:
 #
 #Mainly work by me except the first class. I included two objects.
@@ -213,7 +216,7 @@ class SerialReader:
         self.serial.write(data)                 # get a bunch of bytes and send them
         # Verbose mode prints everthing to console
         if self.verbose:
-           sys.stdout.write("tx:" + data)
+           sys.stdout.write("tx:" + data + "\n")
            sys.stdout.flush()
 
 
