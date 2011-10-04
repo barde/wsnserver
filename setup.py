@@ -7,8 +7,16 @@ Created on 20.06.2011
 '''
 
 import sqlite3
+import argparse
 
 if __name__ == '__main__':
+    
+    parser = argparse.ArgumentParser(description='Setup configures the database connection.')
+    parser.add_help
+    
+    args = parser.parse_args()
+    
+    
     connection = sqlite3.connect("data.db")
     cursor = connection.cursor()
         
