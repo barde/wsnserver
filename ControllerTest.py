@@ -40,8 +40,8 @@ class ControllerTest(unittest.TestCase):
     def testReadLeatestAction(self):
         self.controller.readLeatestAction("wsn01")
     
-    def testRemoveAllAction(self):
-        self.controller.removeAllAction()
+    def testRemoveAllDataAction(self):
+        self.controller.removeAllDataAction()
         self.assertEqual(0, len(self.dataRepository.readAllData("wsn01")), 
                          "RemoveAllAction does not work properly.")
         

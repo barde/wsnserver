@@ -35,7 +35,7 @@ class Webserver:
     @expose
     def removeAll(self):
         controller = Controller.Controller()
-        controller.removeAllAction()
+        controller.removeAllDataAction()
         return "All messeges removed"
 
 cherrypy.quickstart(Webserver())

@@ -47,7 +47,7 @@ class Controller(object):
     def readLeatestAction(self, id):
         self.dataRepository.readLeatestData(id)
     
-    def removeAllAction(self):
+    def removeAllDataAction(self):
         self.dataRepository.removeAllData()
         
     def __init__(self):

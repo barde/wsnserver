@@ -8,6 +8,7 @@ Created on 20.06.2011
 
 import sqlite3
 import argparse
+import Controller
 
 if __name__ == '__main__':
     
@@ -18,9 +19,19 @@ if __name__ == '__main__':
     parser.add_help
     
     args = parser.parse_args()
+    argsArray = vars(args)
     
-    print args
     
+    
+    if argsArray['rmDev']:
+        controller = Controller.Controller()
+        controller.removeAllDevicesAction()
+        print 'All devices removed.'
+        
+    if argsArray['rmData']:
+        controller = Controller.Controller()
+        controller.remove
+        print 'All devices removed.'
     
     connection = sqlite3.connect("data.db")
     cursor = connection.cursor()
