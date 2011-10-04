@@ -22,6 +22,9 @@ class Controller(object):
     
     def saveCMDAction(self, id, cmd):
         self.dataRepository.saveCMD(id, cmd)
+        
+    def removeAllCMDAction(self):
+        self.dataRepository.removeAllCMD()
     
     def saveDataAction(self, id, value):
         self.dataRepository.saveData(id, value)
@@ -31,6 +34,9 @@ class Controller(object):
     
     def readDeviceList(self):
         return self.dataRepository.readDeviceList()
+    
+    def removeAllDevicesAction(self):
+        self.dataRepository.removeAllDevices()
     
     ''' 
     Todo: Return value must be formated.
