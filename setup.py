@@ -9,19 +9,23 @@ Created on 20.06.2011
 import sqlite3
 import argparse
 import Controller
+import sys
 
 if __name__ == '__main__':
     
+    if len(sys.argv) < 2:
+        print 'Use "-h" or "--help" to view the options.'
+        
     parser = argparse.ArgumentParser(description='Setup configures the database connection.')
     parser.add_argument('--rmDev', action='store_true', help='removes all devices from the database')
     parser.add_argument('--rmData', action='store_true', help='removes all saved data from the database')
     parser.add_argument('--rmCMD', action='store_true', help='removes all saved CMD`s from the database')
+    parser.add_argument('--sqlite3', action='store_true', help='creates a sqlite3 database called data.db in the same folder')
     parser.add_help
     
     args = parser.parse_args()
-    argsArray = vars(args)
-    
-    
+    ''' get the variables from namespace object '''
+    argsArray = vars(args)  
     
     if argsArray['rmDev']:
         controller = Controller.Controller()
@@ -30,22 +34,28 @@ if __name__ == '__main__':
         
     if argsArray['rmData']:
         controller = Controller.Controller()
-        controller.remove
-        print 'All devices removed.'
-    
-    connection = sqlite3.connect("data.db")
-    cursor = connection.cursor()
+        controller.removeAllDataAction()
+        print 'All data removed.'
         
-    cursor.execute("""CREATE TABLE data(
-        id TEXT, value TEXT, read INTEGER, createdOn TEXT)""")
+    if argsArray['rmCMD']:
+        controller = Controller.Controller()
+        controller.removeAllCMDAction()
+        print 'All CMD`s removed.'
     
-    cursor.execute("""CREATE TABLE devices(id TEXT)""")
-    
-    cursor.execute("""CREATE TABLE commands(id TEXT, cmd TEXT, 
-                      read INTEGER, createdOn TEXT)""")
+    if argsArray['sqlite3']:
+        connection = sqlite3.connect("data.db")
+        cursor = connection.cursor()
+            
+        cursor.execute("""CREATE TABLE data(
+            id TEXT, value TEXT, read INTEGER, createdOn TEXT)""")
         
-    connection.commit()
-    connection.close()
-    
-    print("Setup was successful. SQLite database has been created.")
+        cursor.execute("""CREATE TABLE devices(id TEXT)""")
+        
+        cursor.execute("""CREATE TABLE commands(id TEXT, cmd TEXT, 
+                          read INTEGER, createdOn TEXT)""")
+            
+        connection.commit()
+        connection.close()
+        
+        print("SQLite database has been created.")
     
