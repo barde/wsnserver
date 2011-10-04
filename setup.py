@@ -12,9 +12,14 @@ import argparse
 if __name__ == '__main__':
     
     parser = argparse.ArgumentParser(description='Setup configures the database connection.')
+    parser.add_argument('--rmDev', action='store_true', help='removes all devices from the database')
+    parser.add_argument('--rmData', action='store_true', help='removes all saved data from the database')
+    parser.add_argument('--rmCMD', action='store_true', help='removes all saved CMD`s from the database')
     parser.add_help
     
     args = parser.parse_args()
+    
+    print args
     
     
     connection = sqlite3.connect("data.db")
@@ -31,5 +36,5 @@ if __name__ == '__main__':
     connection.commit()
     connection.close()
     
-    print("Setup was successful.")
+    print("Setup was successful. SQLite database has been created.")
     
