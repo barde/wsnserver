@@ -8,6 +8,9 @@ import sqlite3
 
 class DataRepository(object):
     
+    '''
+    Saves the device id to the database
+    '''
     def saveDevice(self, id):
         connection = self.__returnConnection()
         cursor = connection.cursor()
@@ -15,6 +18,9 @@ class DataRepository(object):
         cursor.execute("INSERT INTO devices VALUES (?)", [id])
         connection.commit()
     
+    '''
+    Returns the devices known to the system
+    '''
     def readDeviceList(self):
         connection = self.__returnConnection()        
         cursor = connection.cursor()
@@ -45,6 +51,9 @@ class DataRepository(object):
         connection.commit()
         return cmd
     
+    '''
+    Save a command for a wsn
+    '''
     def saveCMD(self, id, cmd):
         values = (id, cmd, False, sqlite3.datetime.datetime.now()) 
         sql = "INSERT INTO commands VALUES (?, ?, ?, ?)" 
@@ -54,24 +63,36 @@ class DataRepository(object):
         cursor.execute(sql, values)
         connection.commit()
         
+    '''
+    Removes all commands from the database
+    '''
     def removeAllCMD(self):
         connection = self.__returnConnection()
         cursor = connection.cursor()
         cursor.execute("DELETE FROM commands")
         connection.commit()
-        
+    
+    '''
+    Removes all devices from the database
+    '''
     def removeAllDevices(self):
         connection = self.__returnConnection()
         cursor = connection.cursor()
         cursor.execute("DELETE FROM devices")
         connection.commit()
 
+    '''
+    Removes all data from the database
+    '''
     def removeAllData(self):
         connection = self.__returnConnection()
         cursor = connection.cursor()
         cursor.execute("DELETE FROM data")
         connection.commit()
     
+    '''
+    Return the all collected data for a wsn
+    '''
     def readAllData(self, id):
         connection = self.__returnConnection()
         cursor = connection.cursor()
@@ -82,6 +103,9 @@ class DataRepository(object):
         connection.commit()
         return data
     
+    '''
+    Return the unread data for a wsn
+    '''
     def readLeatestData(self, id):
         connection = self.__returnConnection()
         cursor = connection.cursor()

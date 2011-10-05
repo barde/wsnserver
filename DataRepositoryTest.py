@@ -10,7 +10,9 @@ import DataRepository
 
 class DataRepositoryTest(unittest.TestCase):
     
-    ''' Setup sets up the fixtures in the database for every testrun '''
+    ''' 
+    Setup sets up the fixtures in the database for every testrun
+    '''
     def setUp(self):
         dr = DataRepository.DataRepository()
         dr.saveData("wsn01", "testdata")
@@ -66,6 +68,9 @@ class DataRepositoryTest(unittest.TestCase):
         dr.saveData("wsn01", "testdata")
         self.assertEqual(2, len(dr.readAllData("wsn01")), "SaveToDB failed")
 
+    '''
+    Clears all tables in the database
+    '''
     def tearDown(self):
         dr = DataRepository.DataRepository()
         dr.removeAllData()
