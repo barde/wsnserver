@@ -14,15 +14,20 @@ class Controller(object):
     dataRepository = 0
     
     ''' 
-    Only the WSN should request this action. 
-    ReadCMDAction looks into the database for new CMDs
+    Only the WSN should request this action
+    ReadCMDAction looks into the database for new CMDs for a wsn id
     '''
     def readCMDAction(self, id):
         self.dataRepository.readCMD(id)
     
+    '''
+    Saved commands for a wsn id
+    This function should be used to control the wsns
+    '''
     def saveCMDAction(self, id, cmd):
         self.dataRepository.saveCMD(id, cmd)
-        
+    
+    
     def removeAllCMDAction(self):
         self.dataRepository.removeAllCMD()
     
