@@ -51,6 +51,9 @@ import Translator
 #and sexy http-interface
 import Controller
 
+#Import Security :D
+import WSNSec
+
 #Prepare for the most ingenious
 #and sophisticated Serial reader you
 #ever read. Full of Adapter design patterns,
