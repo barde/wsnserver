@@ -5,6 +5,7 @@ Created on 20.06.2011
 @author: Kamil Wozniak
 '''
 import sqlite3
+import DBConnection
 
 class DataRepository(object):
     
@@ -133,7 +134,7 @@ class DataRepository(object):
     opens the database and returns the connection to work with
     '''
     def __returnConnection(self):
-        conn =  sqlite3.connect("data.db")
+        conn =  DBConnection.DBConnection().getDBConnection()
         conn.text_factory = str
         return conn
 

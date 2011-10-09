@@ -6,11 +6,11 @@ Created on 20.06.2011
 @author: Kamil Wozniak
 '''
 
-import sqlite3
 import argparse
 import Controller
 import sys
 import ConfigParser
+import DBConnection
 
 if __name__ == '__main__':
     
@@ -44,8 +44,8 @@ if __name__ == '__main__':
         controller.removeAllCMDAction()
         print 'All CMD`s removed.'
     
-    if argsArray['sqlite3']:
-        connection = sqlite3.connect("data.db")
+    if argsArray['sqlite3']: 
+        connection = DBConnection.DBConnection().getDBConnection()
         cursor = connection.cursor()
             
         cursor.execute("""CREATE TABLE data(
