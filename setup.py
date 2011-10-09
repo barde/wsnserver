@@ -10,6 +10,7 @@ import sqlite3
 import argparse
 import Controller
 import sys
+import ConfigParser
 
 if __name__ == '__main__':
     
@@ -56,6 +57,14 @@ if __name__ == '__main__':
             
         connection.commit()
         connection.close()
+        
+        # creating/writing the database settings to the configuration file
+        configurator = ConfigParser.RawConfigParser()
+        configurator.add_section('Database-Config')
+        configurator.set('Database-Config', 'type', 'sqlite3')        
+        
+        with open('wsn.cfg', 'wb') as configfile:
+                configurator.write(configfile)
         
         print("SQLite database has been created.")
     
