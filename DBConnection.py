@@ -6,6 +6,11 @@ Created on 09.10.2011
 import sqlite3
 import ConfigParser
 
+try:
+    import MySQLdb
+except ImportError:
+    doNothing = True # just a stub
+
 class DBConnection(object):
     '''
     classdocs
