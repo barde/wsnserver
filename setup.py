@@ -45,6 +45,15 @@ if __name__ == '__main__':
         print 'All CMD`s removed.'
     
     if argsArray['sqlite3']: 
+        # creating/writing the database settings to the configuration file
+        configurator = ConfigParser.RawConfigParser()
+        configurator.add_section('Database-Config')
+        configurator.set('Database-Config', 'type', 'sqlite3')        
+        
+        with open('wsn.cfg', 'wb') as configfile:
+                configurator.write(configfile)
+                
+        # get the connection object for creating the tables
         connection = DBConnection.DBConnection().getDBConnection()
         cursor = connection.cursor()
             
@@ -58,15 +67,7 @@ if __name__ == '__main__':
             
         connection.commit()
         connection.close()
-        
-        # creating/writing the database settings to the configuration file
-        configurator = ConfigParser.RawConfigParser()
-        configurator.add_section('Database-Config')
-        configurator.set('Database-Config', 'type', 'sqlite3')        
-        
-        with open('wsn.cfg', 'wb') as configfile:
-                configurator.write(configfile)
-        
+                
         print("SQLite database has been created.")
         
     if argsArray['mysql']:
