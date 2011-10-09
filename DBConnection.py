@@ -21,6 +21,9 @@ class DBConnection(object):
             conn = sqlite3.connect("data.db")
             conn.text_factory = str
             return conn
+        
+        if type == 'mysql':
+            return 0
 
     def __init__(self):
         '''
