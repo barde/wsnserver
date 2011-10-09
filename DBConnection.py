@@ -10,11 +10,14 @@ class DBConnection(object):
     '''
     classdocs
     '''
-    
-    type = None
-    
+        
     def getDBConnection(self):
-        if self.type == 'sqlite3':
+        config = ConfigParser.RawConfigParser()
+        config.read('wsn.cfg')
+        
+        type = config.get('Database-Config', 'type')
+        
+        if type == 'sqlite3':
             conn = sqlite3.connect("data.db")
             conn.text_factory = str
             return conn
@@ -23,8 +26,5 @@ class DBConnection(object):
         '''
         Constructor
         '''  
-        config = ConfigParser.RawConfigParser()
-        config.read('wsn.cfg')
-        
-        self.type = config.get('Database-Config', 'type')
+
         
