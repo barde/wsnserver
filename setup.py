@@ -22,6 +22,7 @@ if __name__ == '__main__':
     parser.add_argument('--rmData', action='store_true', help='removes all saved data from the database')
     parser.add_argument('--rmCMD', action='store_true', help='removes all saved CMD`s from the database')
     parser.add_argument('--sqlite3', action='store_true', help='creates a sqlite3 database called data.db in the same folder')
+    parser.add_argument('--mysql', action='store_true', help='creates the mysql tables for a user')
     parser.add_help
     
     args = parser.parse_args()
@@ -67,4 +68,19 @@ if __name__ == '__main__':
                 configurator.write(configfile)
         
         print("SQLite database has been created.")
+        
+    if argsArray['mysql']:
+        # creating/writing the database settings to the configuration file
+        configurator = ConfigParser.RawConfigParser()
+        configurator.add_section('Database-Config')
+        configurator.set('Database-Config', 'type', 'mysql')
+        configurator.set('Database-Config', 'host', 'stub_host')   
+        configurator.set('Database-Config', 'user', 'stub_user')
+        configurator.set('Database-Config', 'password', 'stub_password')  
+        configurator.set('Database-Config', 'databasename', 'stub_databasename')               
+        
+        with open('wsn.cfg', 'wb') as configfile:
+                configurator.write(configfile)
+                
+        print("MySQL tables have been created.")
     
