@@ -18,3 +18,8 @@ NOTE: MySQL needs to be installed before running the installation for the follow
 2. Download the driver from http://sourceforge.net/projects/mysql-python/
 3. Install it by extracting the package and running "python setup.py install"
    in a shell (for linux systems).
+
+This project is supported by:
+
+Gooze - High quality cryptographic tools for GNU/Linux, Mac OS X and Windows
+http://www.gooze.eu
