@@ -134,7 +134,7 @@ class DataRepository(object):
     opens the database and returns the connection to work with
     '''
     def __returnConnection(self):
-        return DBConnection.DBConnection().getDBConnection()
+        return DBConnection.DBConnection().__getDBConnection()
 
     def __init__(self):
         '''
