@@ -18,7 +18,7 @@ class DBConnection(object):
     classdocs
     '''
         
-    def __getDBConnection(self):
+    def getDBConnection(self):
         config = ConfigParser.RawConfigParser()
         config.read('wsn.cfg')
         
