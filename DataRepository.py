@@ -10,7 +10,7 @@ import ConfigParser
 
 class DataRepository(object):
     
-    dbtype = 0
+    dbtype = None
     
     '''
     Saves the device id to the database
