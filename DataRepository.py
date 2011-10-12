@@ -6,8 +6,11 @@ Created on 20.06.2011
 '''
 import sqlite3
 import DBConnection
+import ConfigParser
 
 class DataRepository(object):
+    
+    dbtype = 0
     
     '''
     Saves the device id to the database
@@ -16,7 +19,10 @@ class DataRepository(object):
         connection = self.__returnConnection()
         cursor = connection.cursor()
         
-        cursor.execute("INSERT INTO devices VALUES (?)", [id])
+        if self.dbtype == "sqlite3":
+            cursor.execute("INSERT INTO devices VALUES (?)", [id])
+        elif self.dbtype == "mysql":
+            cursor.execute("INSERT INTO devices VALUES (%s)", [id])
         connection.commit()
     
     '''
@@ -42,13 +48,20 @@ class DataRepository(object):
         connection = self.__returnConnection()
         cursor = connection.cursor()
         
-        cursor.execute("SELECT cmd FROM commands WHERE id = ? AND read = 0 ORDER BY createdOn DESC LIMIT 1", [id])
-        
+        if self.dbtype == "sqlite3":
+            cursor.execute("SELECT cmd FROM commands WHERE id = ? AND read = 0 ORDER BY createdOn DESC LIMIT 1", [id])
+        elif self.dbtype == "mysql":
+            cursor.execute("SELECT cmd FROM `commands` WHERE `id` = %s AND `read` = 0 ORDER BY createdOn DESC LIMIT 1", [id])
+            
         cmd = ''
         for row in cursor:
             cmd = row[0]
             
-        cursor.execute("UPDATE commands set read = 1 WHERE id = ?", [id])
+        if self.dbtype == "sqlite3":
+            cursor.execute("UPDATE commands set read = 1 WHERE id = ?", [id])
+        elif self.dbtype == "mysql":
+            cursor.execute("UPDATE commands set `read` = 1 WHERE `id` = %s", [id])
+            
         connection.commit()
         return cmd
     
@@ -56,9 +69,14 @@ class DataRepository(object):
     Save a command for a wsn
     '''
     def saveCMD(self, id, cmd):
-        values = (id, cmd, False, sqlite3.datetime.datetime.now()) 
-        sql = "INSERT INTO commands VALUES (?, ?, ?, ?)" 
-        
+         
+        if self.dbtype == "sqlite3":
+            values = (id, cmd, False, sqlite3.datetime.datetime.now())
+            sql = "INSERT INTO commands VALUES (?, ?, ?, ?)" 
+        elif self.dbtype == "mysql":
+            values = (id, cmd)
+            sql = "INSERT INTO `commands` VALUES (%s, %s, 0, NOW())"
+            
         connection = self.__returnConnection()
         cursor = connection.cursor()
         cursor.execute(sql, values)
@@ -97,10 +115,18 @@ class DataRepository(object):
     def readAllData(self, id):
         connection = self.__returnConnection()
         cursor = connection.cursor()
-
-        cursor.execute("SELECT * FROM data WHERE data.id = ?", [id])
+        
+        if self.dbtype == "sqlite3":
+            cursor.execute("SELECT * FROM data WHERE data.id = ?", [id])
+        elif self.dbtype == "mysql":
+            cursor.execute("SELECT * FROM data WHERE data.id = %s", [id])
+            
         data = cursor.fetchall()
-        cursor.execute("UPDATE data set read = 1")
+        
+        if self.dbtype == "sqlite3":
+            cursor.execute("UPDATE data set read = 1")
+        elif self.dbtype == "mysql":
+            cursor.execute("UPDATE data set `read` = 1")
         connection.commit()
         return data
     
@@ -111,9 +137,17 @@ class DataRepository(object):
         connection = self.__returnConnection()
         cursor = connection.cursor()
         
-        cursor.execute("SELECT * FROM data WHERE id = ? AND read = 0", [id])
+        if self.dbtype == "sqlite3":
+            cursor.execute("SELECT * FROM data WHERE id = ? AND read = 0", [id])
+        elif self.dbtype == "mysql":
+            cursor.execute("SELECT * FROM `data` WHERE `id` = %s AND `read` = 0", [id])
+            
         data = cursor.fetchall()
-        cursor.execute("UPDATE data set read = 1")
+        
+        if self.dbtype == "sqlite3":
+            cursor.execute("UPDATE data set read = 1")
+        elif self.dbtype == "mysql":
+            cursor.execute("UPDATE data set `read` = 1")
         connection.commit()
         return data
     
@@ -122,8 +156,12 @@ class DataRepository(object):
     value: should contain the data.
     '''
     def saveData(self, id, value):
-        values = (id, value, False, sqlite3.datetime.datetime.now()) 
-        sql = "INSERT INTO data VALUES (?, ?, ?, ?)" 
+        if self.dbtype == "sqlite3":
+            values = (id, value, False, sqlite3.datetime.datetime.now())
+            sql = "INSERT INTO data VALUES (?, ?, ?, ?)" 
+        elif self.dbtype == "mysql":
+            values = (id, value)
+            sql = "INSERT INTO `data` VALUES (%s, %s, 0, NOW())" 
         
         connection = self.__returnConnection()
         cursor = connection.cursor()
@@ -140,4 +178,9 @@ class DataRepository(object):
         '''
         Constructor
         '''
+        
+        config = ConfigParser.RawConfigParser()
+        config.read('wsn.cfg')
+        
+        self.dbtype = config.get('Database-Config', 'type')
         

@@ -38,7 +38,9 @@ class DBConnection(object):
                 password = config.get('Database-Config', 'password')
                 dbname = config.get('Database-Config', 'dbname')
                 
-                return MySQLdb.connect(host, user, password, dbname)
+                conn = MySQLdb.connect(host, user, password, dbname)
+                conn.text_factory = str
+                return conn
     
     def __init__(self):
         '''
