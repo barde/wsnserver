@@ -90,5 +90,23 @@ if __name__ == '__main__':
             with open('wsn.cfg', 'wb') as configfile:
                     configurator.write(configfile)
                     
+            # get the connection object for creating the tables
+            connection = DBConnection.DBConnection().getDBConnection()
+            cursor = connection.cursor()
+            
+            cursor.execute("""
+                CREATE TABLE data(`id` TEXT, `value` TEXT, `read` INTEGER, `createdOn` TEXT)
+                """)
+            
+            cursor.execute("""CREATE TABLE devices(id TEXT)""")
+            
+            cursor.execute("""
+                CREATE TABLE commands (`id` TEXT, `cmd` TEXT, `read` INTEGER, `createdOn` TEXT)
+                """)
+            
+                
+            connection.commit()
+            connection.close()
+                    
             print("MySQL tables have been created.")
     
