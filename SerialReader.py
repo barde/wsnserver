@@ -42,7 +42,7 @@ import time
 import LazyData
 
 #More reliable read from console
-import EnhancedSerial
+import enhancedserial
 
 #Translator for genericCommand -> [WSN-Dialect]
 import Translator
@@ -104,7 +104,7 @@ class SerialReader:
         if self.aggressive_mode:
             self.serial = serial.Serial()
         else:
-            self.serial = EnhancedSerial.EnhancedSerial(timeout=0.5)
+            self.serial = enhancedserial.EnhancedSerial(timeout=0.5)
 
         #auto detection of WSN connection works only for FTDI usb->serial
         #with linux
