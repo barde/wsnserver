@@ -12,20 +12,10 @@
 #Ubiquitous Computing
 #Project for a RESTful http bridge for Wireless Sensor Nodes
 #
-#TODO:
-# - prepare for PKCS11 support
-#
 #Purpose of this file:
+#	Get the commands from the serial port(optionally USB)
+#       and move them to higher layers.
 #
-#Mainly work by me except the first class. I included two objects.
-#
-#The first one, EnchacedSerial, is from the 
-#repositories of PySerial. It is under the Python-License.
-#
-#
-#
-#The second class is about the real communication.
-#Use the source, Luke.
  #
   #
    ############
@@ -191,7 +181,7 @@ class SerialReader:
     def find_port(self):
         port = glob.glob('/dev/ttyUSB*')
         if len(port) != 1:
-            sys.stderr.write("Only _one_ USB-FTDI adapter required - no more or less")
+            sys.stderr.write("Only _one_ USB-FTDI adapter required - no more or less\n")
             sys.exit(1)
         else:
             return port[0]
