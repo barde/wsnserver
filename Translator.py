@@ -34,7 +34,7 @@ rx:'help'             get this Command List
 
 #Abstract class
 class Translator:
-    dictionary = 	{"Whatever":"Something"}
+    dictionary = 	{"UniversalLangugeTag":"SpecificDeviceTag"}
 
     def tag(self,genericCommand):
         for tag in self.dictionary:
@@ -44,7 +44,7 @@ class Translator:
         
 #First real dictionary as inherited class
 class RenesasTranslator(Translator):
-    dictionary = 	{"GetId":"+WWSNID"}
+    dictionary = 	{"GetId":"+WWSNID\n\r"}
 
 #Small testing
 if __name__ == '__main__':

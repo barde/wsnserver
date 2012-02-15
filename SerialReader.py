@@ -209,7 +209,7 @@ class SerialReader:
         self.serial.write(data)                 # get a bunch of bytes and send them
         # Verbose mode prints everthing to console
         if self.verbose:
-           sys.stdout.write("tx:" + data + "\n")
+           sys.stdout.write("tx:" + data)
            sys.stdout.flush()
 
 
