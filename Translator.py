@@ -21,20 +21,9 @@
   #
    ############
 
-"""
-rx:'+WWSNID'          get WSN ID
-rx:'+WCHAN'           get ZigBee channel number
-rx:'+WPANID'          get ZigBee PANID
-rx:'+WENQ'            send ENQUIRY
-rx:'+WLED 1 [ON/OFF]' set LED1 ON/OFF
-rx:'+WSENDTEMP'       send Temperature value each minute
-rx:'+WNSENDTEMP'      stop sending Temperature value
-rx:'help'             get this Command List
-"""
-
 #Abstract class
 class Translator:
-    dictionary = 	{"UniversalLangugeTag":"SpecificDeviceTag"}
+    dictionary =	{"UniversalLangugeTag":"SpecificDeviceTag"}
 
     def tag(self,genericCommand):
         for tag in self.dictionary:
@@ -44,9 +33,25 @@ class Translator:
         
 #First real dictionary as inherited class
 class RenesasTranslator(Translator):
-    dictionary = 	{"GetId":"+WWSNID\n\r"}
+    dictionary =	{
+					"GetId":"+WWSNID\n\r", 
+					"GetChannel":"+WCHAN\n\r",
+					"GetPanId":"+WPANID\n\r",
+					"LedOn":"+WLED1 ON\n\r",
+					"LedOff":"+WLED1 OFF\n\r",
+					"TempOn":"+WSENDTEMP\n\r",
+					"TempOff":"+WNSENDTEMP\n\r",
+					"Enquiry":"+WENQ\n\r"
+					}
+
+class MedusaTranslator(Translator):
+	dictionary =	{
+					"GetId":"COUNTHEADS",
+					"CountChildren":"LOCALIZE"
+					}
+
 
 #Small testing
 if __name__ == '__main__':
     t = RenesasTranslator()
-    assert(t.tag("GetId") == "+WWSNID")
+    assert(t.tag("GetId") == "+WWSNID\n\r")
