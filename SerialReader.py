@@ -41,9 +41,6 @@ import Translator
 #and sexy http-interface
 import Controller
 
-#Import Security :D
-import WSNSec
-
 #Prepare for the most ingenious
 #and sophisticated Serial reader you
 #ever read. Full of Adapter design patterns,
@@ -57,7 +54,7 @@ import WSNSec
 
 class SerialReader:
 
-    def __init__(self, verbose, aggressive_mode, wsnport, command, baud):
+    def __init__(self, verbose, aggressive_mode, wsnport, command, baud, on_demand_mode):
         
 
         #Our buffer which is sometimes filled by parametres send by command line
@@ -86,8 +83,13 @@ class SerialReader:
         #Save the port of the WSN if there was any
         self.wsnport = wsnport
 
-        #Ask for more speed and less reliability?
+        #Asking for more speed and less reliability?
         self.aggressive_mode = aggressive_mode
+
+	#On demand mode: only read data if request was sent to WSN before
+	if on_demand_mode:
+		self.command_sent = False
+		self.on_demand_mode = on_demand_mode
 
         #configuration for the serial port
         #which is given by an FTDI usb converter
@@ -130,7 +132,7 @@ class SerialReader:
 
     """
         #Read buffer first 10 times to flush
-    #Good for first start or debugging
+    	#Good for first start or debugging
         i = 0;
         while i < 10:
             self.reader()
@@ -201,7 +203,16 @@ class SerialReader:
         if self.verbose and len(data) > 0:
             sys.stdout.write("rx:" + data)
             sys.stdout.flush()
-        return data.strip()
+
+	if self.on_demand_mode and self.command_sent:
+		self.command_sent = False
+        	return data.strip()
+	elif self.on_demand_mode and not self.command_sent:
+		data = ""
+		return data.strip()
+	elif not self.on_demand_mode:
+		return data.strip()
+
 
 
     
@@ -211,6 +222,8 @@ class SerialReader:
         if self.verbose:
            sys.stdout.write("tx:" + data)
            sys.stdout.flush()
+	if self.on_demand_mode:
+		self.command_sent = True
 
 
 
@@ -263,6 +276,12 @@ if __name__ == '__main__':
     help="use keyboard to send commands to WSN",
     default = False)
 
+    parser.add_option("-d", "--demandmode",
+    dest="on_demand_mode",
+    action = "store_true",
+    help="On-demand-mode: only send data to DB if a command was requested upfront",
+    default = False)
+
     parser.add_option("-c", "--command",
     action="store",
     type="string",
@@ -287,7 +306,8 @@ if __name__ == '__main__':
         options.aggressive_mode,
         options.port,
         options.command,
-        options.baud)
+        options.baud,
+	options.on_demand_mode)
 
     #Enable our buffer
     lazyData = LazyData.LazyData()
