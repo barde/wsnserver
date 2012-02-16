@@ -30,9 +30,12 @@ Installing MySQL on Debian based systems:
    
 For running the setup, you will also need the MySQLdb driver.
 **NOTE:** MySQL needs to be installed before running the installation for the following packages.
+
 1. Install *python-setuptools* for your distribution. For Debian based systems
    `apt-get install python-setuptools`
+
 2. [Download](http://sourceforge.net/projects/mysql-python/) the driver
+
 3. Install it by extracting the package and running `python setup.py install` from the wsnserver directory
 
 Usage
