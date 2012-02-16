@@ -10,6 +10,7 @@ Installation
 ------------
 
 First you need to install [GIT](http://git-scm.com/) on your local host which is connected to the controlling node.
+If you use Debian: `apt-get install git`
 
 Afterwards you get the rolling-release version with:
 `git clone git@github.com:Phialo/wsnserver.git`
