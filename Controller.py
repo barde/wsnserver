@@ -34,8 +34,8 @@ class Controller(object):
     def saveDataAction(self, id, value):
         self.dataRepository.saveData(id, value)
         
-    def saveDevice(self, id):
-        self.dataRepository.saveDevice(id)
+    def saveDevice(self, id, panid, channel):
+        self.dataRepository.saveDevice(id, panid, channel)
     
     def readDeviceList(self):
         return self.dataRepository.readDeviceList()

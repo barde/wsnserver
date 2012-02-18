@@ -29,6 +29,10 @@ class ControllerTest(unittest.TestCase):
     def testSaveCMDAction(self):
         pass
     
+    def testSaveDevice(self):
+        self.dataRepository.saveDevice("wsn01", "0xACE", "5")
+        self.assertEqual(1, len(self.dataRepository.readDeviceList()), "Saving the devices failed.")
+    
     def testSaveDataAction(self):
         self.controller.saveDataAction("wsn01", "15")
         ''' Must be equal 2 because one dataset is being added by the setUp method. '''
