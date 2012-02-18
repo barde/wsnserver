@@ -20,12 +20,12 @@ class DataRepositoryTest(unittest.TestCase):
         
     def testSaveDevice(self):
         dr = DataRepository.DataRepository()
-        dr.saveDevice("wsn01")
+        dr.saveDevice("wsn01", "0x123AC", "5")
         
     def testReadDeviceList(self):
         dr = DataRepository.DataRepository()
-        dr.saveDevice("wsn01")
-        dr.saveDevice("wsn02")
+        dr.saveDevice("wsn01", "0x123AC", "5")
+        dr.saveDevice("wsn02", "0x124BC", "6")
         self.assertEqual(2, len(dr.readDeviceList()), 
                          "device number is not equal")
         

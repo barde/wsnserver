@@ -15,14 +15,14 @@ class DataRepository(object):
     '''
     Saves the device id to the database
     '''
-    def saveDevice(self, id):
+    def saveDevice(self, id, panid, channel):
         connection = self.__returnConnection()
         cursor = connection.cursor()
         
         if self.dbtype == "sqlite3":
-            cursor.execute("INSERT INTO devices VALUES (?)", [id])
+            cursor.execute("INSERT INTO devices VALUES (?, ?, ?)", [id, panid, channel])
         elif self.dbtype == "mysql":
-            cursor.execute("INSERT INTO devices VALUES (%s)", [id])
+            cursor.execute("INSERT INTO devices VALUES (%s, %s, %s)", [id, panid, channel])
         connection.commit()
     
     '''
