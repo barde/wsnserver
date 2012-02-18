@@ -29,12 +29,12 @@ class ControllerTest(unittest.TestCase):
     def testSaveCMDAction(self):
         pass
     
-    def testSaveDevice(self):
-        self.controller.saveDevice("wsn01", "0xACE", "5")
+    def testSaveDeviceAction(self):
+        self.controller.saveDeviceAction("wsn01", "0xACE", "5")
         self.assertEqual(1, len(self.dataRepository.readDeviceList()), "Saving the devices failed.")
         
-    def testSaveDevicesWithEmptyParams(self):
-        self.controller.saveDevice("", "", "")
+    def testSaveDeviceActionWithEmptyParams(self):
+        self.controller.saveDeviceAction("", "", "")
         self.assertEqual(0, len(self.dataRepository.readDeviceList()), "Parameters have not been recognized.")
         
     def testReadDeviceList(self):
