@@ -98,7 +98,7 @@ if __name__ == '__main__':
                 CREATE TABLE data(`id` TEXT, `value` TEXT, `read` INTEGER, `createdOn` TEXT)
                 """)
             
-            cursor.execute("""CREATE TABLE devices(id TEXT)""")
+            cursor.execute("""CREATE TABLE devices(`id` TEXT, `panid` TEXT, `channel` TEXT)""")
             
             cursor.execute("""
                 CREATE TABLE commands (`id` TEXT, `cmd` TEXT, `read` INTEGER, `createdOn` TEXT)
