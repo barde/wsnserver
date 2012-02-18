@@ -148,7 +148,7 @@ class SerialReader:
             self.write(self.translator.tag("GetId"))
             time.sleep(1)
             self.controllerId = self.reader()
-            self.controller.saveDevice(self.controllerId)
+            self.controller.saveDeviceAction(self.controllerId)
             return
 
         #receive data and save it to the database with ID of WSN
