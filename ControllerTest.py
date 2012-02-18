@@ -30,8 +30,11 @@ class ControllerTest(unittest.TestCase):
         pass
     
     def testSaveDevice(self):
-        self.dataRepository.saveDevice("wsn01", "0xACE", "5")
+        self.controller.saveDevice("wsn01", "0xACE", "5")
         self.assertEqual(1, len(self.dataRepository.readDeviceList()), "Saving the devices failed.")
+        
+    def testReadDeviceList(self):
+        pass
     
     def testSaveDataAction(self):
         self.controller.saveDataAction("wsn01", "15")
@@ -52,6 +55,7 @@ class ControllerTest(unittest.TestCase):
     def tearDown(self):
         ''' Remove all data from db before next test. '''
         self.dataRepository.removeAllData()
+        self.dataRepository.removeAllDevices()
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
