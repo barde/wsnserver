@@ -17,25 +17,26 @@ class Controller(object):
     Only the WSN should request this action
     ReadCMDAction looks into the database for new CMDs for a wsn id
     '''
-    def readCMDAction(self, id):
-        self.dataRepository.readCMD(id)
+    def readCMDAction(self, wsnid):
+        self.dataRepository.readCMD(wsnid)
     
     '''
     Saved commands for a wsn id
     This function should be used to control the wsns
     '''
-    def saveCMDAction(self, id, cmd):
-        self.dataRepository.saveCMD(id, cmd)
+    def saveCMDAction(self, wsnid, cmd):
+        self.dataRepository.saveCMD(wsnid, cmd)
     
     
     def removeAllCMDAction(self):
         self.dataRepository.removeAllCMD()
     
-    def saveDataAction(self, id, value):
-        self.dataRepository.saveData(id, value)
+    def saveDataAction(self, wsnid, value):
+        self.dataRepository.saveData(wsnid, value)
         
-    def saveDevice(self, id, panid, channel):
-        self.dataRepository.saveDevice(id, panid, channel)
+    def saveDevice(self, wsnid, panid, channel):
+        if id and panid and channel:
+            self.dataRepository.saveDevice(wsnid, panid, channel)
     
     def readDeviceList(self):
         return self.dataRepository.readDeviceList()
@@ -46,11 +47,11 @@ class Controller(object):
     ''' 
     Todo: Return value must be formated.
     '''
-    def readAllAction(self, id):
-        return self.dataRepository.readAllData(id)
+    def readAllAction(self, wsnid):
+        return self.dataRepository.readAllData(wsnid)
     
-    def readLeatestAction(self, id):
-        self.dataRepository.readLeatestData(id)
+    def readLeatestAction(self, wsnid):
+        self.dataRepository.readLeatestData(wsnid)
     
     def removeAllDataAction(self):
         self.dataRepository.removeAllData()

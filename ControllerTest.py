@@ -33,6 +33,10 @@ class ControllerTest(unittest.TestCase):
         self.controller.saveDevice("wsn01", "0xACE", "5")
         self.assertEqual(1, len(self.dataRepository.readDeviceList()), "Saving the devices failed.")
         
+    def testSaveDevicesWithEmptyParams(self):
+        self.controller.saveDevice("", "", "")
+        self.assertEqual(0, len(self.dataRepository.readDeviceList()), "Parameters have not been recognized.")
+        
     def testReadDeviceList(self):
         pass
     
@@ -53,9 +57,10 @@ class ControllerTest(unittest.TestCase):
                          "RemoveAllAction does not work properly.")
         
     def tearDown(self):
-        ''' Remove all data from db before next test. '''
+        ''' Remove all data/devices/cmds from db before next test. '''
         self.dataRepository.removeAllData()
         self.dataRepository.removeAllDevices()
+        self.dataRepository.removeAllCMD()
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
