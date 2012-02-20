@@ -93,7 +93,7 @@ class SerialReader:
         #On demand mode: only read data if request was sent to WSN before
         if on_demand_mode:
             self.command_sent = False
-            self.on_demand_mode = on_demand_mode
+        self.on_demand_mode = on_demand_mode
 
         #configuration for the serial port
         #which is given by an FTDI usb converter
@@ -241,10 +241,10 @@ class SerialReader:
         self.serial.write(data)                 # get a bunch of bytes and send them
         # Verbose mode prints everthing to console
         if self.verbose:
-           sys.stdout.write("tx:" + data)
-           sys.stdout.flush()
+            sys.stdout.write("tx:" + data)
+            sys.stdout.flush()
         if self.on_demand_mode:
-           self.command_sent = True
+            self.command_sent = True
 
 
 
@@ -328,7 +328,7 @@ if __name__ == '__main__':
         options.port,
         options.command,
         options.baud,
-    options.on_demand_mode)
+        options.on_demand_mode)
 
     #Enable our buffer
     lazyData = LazyData.LazyData()
