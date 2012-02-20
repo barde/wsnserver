@@ -13,7 +13,7 @@
 #Project for a RESTful http bridge for Wireless Sensor Nodes
 #
 #Purpose of this file:
-#	Get the commands from the serial port(optionally USB)
+#   Get the commands from the serial port(optionally USB)
 #       and move them to higher layers.
 #
  #
@@ -86,10 +86,14 @@ class SerialReader:
         #Asking for more speed and less reliability?
         self.aggressive_mode = aggressive_mode
 
-	#On demand mode: only read data if request was sent to WSN before
-	if on_demand_mode:
-		self.command_sent = False
-		self.on_demand_mode = on_demand_mode
+        #Double-Boolean check variable if every needed intialisation data
+        #has been saved to the database for the controller WSN
+        self.initCounter = 0
+
+        #On demand mode: only read data if request was sent to WSN before
+        if on_demand_mode:
+            self.command_sent = False
+            self.on_demand_mode = on_demand_mode
 
         #configuration for the serial port
         #which is given by an FTDI usb converter
@@ -132,7 +136,7 @@ class SerialReader:
 
     """
         #Read buffer first 10 times to flush
-    	#Good for first start or debugging
+        #Good for first start or debugging
         i = 0;
         while i < 10:
             self.reader()
@@ -143,15 +147,32 @@ class SerialReader:
             
     #servant for the object if ran as executable
     def servant(self):
+        panid = ""
+        channel = ""
         #Get ID from WSN
-        if len(self.controllerId) == 0:
-            self.write(self.translator.tag("GetId"))
-            time.sleep(1)
-            self.controllerId = self.reader()
-            self.controller.saveDeviceAction(self.controllerId)
+        while not self.initCounter == 3:
+            if  len(self.controllerId) == 0:
+                self.write(self.translator.tag("GetId"))
+                time.sleep(1)
+                self.controllerId = self.reader()
+                self.initCounter += 1
+            if len(panid) == 0:
+                self.write(self.translator.tag("GetPanId"))
+                time.sleep(1)
+                panid = self.reader()
+                self.initCounter += 1
+            if len(channel) == 0:
+                self.write(self.translator.tag("GetChannel")) 
+                time.sleep(1)
+                channel = self.reader()
+                self.initCounter += 1
+        #Renesas PAN-ID init get for database - 
+        #probably meant to be changed by you
+        if self.initCounter == 3:
+            self.controller.saveDeviceAction(self.controllerId,panid,channel)
             return
-
-        #receive data and save it to the database with ID of WSN
+        
+        
         outdata = self.reader()
         if len(outdata) > 0:
             self.controller.saveDataAction(self.controllerId, outdata)
@@ -204,14 +225,14 @@ class SerialReader:
             sys.stdout.write("rx:" + data)
             sys.stdout.flush()
 
-	if self.on_demand_mode and self.command_sent:
-		self.command_sent = False
-        	return data.strip()
-	elif self.on_demand_mode and not self.command_sent:
-		data = ""
-		return data.strip()
-	elif not self.on_demand_mode:
-		return data.strip()
+    if self.on_demand_mode and self.command_sent:
+        self.command_sent = False
+            return data.strip()
+    elif self.on_demand_mode and not self.command_sent:
+        data = ""
+        return data.strip()
+    elif not self.on_demand_mode:
+        return data.strip()
 
 
 
@@ -222,8 +243,8 @@ class SerialReader:
         if self.verbose:
            sys.stdout.write("tx:" + data)
            sys.stdout.flush()
-	if self.on_demand_mode:
-		self.command_sent = True
+    if self.on_demand_mode:
+        self.command_sent = True
 
 
 
@@ -307,7 +328,7 @@ if __name__ == '__main__':
         options.port,
         options.command,
         options.baud,
-	options.on_demand_mode)
+    options.on_demand_mode)
 
     #Enable our buffer
     lazyData = LazyData.LazyData()
