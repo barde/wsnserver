@@ -343,7 +343,7 @@ if __name__ == '__main__':
     while True:
         try:
             if options.interactive and len(keyboard_data) != 0:
-                lazyData.content = keyboard_data
+                lazyData.content = keyboard_data + "\n\r"
                 keyboard_data = ""
             s.servant()
         except KeyboardInterrupt:
