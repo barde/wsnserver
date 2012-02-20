@@ -150,7 +150,7 @@ class SerialReader:
         panid = ""
         channel = ""
         #Get ID from WSN
-        while not self.initCounter == 3:
+        while self.initCounter < 3:
             if  len(self.controllerId) == 0:
                 self.write(self.translator.tag("GetId"))
                 time.sleep(1)
@@ -170,7 +170,8 @@ class SerialReader:
         #probably meant to be changed by you
         if self.initCounter == 3:
             self.controller.saveDeviceAction(self.controllerId,panid,channel)
-            return
+            #Dirty trick to circumvent init parsing for Renesas
+            self.initCounter += 1
         
         
         outdata = self.reader()
@@ -220,7 +221,7 @@ class SerialReader:
         else:
             data = self.serial.readline()
 
-            # Verbose mode prints everthing to console
+        # Verbose mode prints everthing to console
         if self.verbose and len(data) > 0:
             sys.stdout.write("rx:" + data)
             sys.stdout.flush()
@@ -252,6 +253,13 @@ class SerialReader:
 #necessary because of threading
 def readInput():
     global keyboard_data
+    time.sleep(5)
+    print "Initialising Keyboard..."
+    time.sleep(1)
+    print "Keyboard loaded"
+    time.sleep(1)
+    print "Insert your commands here or use punchcard"
+            
     while True:
         keyboard_data = raw_input("? ")
 
@@ -344,6 +352,9 @@ if __name__ == '__main__':
         try:
             if options.interactive and len(keyboard_data) != 0:
                 lazyData.content = keyboard_data + "\n\r"
+                if options.verbose:
+                    print "Keyboard data buffered:" + keyboard_data
+                    print "Lazy data sending:" + repr(lazyData.content)
                 keyboard_data = ""
             s.servant()
         except KeyboardInterrupt:
