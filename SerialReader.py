@@ -225,14 +225,14 @@ class SerialReader:
             sys.stdout.write("rx:" + data)
             sys.stdout.flush()
 
-    if self.on_demand_mode and self.command_sent:
-        self.command_sent = False
+        if self.on_demand_mode and self.command_sent:
+            self.command_sent = False
             return data.strip()
-    elif self.on_demand_mode and not self.command_sent:
-        data = ""
-        return data.strip()
-    elif not self.on_demand_mode:
-        return data.strip()
+        elif self.on_demand_mode and not self.command_sent:
+            data = ""
+            return data.strip()
+        elif not self.on_demand_mode:
+            return data.strip()
 
 
 
@@ -243,8 +243,8 @@ class SerialReader:
         if self.verbose:
            sys.stdout.write("tx:" + data)
            sys.stdout.flush()
-    if self.on_demand_mode:
-        self.command_sent = True
+        if self.on_demand_mode:
+           self.command_sent = True
 
 
 
