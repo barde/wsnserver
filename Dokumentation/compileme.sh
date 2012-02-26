@@ -1,6 +1,3 @@
 #!/bin/bash
 
-pdflatex wsnserver
-pdflatex wsnserver
-bibtex wsnserver
-pdflatex wsnserver
+pdflatex wsnserver && pdflatex wsnserver && bibtex wsnserver  && pdflatex wsnserver
