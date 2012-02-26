@@ -1,0 +1,148 @@
+\documentclass[bibtotocnumbered, headsepline,normalheadings]{report}
+\usepackage[latin1]{inputenc}
+\usepackage{color}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{listings}
+\lstset{breaklines=true,showstringspaces=false,numbers=left,frame=single,prebreak=\mbox{$\hookleftarrow$}}
+\usepackage{hyperref}
+\usepackage[a4paper,margin=2cm]{geometry} 
+\usepackage{scrpage}
+\usepackage{alltt}
+\usepackage{float}
+\usepackage{graphicx}
+\definecolor{darkblue}{rgb}{0,0,.5}
+\hypersetup{pdftex=true, colorlinks=false, breaklinks=true, citecolor=darkblue, linkcolor=darkblue, menucolor=darkblue, pagecolor=darkblue, urlcolor=darkblue,
+pdftitle={Universal Translator for Wireless Sensor Node Networks},
+pdfauthor={Bartholomäus Dedersen, Kamil Wozniak},
+bookmarks=true,
+bookmarksnumbered=true,
+bookmarksopen=true,
+bookmarksopenlevel=2}
+\pagestyle{headings}
+\begin{document}
+
+\author{ 
+Bartholomäus Dedersen \\ Fachhochschule Kiel \\ bartholomaeus.dedersen@student.fh-kiel.de \and
+Kamil Wozniak  \\ Fachhochschule Kiel \\ XXXXX@student.fh-kiel.de }
+
+\date{\today} 
+\title{Universal Translator for Wireless Sensor Node Networks} 
+
+\maketitle
+
+
+\begin{abstract}
+Kamil likes to write abstracts and does not deny it.
+\end{abstract}
+
+\tableofcontents \newpage
+
+\chapter{Introduction}
+
+\input{introduction.tex}
+
+\chapter{Wireless Sensor Nodes}
+
+\input{wsn.tex}
+
+\chapter{Task of unifying languages}
+
+\input{task.tex}
+
+\chapter{Overview on current state}
+
+\input{overview.tex}
+
+\chapter{wsnserver - A practical solution}
+
+\input{programming.tex}
+
+\chapter{Conclusion}
+
+\input{conclusion.tex}
+
+
+%\begin{figure}[H]
+%	\centering
+%	\includegraphics[width=0.6\textwidth]{http.png}%
+%	\caption{HTTP-Kommunikation zwischen Server und Client}
+%	\label{http}%
+%\end{figure}
+%\footnote{Lösungsarchitekturen wie RESTful Web Services wie in der Dissertation von 
+%Fielding in \cite{Fielding99softwarearchitectural} beschrieben verlagern die Identifizierung eines Benutzers und den Transport von Informationen über 
+
+%\begin{description}
+%\item[GET] Eine bestimmte Resource wird vom Server abgefragt. Dies kann ein statisches Dokument oder ein serverseitiges Script sein. GET-Aufrufe müssen in ihrer Auswirkung idempotent sein, das heißt
+%ein mehrmaliger Aufruf mit Hilfe eines GET-Requests soll die selbe Auswirkung haben wie ein einzelner GET-Request.\cite{rfc2616}\footnote{Wenn beispielsweise ein GET-Aufruf einen Einkaufsvorgang mit Bezahlung bewirken soll, muss nach 
+%wiederholten des GETs kein neuer Artikel eingekauft oder Abbuchvorgang durchgeführt werden.} 
+%\item[POST] Daten des Clients werden zur Verarbeitung an den Server geschickt. Es sind die selben 
+%Header-Variablen möglich wie im GET. Deshalb kann durch die Verwendung von Cookies hier eine Verknüpfung zu 
+%vorhergehenden GET-Aufrufen hergestellt werden.
+%\item[HEAD] Eine Resource wird vom Server abgefragt aber es sollen nur die Kopfdaten einer gesamten HTTP-Verbindung als Response zurückgeliefert
+%werden. Damit kann das Datenaufkommen verringert werden, falls nur der Antwortstatus gefragt ist.
+%\end{description}
+
+%\begin{itemize}
+%\item Authentifizierung von Server und Client
+%\item End-zu-End Verschlüsselung einer HTTP-Verbindung
+%\item Integritätsprüfungen
+%\end{itemize}
+
+%dafür die \texttt{javax.net.ssl} Klasse zur Verfügung. Leider wird die Sessionverwaltung nicht unter anderen Plattformen 
+
+%mit der Einbindung der PKCS-Spezifikation, die in Kapitel \ref{sec:pkcs} näher erläutert wird, eine Möglichkeit
+%Skriptsprachen eine \textsl{same orgin policy}\footnote{\url{https://developer.mozilla.org/En/Same_origin_policy_for_JavaScript}} umgesetzt, die
+
+%\url{http://www.whatwg.org/specs/web-apps/current-work/complete/commands.html\#devices}}
+
+%\(c\) umwandeln kann, muss \(s\) auch zur Entschlüsselungfunktion \(E\) genutzt werden können um den
+%Klartext wiederherzustellen. Die Verschlüsselung sieht folgendermaßen aus:
+%\[V_s(k)=c\] 
+
+
+%\subsubsection{TEA}
+%\label{sec:tea}
+
+%\begin{quote}
+%
+%``What does this protocol achieve?\\
+% Does this protocol need more assumptions than another one?\\
+% Does this protocol do anything unnecessary that could be left out without weakening it?\\
+% Does this protocol encrypt something that could be sent in clear without weakening it?'' \cite{Burrows90}
+%
+%\end{quote}
+
+
+%\begin{lstlisting}[language=PHP]
+%include "sgl_wrap.php";
+%
+%SglFormInit($authentCode,1,"nextFile.php");
+%SglSearchLock(1);
+%SglFormClose();
+%
+%\end{lstlisting}
+
+%\begin{table}[!h] 
+%\centering 
+%\begin{tabular}{|l||l|} 
+%Position & Person\\ 
+%\hline Manager of Student
+%Group & MG \\ 
+%Document Manager/Vice Lead & BD \\ 
+%Head Programmer/Database Administrator & CT \\
+%Quality Assurance/Programmer & GG \\ 
+%Design/Diagrams & AI \\ 
+%Diagrams/Head Research & SC \\
+%\end{tabular} 
+%\caption{ Table of responsibilities} 
+%\label{tab:responsibilities} 
+%\end{table}
+
+
+\bibliographystyle{acm}
+\bibliography{bibwsnserver}
+\listoffigures
+\begingroup \let\clearpage\relax
+\listoftables \endgroup
+\end{document} 
