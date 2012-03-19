@@ -29,7 +29,7 @@ n Wireless Sensor Node as Client & Renesas ZMD28-BRD \\
 \end{table}
 
 
-\begin{figure}[h]
+\begin{figure}[H]
    \centering
    \includegraphics[width=0.8\textwidth]{pic/whole_setup.jpg}%
    \caption{Glimpse on the development setup}
@@ -38,7 +38,7 @@ n Wireless Sensor Node as Client & Renesas ZMD28-BRD \\
 
 -low cost iso available at XXX
 
-\begin{figure}[h]
+\begin{figure}[H]
    \centering
    \includegraphics[width=0.8\textwidth]{pic/controller.jpg}%
    \caption{Renesas Node with Custom Programming and Serial Connector}
@@ -47,7 +47,7 @@ n Wireless Sensor Node as Client & Renesas ZMD28-BRD \\
 
 - less nodes as focused on communication
 
-\begin{figure}[h]
+\begin{figure}[H]
    \centering
    \includegraphics[width=0.8\textwidth]{pic/host_machine.jpg}%
    \caption{Console Output on Host Machine}
@@ -56,86 +56,107 @@ n Wireless Sensor Node as Client & Renesas ZMD28-BRD \\
 
 - initialisiation description
 
-
+\newpage
 \section{Class diagrams}
-\begin{figure}[h]
+\subsection{The Controller class}
+\begin{figure}[H]
    \centering
    \includegraphics[width=0.5\textwidth]{pic/Controller.png}%
    \caption{The Controller class}
    \label{Controllerpic}%
 \end{figure}
 
-\begin{figure}[h]
+\newpage
+\subsection{The ControllerTest class}
+\begin{figure}[H]
    \centering
    \includegraphics[width=0.5\textwidth]{pic/ControllerTest.png}%
    \caption{ControllerTest class, unittest for the Controller class}
    \label{ControllerTestpic}%
 \end{figure}
 
-\begin{figure}[h]
+\newpage
+\subsection{DataRepository class}
+\begin{figure}[H]
    \centering
    \includegraphics[width=0.5\textwidth]{pic/DataRepository.png}%
    \caption{DataRepository class, which handles the model}
    \label{DataRepositorypic}%
 \end{figure}
 
-\begin{figure}[h]
+\newpage
+\subsection{DataRepositoryTest class}
+\begin{figure}[H]
    \centering
    \includegraphics[width=0.5\textwidth]{pic/DataRepositoryTest.png}%
    \caption{DataRepositoryTest class, unittest for the DataRepository class}
    \label{DataRepositoryTestpic}%
 \end{figure}
 
-\begin{figure}[h]
+\newpage
+\subsection{DBConnection class}
+\begin{figure}[H]
    \centering
    \includegraphics[width=0.5\textwidth]{pic/DBConnection.png}%
    \caption{DBConnection class, a database layer}
    \label{DBConnectionpic}%
 \end{figure}
 
-\begin{figure}[h]
+\newpage
+\subsection{EnhancedSerial class}
+\begin{figure}[H]
    \centering
    \includegraphics[width=0.5\textwidth]{pic/EnhancedSerial.png}%
    \caption{EnhancedSerial reader class}
    \label{EnhancedSerialpic}%
 \end{figure}
 
-\begin{figure}[h]
+\newpage
+\subsection{LazyData class}
+\begin{figure}[H]
    \centering
    \includegraphics[width=0.5\textwidth]{pic/LazyData.png}%
    \caption{LazyData class}
    \label{LazyDatapic}%
 \end{figure}
 
-\begin{figure}[h]
+\newpage
+\subsection{Translator class}
+\begin{figure}[H]
    \centering
    \includegraphics[width=0.5\textwidth]{pic/Translator.png}%
    \caption{Translator class}
    \label{Translatorpic}%
 \end{figure}
 
-\begin{figure}[h]
+\subsubsection{MedusaTranslator class}
+\begin{figure}[H]
    \centering
    \includegraphics[width=0.5\textwidth]{pic/MedusaTranslator.png}%
    \caption{MedusaTranslator class}
    \label{MedusaTranslatorpic}%
 \end{figure}
 
-\begin{figure}[h]
+\subsubsection{RenesasTranslator class}
+\begin{figure}[H]
    \centering
    \includegraphics[width=0.5\textwidth]{pic/RenesasTranslator.png}%
    \caption{RenesasTranslator class, dictionary class for Renesas}
    \label{RenesasTranslatorpic}%
 \end{figure}
 
-\begin{figure}[h]
+\newpage
+\subsection{SerialReader class}
+\begin{figure}[H]
    \centering
    \includegraphics[width=0.5\textwidth]{pic/SerialReader.png}%
    \caption{SerialReader class, main class for reading data from serial port}
    \label{SerialReaderpic}%
 \end{figure}
 
-\begin{figure}[h]
+\newpage
+\subsection{Webserver class}
+\begin{figure}[H]
    \centering
    \includegraphics[width=0.5\textwidth]{pic/Webserver.png}%
    \caption{Webserver class, containing the webserver}
