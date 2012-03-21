@@ -182,6 +182,10 @@ The "DataRepository" class is the main modell class of this project. Their goal 
    \label{Webserverpic}%
 \end{figure}
 
+The "Webserver" class can be seen as the "View" part of the MVC pattern, as it allows and restricts the access and the requests of a user to this speciffied methods.
+
+The class uses the Cherrypy webserver framework.\footnote{The CherryPy webserver is a opensource project hosted on http://www.cherrypy.org/} A standalone webserver written completly in Python. The advantage of this fact is that the dependency of project is reduced to Python instead of the use of a big and resource hungry webserver like Apache2. Also the easy and fast development of methods/pages which comes with the framework.
+
 
 
 
