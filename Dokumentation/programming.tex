@@ -79,6 +79,8 @@ Applied to this project the "Controller" class receives requests from the webser
 
 The last possible user is the setup script, which accesses the controller for maintaince tasks, like removing all data from the datarepository.
 
+
+
 \newpage
 \subsection{The ControllerTest class}
 \begin{figure}[H]
@@ -98,6 +100,8 @@ This unittest was written to test the "Controller" class and their functionality
    \caption{DataRepository class, which handles the model}
    \label{DataRepositorypic}%
 \end{figure}
+
+The "DataRepository" class is the main modell class of this project. Their goal is to store and retrive infromation and data from the database. Nearly all methods contain SQL instructions, which will be executed by the use of an "DBConnection" object, which contain an actual database connection.
 
 \newpage
 \subsection{DataRepositoryTest class}
