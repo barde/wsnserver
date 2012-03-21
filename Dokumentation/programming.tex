@@ -57,6 +57,10 @@ n Wireless Sensor Node as Client & Renesas ZMD28-BRD \\
 - initialisiation description
 
 \newpage
+\section{The development method}
+
+For development there have been used different approaches. Most of this project has been developed by the use of agile methods, what means that a feature was implemented and then tested. If it worked properly, it has been commited to a central repository. Critical parts like the "Controller" and the "DataRepository" classes have been developed by using the test-driven-development, where first tests have been written and afterwards the corresponding methods. This last development technique had their advantages and made the expension of the "DataRepository" class with a second database layer - MySQL - much easier and faster: each testcase created for the first database layer - SQLite - had also to work with the newly implemented layer for MySQL.
+
 \section{Class diagrams}
 \subsection{The Controller class}
 \begin{figure}[H]
@@ -66,6 +70,15 @@ n Wireless Sensor Node as Client & Renesas ZMD28-BRD \\
    \label{Controllerpic}%
 \end{figure}
 
+The "Controller" class is the central part of this project. It corresponds to the controller part of the Modell-View-Controller design pattern.
+
+Like in any other MVC applications the controller receives and handles input and requests of the user and also of any other external modules. 
+It validates the input and decides what to do with the data passed to the controller, for example if the controller should save it to the modell or retrive some data from the repository and return it as response.
+
+Applied to this project the "Controller" class receives requests from the webserver to retrieve stored data for a wsn and also to save commands for a wsn in the database, which is used as a queue. The second actor of this class is the "SerialReader" class, which also accesses the controller to save its identification credentials, to pass its read sensor data to the controller for saving and to retrieve new commands from the queue.
+
+The last possible user is the setup script, which accesses the controller for maintaince tasks, like removing all data from the datarepository.
+
 \newpage
 \subsection{The ControllerTest class}
 \begin{figure}[H]
@@ -74,6 +87,8 @@ n Wireless Sensor Node as Client & Renesas ZMD28-BRD \\
    \caption{ControllerTest class, unittest for the Controller class}
    \label{ControllerTestpic}%
 \end{figure}
+
+This unittest was written to test the "Controller" class and their functionality. 
 
 \newpage
 \subsection{DataRepository class}
