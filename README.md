@@ -50,7 +50,8 @@ Run:
 If there is a need for making the data available to other plattfroms, you can use the built-in webserver.
 
 Run:
-`python Webserver.py` to start the webserver, which will be listening on port 8080 for requests.
+`python Webserver.py` to start the webserver, which will be listening on port 8080 for requests. To check if the webserver is running, call `http://yourip:8080/index`
+
 
 Very Boring legal stuff
 ------------------
