@@ -1,6 +1,8 @@
 \documentclass[bibtotocnumbered, headsepline,normalheadings]{report}
 \usepackage[utf8x]{inputenc}
 \usepackage{color}
+\usepackage[polutonikogreek,english]{babel}
+\usepackage{ucs}
 \usepackage{booktabs}
 \usepackage{multirow}
 \usepackage{listings}
@@ -14,16 +16,18 @@
 \definecolor{darkblue}{rgb}{0,0,.5}
 \hypersetup{pdftex=true, colorlinks=false, breaklinks=true, citecolor=darkblue, linkcolor=darkblue, menucolor=darkblue, pagecolor=darkblue, urlcolor=darkblue,
 pdftitle={Universal Translator for Wireless Sensor Node Networks},
-pdfauthor={Bartholomäus Dedersen, Kamil Wozniak},
+pdfauthor={BartholomÃ¤us Dedersen, Kamil Wozniak},
 bookmarks=true,
 bookmarksnumbered=true,
 bookmarksopen=true,
 bookmarksopenlevel=2}
 \pagestyle{headings}
+\newcommand{\gdir}%
+   {\foreignlanguage{polutonikogreek}}
 \begin{document}
 
 \author{ 
-Bartholomäus Dedersen \\ Fachhochschule Kiel \\ bartholomaeus.dedersen@student.fh-kiel.de \and
+BartholomÃ¤us Dedersen \\ Fachhochschule Kiel \\ bartholomaeus.dedersen@student.fh-kiel.de \and
 Kamil Wozniak  \\ Fachhochschule Kiel \\ kamil.a.wozniak@student.fh-kiel.de }
 
 \date{\today} 
@@ -70,35 +74,35 @@ Kamil likes to write abstracts and does not deny it.
 %	\caption{HTTP-Kommunikation zwischen Server und Client}
 %	\label{http}%
 %\end{figure}
-%\footnote{Lösungsarchitekturen wie RESTful Web Services wie in der Dissertation von 
-%Fielding in \cite{Fielding99softwarearchitectural} beschrieben verlagern die Identifizierung eines Benutzers und den Transport von Informationen über 
+%\footnote{LÃ¶sungsarchitekturen wie RESTful Web Services wie in der Dissertation von 
+%Fielding in \cite{Fielding99softwarearchitectural} beschrieben verlagern die Identifizierung eines Benutzers und den Transport von Informationen Ã¼ber 
 
 %\begin{description}
-%\item[GET] Eine bestimmte Resource wird vom Server abgefragt. Dies kann ein statisches Dokument oder ein serverseitiges Script sein. GET-Aufrufe müssen in ihrer Auswirkung idempotent sein, das heißt
+%\item[GET] Eine bestimmte Resource wird vom Server abgefragt. Dies kann ein statisches Dokument oder ein serverseitiges Script sein. GET-Aufrufe mÃ¼ssen in ihrer Auswirkung idempotent sein, das heiÃŸt
 %ein mehrmaliger Aufruf mit Hilfe eines GET-Requests soll die selbe Auswirkung haben wie ein einzelner GET-Request.\cite{rfc2616}\footnote{Wenn beispielsweise ein GET-Aufruf einen Einkaufsvorgang mit Bezahlung bewirken soll, muss nach 
-%wiederholten des GETs kein neuer Artikel eingekauft oder Abbuchvorgang durchgeführt werden.} 
+%wiederholten des GETs kein neuer Artikel eingekauft oder Abbuchvorgang durchgefÃ¼hrt werden.} 
 %\item[POST] Daten des Clients werden zur Verarbeitung an den Server geschickt. Es sind die selben 
-%Header-Variablen möglich wie im GET. Deshalb kann durch die Verwendung von Cookies hier eine Verknüpfung zu 
+%Header-Variablen mÃ¶glich wie im GET. Deshalb kann durch die Verwendung von Cookies hier eine VerknÃ¼pfung zu 
 %vorhergehenden GET-Aufrufen hergestellt werden.
-%\item[HEAD] Eine Resource wird vom Server abgefragt aber es sollen nur die Kopfdaten einer gesamten HTTP-Verbindung als Response zurückgeliefert
+%\item[HEAD] Eine Resource wird vom Server abgefragt aber es sollen nur die Kopfdaten einer gesamten HTTP-Verbindung als Response zurÃ¼ckgeliefert
 %werden. Damit kann das Datenaufkommen verringert werden, falls nur der Antwortstatus gefragt ist.
 %\end{description}
 
 %\begin{itemize}
 %\item Authentifizierung von Server und Client
-%\item End-zu-End Verschlüsselung einer HTTP-Verbindung
-%\item Integritätsprüfungen
+%\item End-zu-End VerschlÃ¼sselung einer HTTP-Verbindung
+%\item IntegritÃ¤tsprÃ¼fungen
 %\end{itemize}
 
-%dafür die \texttt{javax.net.ssl} Klasse zur Verfügung. Leider wird die Sessionverwaltung nicht unter anderen Plattformen 
+%dafÃ¼r die \texttt{javax.net.ssl} Klasse zur VerfÃ¼gung. Leider wird die Sessionverwaltung nicht unter anderen Plattformen 
 
-%mit der Einbindung der PKCS-Spezifikation, die in Kapitel \ref{sec:pkcs} näher erläutert wird, eine Möglichkeit
+%mit der Einbindung der PKCS-Spezifikation, die in Kapitel \ref{sec:pkcs} nÃ¤her erlÃ¤utert wird, eine MÃ¶glichkeit
 %Skriptsprachen eine \textsl{same orgin policy}\footnote{\url{https://developer.mozilla.org/En/Same_origin_policy_for_JavaScript}} umgesetzt, die
 
 %\url{http://www.whatwg.org/specs/web-apps/current-work/complete/commands.html\#devices}}
 
-%\(c\) umwandeln kann, muss \(s\) auch zur Entschlüsselungfunktion \(E\) genutzt werden können um den
-%Klartext wiederherzustellen. Die Verschlüsselung sieht folgendermaßen aus:
+%\(c\) umwandeln kann, muss \(s\) auch zur EntschlÃ¼sselungfunktion \(E\) genutzt werden kÃ¶nnen um den
+%Klartext wiederherzustellen. Die VerschlÃ¼sselung sieht folgendermaÃŸen aus:
 %\[V_s(k)=c\] 
 
 
