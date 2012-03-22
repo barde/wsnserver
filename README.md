@@ -48,6 +48,7 @@ Run:
 `python SerialReader.py -h` for explanation of command line variables and use the source for further adjustment.
 
 If there is a need for making the data available to other plattfroms, you can use the built-in webserver.
+
 Run:
 `python Webserver.py` to start the webserver, which will be listening on port 8080 for requests.
 
