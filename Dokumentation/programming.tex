@@ -156,7 +156,7 @@ which will be executed by the use of an \textit{DBConnection} object, which cont
    \label{DBConnectionpic}%
 \end{figure}
 
-The sole purpose of the \textit{DBConnection} class is to return a open database connection or the caller. 
+The sole purpose of the \textit{DBConnection} class is to return a open database connection or the caller. This is achieved by loading the configuration file and read out the settings, so the \textit{DBConnection} class can decide which kind of database connection it will return the the calling method as response.
 
 \newpage
 \subsection{EnhancedSerial class}
