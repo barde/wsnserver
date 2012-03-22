@@ -59,7 +59,12 @@ n Wireless Sensor Node as Client & Renesas ZMD28-BRD \\
 \newpage
 \section{The development method}
 
-For development there have been used different approaches. Most of this project has been developed by the use of agile methods, what means that a feature was implemented and then tested. If it worked properly, it has been committed to a central repository. Critical parts like the "Controller" and the "DataRepository" classes have been developed by using the test-driven-development, where first tests have been written and afterwards the corresponding methods. This last development technique had their advantages and made the expansion of the "DataRepository" class with a second database layer - MySQL - much easier and faster: each test case created for the first database layer - SQLite - had also to work with the newly implemented layer for MySQL.
+For development there have been used different approaches. Most of this project has been developed by the use of agile methods, 
+what means that a feature was implemented and then tested. If it worked properly, it has been committed to a central repository. 
+Critical parts like the \textit{Controller} and the \textit{DataRepository} classes have been developed by using the test-driven-development, 
+where first tests have been written and afterwards the corresponding methods. This last development technique had their advantages and made 
+the expansion of the \textit{DataRepository} class with a second database layer - MySQL - much easier and faster: each test case 
+created for the first database layer - SQLite - had also to work with the newly implemented layer for MySQL.
 
 \section{Class diagrams}
 \subsection{The Controller class}
@@ -70,12 +75,16 @@ For development there have been used different approaches. Most of this project 
    \label{Controllerpic}%
 \end{figure}
 
-The "Controller" class is the central part of this project. It corresponds to the controller part of the Model-View-Controller design pattern.
+The \textit{Controller} class is the central part of this project. It corresponds to the controller part of the Model-View-Controller design pattern.
 
 Like in any other MVC applications the controller receives and handles input and requests of the user and also of any other external modules. 
-It validates the input and decides what to do with the data passed to the controller, for example if the controller should save it to the model or retrieve some data from the repository and return it as response.
+It validates the input and decides what to do with the data passed to the controller, 
+for example if the controller should save it to the model or retrieve some data from the repository and return it as response.
 
-Applied to this project the "Controller" class receives requests from the webserver to retrieve stored data for a WSN and also to save commands for a WSN in the database, which is used as a queue. The second actor of this class is the "SerialReader" class, which also accesses the controller to save its identification credentials, to pass its read sensor data to the controller for saving and to retrieve new commands from the queue.
+Applied to this project the \textit{Controller} class receives requests from the webserver to retrieve stored data for a 
+WSN and also to save commands for a WSN in the database, which is used as a queue. The second actor of this class is the 
+\textit{SerialReader} class, which also accesses the controller to save its identification credentials, 
+to pass its read sensor data to the controller for saving and to retrieve new commands from the queue.
 
 The last possible user is the setup script, which accesses the controller for maintenance tasks, like removing all data from the datarepository.
 
@@ -90,7 +99,7 @@ The last possible user is the setup script, which accesses the controller for ma
    \label{ControllerTestpic}%
 \end{figure}
 
-This unittest was written to test the "Controller" class and their functionality. 
+This unittest was written to test the \textit{Controller} class and their functionality. 
 
 \newpage
 \subsection{DataRepository class}
@@ -101,7 +110,10 @@ This unittest was written to test the "Controller" class and their functionality
    \label{DataRepositorypic}%
 \end{figure}
 
-The "DataRepository" class is the main model class of this project. Their goal is to store and retrieve information and data from the database. Nearly all methods contain SQL instructions, which will be executed by the use of an "DBConnection" object, which contain an actual database connection.
+The \textit{DataRepository} class is the main model class of this project. 
+Their goal is to store and retrieve information and data from the database. 
+Nearly all methods contain SQL instructions, 
+which will be executed by the use of an \textit{DBConnection} object, which contain an actual database connection.
 
 \newpage
 \subsection{DataRepositoryTest class}
@@ -121,7 +133,7 @@ The "DataRepository" class is the main model class of this project. Their goal i
    \label{DBConnectionpic}%
 \end{figure}
 
-The sole purpose of the "DBConnection" class is to return a open database connection or the caller. 
+The sole purpose of the \textit{DBConnection} class is to return a open database connection or the caller. 
 
 \newpage
 \subsection{EnhancedSerial class}
@@ -184,11 +196,11 @@ The sole purpose of the "DBConnection" class is to return a open database connec
    \label{Webserverpic}%
 \end{figure}
 
-The "Webserver" class can be seen as the "View" part of the MVC pattern, as it allows and restricts the access and the requests of a user to this specified methods.
+The \textit{Webserver} class can be seen as the \textit{View} part of the MVC pattern, as it allows and restricts the access and the requests of a user to this specified methods.
 
-The class uses the Cherrypy webserver framework.\footnote{The CherryPy webserver is a open source project hosted on http://www.cherrypy.org/} A standalone webserver written completely in Python. The advantage of this fact is that the dependency of project is reduced to Python instead of the use of a big and resource hungry webserver like Apache2. Also the easy and fast development of methods/pages which comes with the framework.
+The class uses the Cherrypy webserver framework.\footnote{The CherryPy webserver is a open source project hosted on \url{http://www.cherrypy.org/}} A standalone webserver written completely in Python. The advantage of this fact is that the dependency of project is reduced to Python instead of the use of a big and resource hungry webserver like Apache2. Also the easy and fast development of methods/pages which comes with the framework.
 
-For demonstrational purpose of the simplicity of CherryPy an extract of the "Webserver" class is presented. As it can bee seen, it is already enough to define a method to receive a functional site. 
+For demonstrational purpose of the simplicity of CherryPy an extract of the \textit{Webserver} class is presented. As it can bee seen, it is already enough to define a method to receive a functional site. 
 \begin{lstlisting}[language=Python]
 import Controller
 import cherrypy
@@ -201,7 +213,7 @@ class Webserver:
        
 \end{lstlisting}
 
-To see if this method works, the user has to call "http://localhost:8080/index" and will receive the status of the webserver.
+To see if this method works, the user has to call \url{http://localhost:8080/index} and will receive the status of the webserver.
 
 
 
