@@ -279,6 +279,7 @@ Custom installation is only required when not using the provided disc image.
     \item Install a Linux of your chosen flavour. Preferably use Debian.
     \item Install git\footnote{\textit{apt-get install git}}
     \item Download and install cherrypy\footnote{\url{http://www.cherrypy.org/wiki/CherryPyDownload} or on Debian \textit{apt-get install python-cherrypy}}
+    \item Run \textit{python setup.py --sqlite} to create and configure the SQLite database. For further information or help run \textit{python setup.py -h}, which explains the usage of the commandline script.
     \item \textit{Optionally:} Install a MySQL server and proper SQL bindings for increased functionality\footnote{\textit{apt-get install mysql-server mysql-client libmysqlclient15-dev python-mysqldb}}
 \end{enumerate}
 
@@ -287,4 +288,5 @@ get the most recent development version with \textit{git clone git@github.com:Ph
 
 Finally, you change directory to the project and run \textit{python SerialReader.py -h} to see available options.
 
-[KAMIL BESCHREIBT HIER WIE DER web server ZU STARTEN IST UND ERGAENZT AUCH DAS GITHUB-HELPDINGSDA - Alles klar]
+If there is a need to make all the gathered data and informations available for further use, the \textit{Webserver} can be started by running \textit{python Webserver.py}. This will automatically start the 
+\textit{Webserver} and make all implemented methods immediately ready for use. To see which commands respectively methods are available, the user should take a look at the description of the \textit{Webserver} class.
