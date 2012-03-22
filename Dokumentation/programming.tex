@@ -124,6 +124,10 @@ The last possible user is the setup script, which accesses the controller for ma
 
 This unittest was written to test the \textit{Controller} class and their functionality. 
 
+The \textit{setUp()} method creates fixtures, which will be stored in the database, before each test case will be run. This ensures that all "retrieving"-methods have something to read and all "remove"-methods have something to delete.
+
+After each testrun the database will be cleared by the \textit{tearDown()} method.
+
 \newpage
 \subsection{DataRepository class}
 \begin{figure}[H]
@@ -136,7 +140,7 @@ This unittest was written to test the \textit{Controller} class and their functi
 The \textit{DataRepository} class is the main model class of this project. 
 Their goal is to store and retrieve information and data from the database. 
 Nearly all methods contain SQL instructions, 
-which will be executed by the use of an \textit{DBConnection} object, which contain an actual database connection.
+which will be executed by the use of an \textit{DBConnection} object, which contains an actual database connection.
 
 \newpage
 \subsection{DataRepositoryTest class}
