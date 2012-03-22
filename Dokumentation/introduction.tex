@@ -1,12 +1,58 @@
-\section{Hello World}
-\subsection{HelloW.NET}
-\subsubsection{XML HelloW.NET}
-
 Wireless Sensor Nodes \footnote{We will refer instead of the long form to the abbreviation \textsc{WSN} in the remaining documentation.}
 are versatile low-power embedded systems used for monitoring sensors, measuring concentration of various chemicals, meshed communication
 and a multitude of other purposes.
 
-They were developed by the DARPA[FIXME: CITE] in the year XXX. The main points which stopped the usage in civilian areas were:
+They were developed by the DARPA\cite{Song}. First tries to established small networked sensors can be traced back to the cold war according to
+\cite{Chong}:
+
+\begin{quote}
+    ``During the Cold War, the Sound Surveillance System
+    (SOSUS), a system of acoustic sensors (hydrophones) on the
+    ocean bottom, was deployed at strategic locations to detect
+    and track quiet Soviet submarines. Over the years, other
+    more sophisticated acoustic networks have been developed
+    for submarine surveillance. SOSUS is now used by the
+    National Oceanographic and Atmospheric Administration
+    (NOAA) for monitoring events in the ocean, e.g., seismic
+    and animal activity.''
+\end{quote}
+
+Acconding to Chong et. al the research and development further increased in the year 1980 with the \textsc{Dsn}\footnote{Distributed Sensor Networks} project.
+It was founded by the American military while 
+``the Arpanet (predecessor of the Internet) had been operational for a number of years, with 
+about 200 hosts at universities and research institutes''\cite{Chong}.
+R. Kahn, one of the main responsible persons behind the early Internet and co-inventor of the TCP/IP-definitions, had special interest how networked
+sensor networks would fit into the routed packed based network acconding to Chong et al..
+
+\begin{figure}[H]
+   \centering
+   \includegraphics[width=0.8\textwidth]{pic/earlynode.png}%
+   \caption{Early Sensor Nodes in 1985. Source: \cite{Chong}}
+   \label{earlynode}%
+\end{figure}
+
+In~\cite{Akyildiz02wirelesssensor} various applications for military use are described. Main points are:
+
+\begin{description}
+    \item[Monitoring] How much ammunition is left in specific areas and/or assets?
+    \item[Surveillance] How is the enemy advancing/retreating?
+    \item[Reconnaissance] Is in a specific area an opposing force?
+    \item[Targeting] Can rockets and other ammunition be assisted for targeting?
+    \item[Damage Assessment] How much did our forces suffer before and after a fight?
+    \item[ABC Detection] Did the opposing force utilize ABC\footnote{Atom/Nuclear, Biological and Chemical Warfare} weaponry?
+\end{description}
+
+As Akyildiz et al. described the main purpose in miliary use are 
+``Wireless sensor networks can be an integral part
+of military command, control, communications,
+computing, intelligence, surveillance, reconnaissance
+and targeting (C4ISRT) systems.
+''
+
+But rapidly civilian areas of usage were aquired. Heraklit said: ``
+
+
+The main points which stopped the usage in civilian areas were:
 
 \begin{itemize}
 \item battery longlivety
