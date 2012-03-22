@@ -2,7 +2,7 @@
 
 A setup for development is explained in table~\ref{tab:requirements}. The most basic components are 
 required for hands-on development. Main issue is a python interpreter and common libraries.\footnote{For example
-cherrypy, pyserial and optionally a module for SQL-bindings in Python.}
+CherryPy, pyserial and optionally a module for SQL-bindings in Python.}
 
 Figure~\ref{setupic} shows the last version of the used development system. The keyboard and monitor on the host machine
 is just used to monitor debug output and use the included \textsl{interactive} mode on the \textsc{WSN}.\footnote{So you can 
@@ -20,7 +20,7 @@ General Component & Specific Component\\
 i86 host machine & 300MHz, 512MB\\ 
 host OS & Debian stable(Squeeze) \\ 
 Python Interpreter & Python 2.7 with pyserial \\ 
-Database & MySQL\footnote{A local sqlite version with reduced functionality has no additional requirements} \\ 
+Database & MySQL\footnote{A local SQLite version with reduced functionality has no additional requirements} \\ 
 1 Wireless Sensor Node as Controller & Renesas ZMD28-BRD \\
 n Wireless Sensor Node as Client & Renesas ZMD28-BRD \\ 
 \end{tabular} 
@@ -61,8 +61,8 @@ to any finite number by the translator but only by available hardware and lower 
 \end{figure}
 
 Figure~\ref{pic:hostpic} shows the state of the middleware after initialisation. On default a USB-FTDI adaptor is used to enable serial over USB.
-In this test we used plain RS232 connections for accessing the controlling node. The parametres of the hardware part called \textit{SerialReader.py}
-are very extensive so use the code or see a console output by using the standard \textit{--help} parametre upon start.
+In this test we used plain RS232 connections for accessing the controlling node. The parameters of the hardware part called \textit{SerialReader.py}
+are very extensive so use the code or see a console output by using the standard \textit{--help} parameter upon start.
 
 The next step is to identify all available nodes. Firstly, the controller gets the command \textit{+WWSNID} to report example identification numbers.
 Our example shows our room number in our college where the node was resting on the table as shown in picture~\ref{pic:nodepic}. It is possible 
@@ -182,7 +182,7 @@ It is a huge improvement in comparison to the default serial line communication 
 
 \textit{LazyData} is a singleton based on the work of Alan Felice. Mainly it serves as a data buffer for the serial output from the host to the node. 
 As mentioned by~\cite{GammaHelmJohnsonVlissides199711} the singleton only allows one instance which is accessible throughout every object. It was
-heaviliy modified by us to enable the usage for the serial reader module.
+heavily modified by us to enable the usage for the serial reader module.
 
 \newpage
 \subsection{Translator class}
@@ -237,8 +237,8 @@ The class itself is mainly a dictionary which is used for the translation proces
    \label{SerialReaderpic}%
 \end{figure}
 
-\textit{SerialReader} is used for the hardware part. It is highly configurable through parametres and even more through code. As the
-serial RS232 connector utilizes a big amount of different configuration parametres a possible adaptor will surely have to look inside the
+\textit{SerialReader} is used for the hardware part. It is highly configurable through parameters and even more through code. As the
+serial RS232 connector utilizes a big amount of different configuration parameters a possible adaptor will surely have to look inside the
 programming. It is the main component which must be started.\footnote{Also the database is important if you don't want to rely on sqlite.}
 
 \newpage
@@ -252,7 +252,7 @@ programming. It is the main component which must be started.\footnote{Also the d
 
 The \textit{web server} class can be seen as the \textit{View} part of the MVC pattern, as it allows and restricts the access and the requests of a user to this specified methods.
 
-The class uses the Cherrypy web server framework.\footnote{The CherryPy web server is a open source project hosted on \url{http://www.cherrypy.org/}} A standalone web server written completely in Python. The advantage of this fact is that the dependency of project is reduced to Python instead of the use of a big and resource hungry web server like Apache2. Also the easy and fast development of methods/pages which comes with the framework.
+The class uses the CherryPy web server framework.\footnote{The CherryPy web server is a open source project hosted on \url{http://www.cherrypy.org/}} A standalone web server written completely in Python. The advantage of this fact is that the dependency of project is reduced to Python instead of the use of a big and resource hungry web server like Apache2. Also the easy and fast development of methods/pages which comes with the framework.
 
 For demonstration of the simplicity of CherryPy an extract of the \textit{web server} class is presented. As it can bee seen, it is already enough to define a method to receive a functional site. 
 \begin{lstlisting}[language=Python]
@@ -287,4 +287,4 @@ get the most recent development version with \textit{git clone git@github.com:Ph
 
 Finally, you change directory to the project and run \textit{python SerialReader.py -h} to see available options.
 
-[KAMIL BESCHREIBT HIER WIE DER web server ZU STARTEN IST UND ERGAENZT AUCH DAS GITHUB-HELPDINGSDA]
+[KAMIL BESCHREIBT HIER WIE DER web server ZU STARTEN IST UND ERGAENZT AUCH DAS GITHUB-HELPDINGSDA - Alles klar]
