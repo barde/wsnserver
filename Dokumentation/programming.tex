@@ -124,9 +124,9 @@ The last possible user is the setup script, which accesses the controller for ma
 
 This unittest was written to test the \textit{Controller} class and their functionality. 
 
-The \textit{setUp()} method creates fixtures, which will be stored in the database, before each test case will be run. This ensures that all "retrieving"-methods have something to read and all "remove"-methods have something to delete.
+The \textit{setUp()} method creates fixtures, which will be stored in the database, before each test case will be run. This ensures that all "retrieving"-methods have something to read and all "remove"-methods have something to delete. At the end of each test case the expected and the actual values will be compared. 
 
-After each testrun the database will be cleared by the \textit{tearDown()} method.
+After each testrun the database will be cleared by the \textit{tearDown()} method. 
 
 \newpage
 \subsection{DataRepository class}
@@ -140,7 +140,9 @@ After each testrun the database will be cleared by the \textit{tearDown()} metho
 The \textit{DataRepository} class is the main model class of this project. 
 Their goal is to store and retrieve information and data from the database. 
 Nearly all methods contain SQL instructions, 
-which will be executed by the use of an \textit{DBConnection} object, which contains an actual database connection.
+which will be executed by the use of an \textit{DBConnection} object, which again contains an actual database connection.
+
+In the first implementation the methods have been developed to run with SQLite so no other database system was needed. After running a few stresstests - by storing very much data in a very short time in the database - the database crashed. Therefore a second layer - MySQL - was developed to ensure proper function under high database usage.
 
 \newpage
 \subsection{DataRepositoryTest class}
@@ -151,6 +153,11 @@ which will be executed by the use of an \textit{DBConnection} object, which cont
    \label{DataRepositoryTestpic}%
 \end{figure}
 
+Equivalent to the \textit{Controller} class the \textit{DataRepository} class also possesses a test class.
+
+The testing of the \textit{DataRepository} class was very crucial, because it was very important to ensure the proper function of the methods implemented in the \textit{DataRepository}. A small error could later cause a discrepancy when analysing the data retrieved from the database. 
+The tests have been developed to be executed for the \textit{DataRepository} in its first version with SQLite, but the same tests also accelerated the development of the MySQL-layer, because every test, which has been developed to run with SQLite, had also to work identically with the MySQL-implementation.
+
 \newpage
 \subsection{DBConnection class}
 \begin{figure}[H]
@@ -160,7 +167,7 @@ which will be executed by the use of an \textit{DBConnection} object, which cont
    \label{DBConnectionpic}%
 \end{figure}
 
-The sole purpose of the \textit{DBConnection} class is to return a open database connection or the caller. This is achieved by loading the configuration file and read out the settings, so the \textit{DBConnection} class can decide which kind of database connection it will return the the calling method as response.
+The sole purpose of the \textit{DBConnection} class is to return an open database connection to the caller. This is achieved by loading the configuration file and read out the settings, so the \textit{DBConnection} class can decide which kind of database connection it will return the the calling method as response.
 
 \newpage
 \subsection{EnhancedSerial class}
@@ -258,7 +265,7 @@ The \textit{Webserver} class can be seen as the \textit{View} part of the MVC pa
 
 The class uses the CherryPy web server framework.\footnote{The CherryPy web server is a open source project hosted on \url{http://www.cherrypy.org/}} A standalone web server written completely in Python. The advantage of this fact is that the dependency of project is reduced to Python instead of the use of a big and resource hungry web server like Apache2. Also the easy and fast development of methods/pages which comes with the framework.
 
-For demonstration of the simplicity of CherryPy an extract of the \textit{Webserver} class is presented. As it can bee seen, it is already enough to define a method to receive a functional site. 
+For demonstration of the simplicity of CherryPy an extract of the \textit{Webserver} class is presented. As it can be seen, it is already enough to define a method to receive a functional site. 
 \begin{lstlisting}[language=Python]
 import Controller
 import cherrypy
@@ -273,7 +280,7 @@ class web server:
 
 To see if this method works, the user has to call \url{http://localhost:8080/index} and will receive the status of the web server.
 
-
+\newpage
 \section{Custom Installation}
 \label{sec:install}
 
