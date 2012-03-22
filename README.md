@@ -36,12 +36,13 @@ For running the setup, you will also need the MySQLdb driver.
 2. [Download](http://sourceforge.net/projects/mysql-python/) the driver
 3. Install it by extracting the package and running `python setup.py install` from the wsnserver directory
 
+
 Usage
 ------
 
 
 For running the translator you need a local Wireless Sensor Node. The development was done on a 
-Renesas ???.
+Renesas ZMD28-BRD.
 
 Run:
 `python SerialReader.py -h` for explanation of command line variables and use the source for further adjustment.

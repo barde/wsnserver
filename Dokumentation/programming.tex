@@ -221,4 +221,21 @@ class Webserver:
 To see if this method works, the user has to call \url{http://localhost:8080/index} and will receive the status of the webserver.
 
 
+\section{Custom Installation}
+\label{chap:install}
 
+Custom installation is only required when not using the provided disc image.
+
+\begin{enumerate}
+    \item Install a Linux of your chosen flavour. Preferrably use Debian.
+    \item Install git\footnote{\textit{apt-get install git}}
+    \item Download and install cherrypy\footnote{\url{http://www.cherrypy.org/wiki/CherryPyDownload} or on Debian \textit{apt-get install python-cherrypy}}
+    \item \textit{Optionally:} Install a MySQL server and proper SQL bindings for increased functionality\footnote{\textit{apt-get install mysql-server mysql-client libmysqlclient15-dev python-mysqldb}}
+\end{enumerate}
+
+The last step is to use a proper user-account\footnote{root not recommended but put the user in the appropriate group for accessing serial connection} and
+get the most recent development version with \textit{git clone git@github.com:Phialo/wsnserver.git}.
+
+Finally, you change directory to the project and run \textit{python SerialReader.py -h} to see available options.
+
+[KAMIL BESCHREIBT HIER WIE DER WEBSERVER ZU STARTEN IST UND ERGAENZT AUCH DAS GITHUB-HELPDINGSDA]
