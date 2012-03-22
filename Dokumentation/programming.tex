@@ -50,7 +50,8 @@ For general x86-machine there are not specific demands
    \label{nodepic}%
 \end{figure}
 
-- less nodes as focused on communication
+For the setup we tried to not distract ourselves from the goal so we tested with just one client. The final version is not restricted
+to any finite number by the translator but only by available hardware and lower protocol stack's requirements.
 
 \begin{figure}[H]
    \centering
@@ -59,7 +60,19 @@ For general x86-machine there are not specific demands
    \label{hostpic}%
 \end{figure}
 
-- initialisiation description
+Figure~\ref{pic:hostpic} shows the state of the middleware after initialisation. On default a USB-FTDI adaptor is used to enable serial over USB.
+In this test we used plain RS232 connections for accessing the controlling node. The parametres of the hardware part called \textit{SerialReader.py}
+are very extensive so use the code or see a console output by using the standard \textit{--help} parametre upon start.
+
+The next step is to identify all available nodes. Firstly, the controller gets the command \textit{+WWSNID} to report example identification numbers.
+Our example shows our room number in our college where the node was resting on the table as shown in picture~\ref{pic:nodepic}. It is possible 
+to use whatever means of identification but it should be unique due to its importance as database key. Every node has its own 
+entry and is adressable if the lower stack on the controller/router enables it.
+
+Forthermore visible is the ZigBee identifier for \textsc{Pan Id} and \textsc{Channel Id}. Every device has its own identifier in the ZigBee specification
+but it is not required on the middleware's side. Some example output is reported by the node as you can see on the screenshot.\footnote{The screenshot
+    is the debug output from the host machine. This is not the default as the host could possibly run headless. Be aware that ZigBee devices may influence
+other nodes which are not part of your project. We experienced this quirk and had a lot of fun to find out why.}
 
 \newpage
 \section{The development method}
@@ -70,6 +83,11 @@ Critical parts like the \textit{Controller} and the \textit{DataRepository} clas
 where first tests have been written and afterwards the corresponding methods. This last development technique had their advantages and made 
 the expansion of the \textit{DataRepository} class with a second database layer - MySQL - much easier and faster: each test case 
 created for the first database layer - SQLite - had also to work with the newly implemented layer for MySQL.
+
+The approach for the hardware backend was similar but more experiemental due to the serial nature of communication between node and host machine. Only
+few tests were used as there were different approaches in the lifecycle of this project: a thread-based approach was not found optimal because 
+of error in the \textit{pySerial} module and hardware design flaws for threading. A buffer was inserted instead which will cache a limited amount of commands which
+will be sent on the next cycle. The cycles were parted between reading and writing.
 
 \section{Class diagrams}
 \subsection{The Controller class}
@@ -149,6 +167,10 @@ The sole purpose of the \textit{DBConnection} class is to return a open database
    \label{EnhancedSerialpic}%
 \end{figure}
 
+\textit{EnhancedSerial} is a part of \url{http://pyserial.sf.net}{pyserial}  written by \url{mailto:cliechti@gmx.net}{C. Liechti} in 2002.
+It is a huge improvement in comparision to the default serial line communication class. For details please look into the code.
+
+
 \newpage
 \subsection{LazyData class}
 \begin{figure}[H]
@@ -157,6 +179,10 @@ The sole purpose of the \textit{DBConnection} class is to return a open database
    \caption{LazyData class}
    \label{LazyDatapic}%
 \end{figure}
+
+\textit{LazyData} is a singleton based on the work of Alan Felice. Mainly it serves as a data buffer for the serial output from the host to the node. 
+As mentioned by~\cite{GammaHelmJohnsonVlissides199711} the singleton only allows one instance which is accessible throughout every object. It was
+heaviliy modified by us to enable the usage for the serial reader module.
 
 \newpage
 \subsection{Translator class}
@@ -167,6 +193,9 @@ The sole purpose of the \textit{DBConnection} class is to return a open database
    \label{Translatorpic}%
 \end{figure}
 
+The translation abstract class is the heart of the middleware. It enables the transition between the various language by providing a basis for further 
+abstraction.
+
 \subsubsection{MedusaTranslator class}
 \begin{figure}[H]
    \centering
@@ -174,6 +203,17 @@ The sole purpose of the \textit{DBConnection} class is to return a open database
    \caption{MedusaTranslator class}
    \label{MedusaTranslatorpic}%
 \end{figure}
+
+The Medusa is a node system with a lot of sonar-like \textit{heads} which are mainly used in localisation.\cite{Dispert}
+This is just a symbolic help to insert also this very special node in the translation system.
+
+\begin{figure}[H]
+   \centering
+   \includegraphics[pic/medusa.jpg}%
+   \caption{A first generation Medusa. Image source: \url{nesl.ee.ucla.edu}}
+   \label{Medusapic}%
+\end{figure}
+
 
 \subsubsection{RenesasTranslator class}
 \begin{figure}[H]
@@ -183,6 +223,11 @@ The sole purpose of the \textit{DBConnection} class is to return a open database
    \label{RenesasTranslatorpic}%
 \end{figure}
 
+As the Renesas ZMD28-BRD is used as our main development board we included a full class for temperature sensing. It is a very 
+basic hardware programming on the node to not complicate the whole project. It was provided by the laboratory assistant Stephan Koss.
+
+The class itself is mainly a dictionary which is used for the translation process.
+
 \newpage
 \subsection{SerialReader class}
 \begin{figure}[H]
@@ -191,6 +236,10 @@ The sole purpose of the \textit{DBConnection} class is to return a open database
    \caption{SerialReader class, main class for reading data from serial port}
    \label{SerialReaderpic}%
 \end{figure}
+
+\textit{SerialReader} is used for the hardware part. It is highly configuarble through parametres and even more through code. As the
+serial RS232 connector utilizes a big amount of different configuration parametres a possible adaptor will surely have to look inside the
+programming. It is the main component which must be started.\footnote{Also the database is important if you don't want to rely on sqlite.}
 
 \newpage
 \subsection{Webserver class}
