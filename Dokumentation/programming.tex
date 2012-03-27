@@ -47,7 +47,7 @@ For general x86-machine there are not specific demands
    \centering
    \includegraphics[width=0.8\textwidth]{pic/controller.jpg}%
    \caption{Renesas Node with Custom Programming and Serial Connector}
-   \label{nodepic}%
+   \label{fig:nodepic}%
 \end{figure}
 
 For the setup we tried to not distract ourselves from the goal so we tested with just one client. The final version is not restricted
@@ -57,15 +57,15 @@ to any finite number by the translator but only by available hardware and lower 
    \centering
    \includegraphics[width=0.8\textwidth]{pic/host_machine.jpg}%
    \caption{Console Output on Host Machine}
-   \label{hostpic}%
+   \label{fig:hostpic}%
 \end{figure}
 
-Figure~\ref{pic:hostpic} shows the state of the middleware after initialisation. On default a USB-FTDI adaptor is used to enable serial over USB.
+Figure~\ref{fig:hostpic} shows the state of the middleware after initialisation. On default a USB-FTDI adaptor is used to enable serial over USB.
 In this test we used plain RS232 connections for accessing the controlling node. The parameters of the hardware part called \textit{SerialReader.py}
 are very extensive so use the code or see a console output by using the standard \textit{--help} parameter upon start.
 
 The next step is to identify all available nodes. Firstly, the controller gets the command \textit{+WWSNID} to report example identification numbers.
-Our example shows our room number in our college where the node was resting on the table as shown in picture~\ref{pic:nodepic}. It is possible 
+Our example shows our room number in our college where the node was resting on the table as shown in picture~\ref{fig:nodepic}. It is possible 
 to use whatever means of identification but it should be unique due to its importance as database key. Every node has its own 
 entry and is addressable if the lower stack on the controller/router enables it.
 
