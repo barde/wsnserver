@@ -90,7 +90,7 @@ of error in the \textit{pySerial} module and hardware design flaws for threading
 will be sent on the next cycle. The cycles were parted between reading and writing.
 
 \section{Desgin concept}
-The goal of the project was to create a middleware software, which can communicate with many different wireless sensor nodes connected to the computer. This requirement showed very clearly that the "reader" module communicating with the enddevices had to be separated from the rest of the logic, because each type of enddevices needs a specific implementation of the so called "reader" module. Another requirement was, that the system should be able to store information for the enddevices in a database until an external application requested the data. The last point emerged the need to provide an API for external application.
+The goal of the project was to create a middleware software, which can communicate with many different wireless sensor nodes connected to the computer. This requirement showed very clearly that the "reader" module communicating with the enddevices had to be separated from the rest of the logic, because each type of enddevices needs a specific implementation of the so called "reader" module. Another requirement was, that the system should be able to store information for the enddevices in a database until an external application requested the data. The last point emerged the need to provide an API for external application, which could be done with a web server.
 
 
 \begin{figure}[H]
@@ -101,36 +101,6 @@ The goal of the project was to create a middleware software, which can communica
 \end{figure}
 
 The sum of the requirements points to the Model-View-Controller design pattern, where the \textit{Webserver} represents the \textit{View}, the \textit{Controller} the \textit{Controller} from the MVC and the \textit{DataRepository} the \textit{Model}.
-
-\newpage
-\section{Sequence diagrams}
-\subsection{Save data from the \textit{SerialReader} to the \textit{DataRepository}}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=1.0\textwidth]{pic/SerialReader-to-DataRepository.png}%
-    \caption{Sequence diagram for saving data from a device to the \textit{DataRepitory}}
-    \label{SerialReadertoDataRepositorypic}%
-\end{figure}
-
-\newpage\
-\subsection{Save commands from user to the \textit{DataRepository}}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=1.0\textwidth]{pic/SaveCMD.png}%
-    \caption{Sequence diagram for user, who saves new commands for a wsnid}
-    \label{SaveCMDpic}%
-\end{figure}
-
-\newpage
-\subsection{User reads all data from the database}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=1.0\textwidth]{pic/User-ReadAll.png}%
-    \caption{Sequence diagram for a user, who reads all data for a wsnid}
-    \label{UserReadAllpic}%
-\end{figure}
-
-
 
 
 \newpage
@@ -203,7 +173,7 @@ Furthermore the \textit{Setup.py} allows the cleaning of the tables by using the
     \label{Setuppypic}%
 \end{figure}
 
-It is advisable to use a MySQL database if more than one wireless sensor node is connected to the \textit{wsnserver}, because the SQLite database uses a file to store the information, which allows only one write access at the time. If more than one device or applications are writing to the SQLite database at the same time, the database will crash and errors will occur.
+It is advisable to use a MySQL database if more than one wireless sensor node is connected to the \textit{wsnserver}, because the SQLite database uses a file to store the information, which allows only one write access at the time. If more than one device or application is writing to the SQLite database at the same time, the database will crash and errors will occur.
 
 \newpage
 \subsection{The Controller class}
@@ -408,6 +378,35 @@ Some of the methods defined in this class need parameters to retrive or save dat
 \end{lstlisting}
 It will be assumed that in the \textit{data} table data for a WSN device with the id \textit{wsn01} is stored. To get this data the user or application has to call the following url with the id as parameter: \textit{http://localhost:8080/readAll?id=wsn01}.
 It is important to use the parameters specified in the method as url parameters, else the web server will not recognize it and won't retrieve the data. 
+
+\newpage
+\section{Sequence diagrams}
+\subsection{Save data from the \textit{SerialReader} to the \textit{DataRepository}}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{pic/SerialReader-to-DataRepository.png}%
+    \caption{Sequence diagram for saving data from a device to the \textit{DataRepitory}}
+    \label{SerialReadertoDataRepositorypic}%
+\end{figure}
+
+\newpage\
+\subsection{Save commands from user to the \textit{DataRepository}}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{pic/SaveCMD.png}%
+    \caption{Sequence diagram for user, who saves new commands for a wsnid}
+    \label{SaveCMDpic}%
+\end{figure}
+
+\newpage
+\subsection{User reads all data from the database}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{pic/User-ReadAll.png}%
+    \caption{Sequence diagram for a user, who reads all data for a wsnid}
+    \label{UserReadAllpic}%
+\end{figure}
+
 
 \newpage
 \section{Custom Installation}
