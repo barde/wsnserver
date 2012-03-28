@@ -90,7 +90,9 @@ of error in the \textit{pySerial} module and hardware design flaws for threading
 will be sent on the next cycle. The cycles were parted between reading and writing.
 
 \section{Desgin concept}
-The goal of the project was to create a middleware software, which can communicate with many different wireless sensor nodes connected to the computer. This requirement showed very clearly that the "reader" module communicating with the enddevices had to be separated from the rest of the logic, because each type of enddevices needs a specific implementation of the so called "reader" module . Another requirement was, that the system should be able to store information for the enddevices in a database until an external application requested the data. The last point emerged the need to provide an API for external application.
+The goal of the project was to create a middleware software, which can communicate with many different wireless sensor nodes connected to the computer. This requirement showed very clearly that the "reader" module communicating with the enddevices had to be separated from the rest of the logic, because each type of enddevices needs a specific implementation of the so called "reader" module. Another requirement was, that the system should be able to store information for the enddevices in a database until an external application requested the data. The last point emerged the need to provide an API for external application.
+
+The sum of the requirements elevates the Model-View-Controller design pattern.
 
 %[HIER KOMMT NOCH EIN UML DIAGRAMM REIN, WIE WIR UNS DAS AM ANFANG VORGESTELLT HABEN  + BEHAVIORAL DIAGRAMS (Sequensdiagram + USE CASE)- KAMILLES AUFGABE]
 \newpage
