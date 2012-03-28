@@ -143,9 +143,9 @@ As already addressed in the description of the \textit{device} table the \textit
 
 \begin{description}
 	\item[id] contains the wsn-id, for example \textit{wsn01}.
-	\item[cmd] contains the command, for example \textit{}
-	\item[read] represents if a stored command has been already read by the \textit{SerialReader} or if this data is still ”fresh”.
-	\item[createdOn] contains the timestamp. It is needed for the execution of the newest command
+	\item[cmd] contains the command, for example \textit{GetID}.
+	\item[read] represents if a stored command has been already executed by the \textit{SerialReader}.
+	\item[createdOn] contains the timestamp. It is needed for the execution of the \underline{newest} command.
 \end{description}
 
 \newpage
