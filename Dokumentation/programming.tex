@@ -94,6 +94,8 @@ will be sent on the next cycle. The cycles were parted between reading and writi
 
 \newpage
 \section{The datamodel - database}
+The datamodel is being handled by 
+
 \subsection{Data table}
 \begin{figure}[H]
 	\centering
@@ -104,6 +106,13 @@ will be sent on the next cycle. The cycles were parted between reading and writi
 
 The data table stores the data received from the \textit{SerialReader} in the database.
 
+\begin{description}
+	\item[id] contains the wsn-id, for example \textit{wsn01}
+	\item[value] this field can be used universal as it can store every data type. In the test setup was a temperature value stored.
+	\item[read] represents if a stored value has been already read by a external application or if this data is still "\textit{fresh}".
+	\item[createdOn] contains the timestamp to make it easier to sort and analyse data afterwards.
+\end{description}
+
 \newpage
 \subsection{Device table}
 \begin{figure}[H]
@@ -113,6 +122,14 @@ The data table stores the data received from the \textit{SerialReader} in the da
     \label{DatamodelDevicespic}%
 \end{figure}
 
+The device table stores the devices connected to the system. The idea behind this table was to provide wsn-ids of the connected devices to external applications. Connecting this functionality with the \textit{Webserver} opens new possibilities and services like the implemented \textit{sendCMD} method in the \textit{Webserver} class. By knowing the wsn-ids it enables the application to create new commands and store them in the database.
+
+\begin{description}
+	\item[id] contains the wsn-id, for example \textit{wsn01}.
+	\item[panid] contains the panid.
+	\item[channel] stores the channel, on which the wsn is communicating.
+\end{description}
+
 \newpage
 \subsection{Command table}
 \begin{figure}[H]
@@ -121,6 +138,15 @@ The data table stores the data received from the \textit{SerialReader} in the da
     \caption{Representation of the command-model in the database}
     \label{DatamodelCMDpic}%
 \end{figure}
+
+As already addressed in the description of the \textit{device} table the \textit{command} table stores commands for wireless sensor nodes. This table is used as buffer between the application, which send this command, and the wireless sensor node, which will execute the command.
+
+\begin{description}
+	\item[id] contains the wsn-id, for example \textit{wsn01}.
+	\item[cmd] contains the command, for example \textit{}
+	\item[read] represents if a stored command has been already read by the \textit{SerialReader} or if this data is still ”fresh”.
+	\item[createdOn] contains the timestamp. It is needed for the execution of the newest command
+\end{description}
 
 \newpage
 \section{Class diagrams}
@@ -216,7 +242,7 @@ The tests have been developed to be executed for the \textit{DataRepository} in 
 
 The sole purpose of the \textit{DBConnection} class is to return an open database connection to the caller. 
 This is achieved by loading the configuration file and read out the settings, so the \textit{DBConnection} 
-class can decide which kind of database connection it will return to the calling method as response.
+class can decide which kind of database connection it will return to gridlabels=the calling method as response.
 
 \newpage
 \subsection{EnhancedSerial class}
