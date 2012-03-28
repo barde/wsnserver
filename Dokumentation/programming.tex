@@ -90,8 +90,9 @@ of error in the \textit{pySerial} module and hardware design flaws for threading
 will be sent on the next cycle. The cycles were parted between reading and writing.
 
 \section{Desgin concept}
-[HIER KOMMT NOCH EIN UML DIAGRAMM REIN, WIE WIR UNS DAS AM ANFANG VORGESTELLT HABEN  + BEHAVIORAL DIAGRAMS (Sequensdiagram + USE CASE)- KAMILLES AUFGABE]
+The goal of the project was to create a middleware software, which can communicate with many different wireless sensor nodes connected to the computer. This requirement showed very clearly that the "reader" module communicating with the enddevices had to be separated from the rest of the logic, because each type of enddevices needs a specific implementation of the so called "reader" module . Another requirement was, that the system should be able to store information for the enddevices in a database until an external application requested the data. The last point emerged the need to provide an API for external application.
 
+%[HIER KOMMT NOCH EIN UML DIAGRAMM REIN, WIE WIR UNS DAS AM ANFANG VORGESTELLT HABEN  + BEHAVIORAL DIAGRAMS (Sequensdiagram + USE CASE)- KAMILLES AUFGABE]
 \newpage
 \section{The datamodel - database}
 The datamodel is being handled by 
@@ -153,7 +154,7 @@ As already addressed in the description of the \textit{device} table the \textit
 \subsection{Setup.py installation script}
 The first step in setting up the middle-ware is to run the \textit{Setup.py} installation script by using \textit{python Setup.py --option}. The goal of the \textit{Setup.py} is to configure the database connection and also to create the needed tables in the database. A configuration file named \textit{wsn.cfg} is being created, which stores the type and the connection settings. In case of the creation of a \textit{SQLite} database, no authentication credentials are needed.
 
-Furthermore the \textit{Setup.py} allows the cleaning of the tables by using the \textit{--rmDev},  \textit{--rmData} and \textit{--rmCMD} and also to change the database type form for example \textit{SQLite} to \textit{MySQL}.
+Furthermore the \textit{Setup.py} allows the cleaning of the tables by using the \textit{--rmDev},  \textit{--rmData} and \textit{--rmCMD} and also to change the database type from for example \textit{SQLite} to \textit{MySQL}.
 
 \begin{figure}[H]
 	\centering
@@ -161,6 +162,8 @@ Furthermore the \textit{Setup.py} allows the cleaning of the tables by using the
     \caption{The help page of the Setup.py script.}
     \label{Setuppypic}%
 \end{figure}
+
+It is advisable to use a MySQL database if more than one wireless sensor node is connected to the \textit{wsnserver}, because the SQLite database uses a file to store the information, which allows only one write access at the time. If more than one device or applications are writing to the SQLite database at the same time, the database will crash and errors will occur.
 
 \newpage
 \subsection{The Controller class}
