@@ -102,6 +102,8 @@ will be sent on the next cycle. The cycles were parted between reading and writi
     \label{DatamodelDatapic}%
 \end{figure}
 
+The data table stores the data received from the \textit{SerialReader} in the database.
+
 \newpage
 \subsection{Device table}
 \begin{figure}[H]
@@ -214,7 +216,7 @@ The tests have been developed to be executed for the \textit{DataRepository} in 
 
 The sole purpose of the \textit{DBConnection} class is to return an open database connection to the caller. 
 This is achieved by loading the configuration file and read out the settings, so the \textit{DBConnection} 
-class can decide which kind of database connection it will return the calling method as response.
+class can decide which kind of database connection it will return to the calling method as response.
 
 \newpage
 \subsection{EnhancedSerial class}
@@ -326,6 +328,17 @@ class web server:
 \end{lstlisting}
 
 To see if this method works, the user has to call \url{http://localhost:8080/index} and will receive the status of the web server.
+
+Some of the methods defined in this class need parameters to retrive or save data for a specific \textit{wsn-id}. To provide an example the \textit{readAll} method has been choosen. Its purpose is to retrieve all data for a specific \textit{wsn-id}.
+\begin{lstlisting}[language=Python]
+@expose
+    def readAll(self, id):
+        controller = Controller.Controller()
+        string = format(controller.readAllAction(id))
+        return string
+\end{lstlisting}
+It will be assumed that in the \textit{data} table data for a WSN device with the id \textit{wsn01} is stored. To get this data the user or application has to call the following url with the id as parameter: \textit{http://localhost:8080/readAll?id=wsn01}.
+It is important to use the parameters specified in the method as url parameters, else the web server will not recognize it and won't retrieve the data. 
 
 \newpage
 \section{Custom Installation}
