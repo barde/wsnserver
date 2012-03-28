@@ -98,9 +98,13 @@ will be sent on the next cycle. The cycles were parted between reading and writi
 
 \section{Class diagrams}
 \subsection{Setup.py installation script}
+The first step in setting up the middle-ware is to run the \textit{Setup.py} installation script by using \textit{python Setup.py --option}. The goal of the \textit{Setup.py} is to configure the database connection and also to create the needed tables in the database. A configuration file named \textit{wsn.cfg} is being created, which stores the type and the connection settings. In case of the creation of a \textit{SQLite} database, no authentication credentials are needed.
+
+Furthermore the \textit{Setup.py} allows the cleaning of the tables by using the \textit{--rmDev},  \textit{--rmData} and \textit{--rmCMD}.
+
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.5\textwidth]{pic/Setuppy.png}%
+	\includegraphics[width=0.8\textwidth]{pic/Setuppy.png}%
     \caption{The help page of the Setup.py script.}
     \label{Setuppypic}%
 \end{figure}
