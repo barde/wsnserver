@@ -92,21 +92,38 @@ will be sent on the next cycle. The cycles were parted between reading and writi
 \section{Desgin concept}
 The goal of the project was to create a middleware software, which can communicate with many different wireless sensor nodes connected to the computer. This requirement showed very clearly that the "reader" module communicating with the enddevices had to be separated from the rest of the logic, because each type of enddevices needs a specific implementation of the so called "reader" module. Another requirement was, that the system should be able to store information for the enddevices in a database until an external application requested the data. The last point emerged the need to provide an API for external application.
 
-The sum of the requirements elevated the Model-View-Controller design pattern.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.3\textwidth]{pic/Concept.png}%
+	\includegraphics[width=1.0\textwidth]{pic/Concept.png}%
     \caption{Concept of the design}
     \label{Conceptpic}%
 \end{figure}
 
+The sum of the requirements points to the Model-View-Controller design pattern, where the \textit{Webserver} represents the \textit{View}, the \textit{Controller} the \textit{Controller} from the MVC and the \textit{DataRepository} the \textit{Model}.
+
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.3\textwidth]{pic/UserReadAll.png}%
+	\includegraphics[width=1.0\textwidth]{pic/SerialReader-to-DataRepository.png}%
+    \caption{Sequence diagram for saving data from a device to the \textit{DataRepitory}}
+    \label{SerialReadertoDataRepositorypic}%
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{pic/SaveCMD.png}%
+    \caption{Sequence diagram for user, who saves new commands for a wsnid}
+    \label{SaveCMDpic}%
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{pic/User-ReadAll.png}%
     \caption{Sequence diagram for a user, who reads all data for a wsnid}
     \label{UserReadAllpic}%
 \end{figure}
+
+
 
 
 \newpage
