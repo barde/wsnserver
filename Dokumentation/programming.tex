@@ -92,10 +92,35 @@ will be sent on the next cycle. The cycles were parted between reading and writi
 \section{Desgin concept}
 [HIER KOMMT NOCH EIN UML DIAGRAMM REIN, WIE WIR UNS DAS AM ANFANG VORGESTELLT HABEN  + BEHAVIORAL DIAGRAMS (Sequensdiagram + USE CASE)- KAMILLES AUFGABE]
 
-\section{DataBase}
+\newpage
+\section{The datamodel - database}
+\subsection{Data table}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.3\textwidth]{pic/DatamodelData.png}%
+    \caption{Representation of the data-model in the database}
+    \label{DatamodelDatapic}%
+\end{figure}
 
-[HIER KOMMT DAS DESIGN DER DATENBANK REIN -> KAMILLE]
+\newpage
+\subsection{Device table}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.3\textwidth]{pic/DatamodelDevices.png}%
+    \caption{Representation of the device-model in the database}
+    \label{DatamodelDevicespic}%
+\end{figure}
 
+\newpage
+\subsection{Command table}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.3\textwidth]{pic/DatamodelCMD.png}%
+    \caption{Representation of the command-model in the database}
+    \label{DatamodelCMDpic}%
+\end{figure}
+
+\newpage
 \section{Class diagrams}
 \subsection{Setup.py installation script}
 The first step in setting up the middle-ware is to run the \textit{Setup.py} installation script by using \textit{python Setup.py --option}. The goal of the \textit{Setup.py} is to configure the database connection and also to create the needed tables in the database. A configuration file named \textit{wsn.cfg} is being created, which stores the type and the connection settings. In case of the creation of a \textit{SQLite} database, no authentication credentials are needed.
@@ -104,11 +129,12 @@ Furthermore the \textit{Setup.py} allows the cleaning of the tables by using the
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\textwidth]{pic/Setuppy.png}%
+	\includegraphics[width=1.0\textwidth]{pic/Setuppy.png}%
     \caption{The help page of the Setup.py script.}
     \label{Setuppypic}%
 \end{figure}
 
+\newpage
 \subsection{The Controller class}
 \begin{figure}[H]
    \centering
