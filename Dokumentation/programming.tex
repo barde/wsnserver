@@ -92,14 +92,51 @@ will be sent on the next cycle. The cycles were parted between reading and writi
 \section{Desgin concept}
 [HIER KOMMT NOCH EIN UML DIAGRAMM REIN, WIE WIR UNS DAS AM ANFANG VORGESTELLT HABEN  + BEHAVIORAL DIAGRAMS (Sequensdiagram + USE CASE)- KAMILLES AUFGABE]
 
-\section{DataBase}
+\newpage
+\section{The datamodel - database}
+\subsection{Data table}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.3\textwidth]{pic/DatamodelData.png}%
+    \caption{Representation of the data-model in the database}
+    \label{DatamodelDatapic}%
+\end{figure}
 
-[HIER KOMMT DAS DESIGN DER DATENBANK REIN -> KAMILLE]
+The data table stores the data received from the \textit{SerialReader} in the database.
 
+\newpage
+\subsection{Device table}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.3\textwidth]{pic/DatamodelDevices.png}%
+    \caption{Representation of the device-model in the database}
+    \label{DatamodelDevicespic}%
+\end{figure}
+
+\newpage
+\subsection{Command table}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.3\textwidth]{pic/DatamodelCMD.png}%
+    \caption{Representation of the command-model in the database}
+    \label{DatamodelCMDpic}%
+\end{figure}
+
+\newpage
 \section{Class diagrams}
-\subsection{Setup.py}
-[HIER MUSS NOCH DIE SETUP.PY REIN, OBWOHL SIE NICHT SO RICHTIG ZU DEN KLASSEN PASST, DA ES SICH HIER UM EIN PROZEDURALES SKRIPT HANDELT- KAMILLES AUFGABE]
+\subsection{Setup.py installation script}
+The first step in setting up the middle-ware is to run the \textit{Setup.py} installation script by using \textit{python Setup.py --option}. The goal of the \textit{Setup.py} is to configure the database connection and also to create the needed tables in the database. A configuration file named \textit{wsn.cfg} is being created, which stores the type and the connection settings. In case of the creation of a \textit{SQLite} database, no authentication credentials are needed.
 
+Furthermore the \textit{Setup.py} allows the cleaning of the tables by using the \textit{--rmDev},  \textit{--rmData} and \textit{--rmCMD} and also to change the database type form for example \textit{SQLite} to \textit{MySQL}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{pic/Setuppy.png}%
+    \caption{The help page of the Setup.py script.}
+    \label{Setuppypic}%
+\end{figure}
+
+\newpage
 \subsection{The Controller class}
 \begin{figure}[H]
    \centering
@@ -179,7 +216,7 @@ The tests have been developed to be executed for the \textit{DataRepository} in 
 
 The sole purpose of the \textit{DBConnection} class is to return an open database connection to the caller. 
 This is achieved by loading the configuration file and read out the settings, so the \textit{DBConnection} 
-class can decide which kind of database connection it will return the calling method as response.
+class can decide which kind of database connection it will return to the calling method as response.
 
 \newpage
 \subsection{EnhancedSerial class}
@@ -291,6 +328,17 @@ class web server:
 \end{lstlisting}
 
 To see if this method works, the user has to call \url{http://localhost:8080/index} and will receive the status of the web server.
+
+Some of the methods defined in this class need parameters to retrive or save data for a specific \textit{wsn-id}. To provide an example the \textit{readAll} method has been choosen. Its purpose is to retrieve all data for a specific \textit{wsn-id}.
+\begin{lstlisting}[language=Python]
+@expose
+    def readAll(self, id):
+        controller = Controller.Controller()
+        string = format(controller.readAllAction(id))
+        return string
+\end{lstlisting}
+It will be assumed that in the \textit{data} table data for a WSN device with the id \textit{wsn01} is stored. To get this data the user or application has to call the following url with the id as parameter: \textit{http://localhost:8080/readAll?id=wsn01}.
+It is important to use the parameters specified in the method as url parameters, else the web server will not recognize it and won't retrieve the data. 
 
 \newpage
 \section{Custom Installation}
