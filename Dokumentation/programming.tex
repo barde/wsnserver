@@ -389,6 +389,10 @@ It is important to use the parameters specified in the method as url parameters,
     \label{SerialReadertoDataRepositorypic}%
 \end{figure}
 
+At each start of the \textit{SerialReader} the device id will be read and saved into the database. In this way the system knows which device is connected to the computer. This will be done only once.
+
+After the initialization the \textit{SerialReader} will run the following commands in a endless loop. On every pass it checks if there are new instructions saved in the database for the connected device. If it should be the case, the commands will be translated and send to the connected device. At last the data from the device will be read and stored to the database. If there are no commands for execution pending, the \textit{SerialReader} would only try to read the data from the device.
+
 \newpage\
 \subsection{Save commands from user to the \textit{DataRepository}}
 \begin{figure}[H]
@@ -397,6 +401,8 @@ It is important to use the parameters specified in the method as url parameters,
     \caption{Sequence diagram for user, who saves new commands for a wsnid}
     \label{SaveCMDpic}%
 \end{figure}
+
+This sequence diagram shows the procedure how a \textit{User} can save commands for a device. If the \textit{User} does not know the device id, he can call a function, which will return all the devices connected to the server. Afterwards a command for a specific device can be saved in the database.
 
 \newpage
 \subsection{User reads all data from the database}
@@ -407,6 +413,7 @@ It is important to use the parameters specified in the method as url parameters,
     \label{UserReadAllpic}%
 \end{figure}
 
+In the case the \textit{User} does not know the device id, he can retrieve it by calling a method, which will return all connected devices from the database. Knowing the device id allows the user to invoke a function to read all data for this specific id.
 
 \newpage
 \section{Custom Installation}
