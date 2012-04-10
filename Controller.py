@@ -48,9 +48,6 @@ class Controller(object):
     def removeAllDevicesAction(self):
         self.dataRepository.removeAllDevices()
     
-    ''' 
-    Todo: Return value must be formated.
-    '''
     def readAllAction(self, wsnid):
         if wsnid:
             return self.dataRepository.readAllData(wsnid)
