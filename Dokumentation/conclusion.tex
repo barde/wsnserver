@@ -1,6 +1,10 @@
--restful
--caching
--unifying/translating
--db
--design
--serial/usb/whatever
+The middleware presented in this paper is a first step of providing a modular, basic system for the development and control of wireless sensor networks, adjustable to the needs of the environment.
+
+The created wireless sensor network server fulfils the needs of a middleware, which supports the implementation of different node protocols and various kind of sensor nodes. 
+
+The separation of the middleware into the \textit{Model-View-Controller} layers makes the system very modular and the implementation of new communication protocols easier and faster. Developers can use the already implemented solution for the \textit{Renesas} node as aid and template for new modules and it is their option to specify the location of the connected device, like USB or the serial port. 
+
+Furthermore the middleware contains a fully functional web server with a RESTful API for communicating with the server. Developers can customize the web server and the interface to their needs. 
+
+
+
