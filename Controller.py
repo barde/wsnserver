@@ -23,8 +23,8 @@ class Controller(object):
             return self.dataRepository.readCMD(wsnid)
     
     '''
-    Saved commands for a wsn id
-    This function should be used to control the wsns
+    Saves commands for a wsn id.
+    This function should be used to control the wsns.
     '''
     def saveCMDAction(self, wsnid, cmd):
         if wsnid and cmd:
@@ -34,28 +34,50 @@ class Controller(object):
     def removeAllCMDAction(self):
         self.dataRepository.removeAllCMD()
     
+    
     def saveDataAction(self, wsnid, value):
         if wsnid and value:
             self.dataRepository.saveData(wsnid, value)
         
+    '''
+    This method should be used only by the SerialReader. It stores the
+    connected device in the database.
+    '''
     def saveDeviceAction(self, wsnid, panid, channel):
         if id and panid and channel:
             self.dataRepository.saveDevice(wsnid, panid, channel)
     
+    '''
+    Returns a list of devices or nodes, which are currently connected
+    to the host pc.
+    '''
     def readDeviceList(self):
         return self.dataRepository.readDeviceList()
     
+    '''
+    Cleans all devices from the device table.
+    '''
     def removeAllDevicesAction(self):
         self.dataRepository.removeAllDevices()
     
+    '''
+    Returns all data for a wsn id, no matter if the data was read
+    before or not, like in "readLeatestAction".
+    '''
     def readAllAction(self, wsnid):
         if wsnid:
             return self.dataRepository.readAllData(wsnid)
     
+    '''
+    Returns only unread data for a wsn id.
+    '''
     def readLeatestAction(self, wsnid):
         if wsnid:
             self.dataRepository.readLeatestData(wsnid)
     
+    '''
+    Clears all stored "data" from the database.
+    '''
     def removeAllDataAction(self):
         self.dataRepository.removeAllData()
         
