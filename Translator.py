@@ -17,9 +17,9 @@
 # This object translates generic commands for WSN
 # of different manufacturers.
 #
- #
-  #
-   ############
+#
+#
+############
 
 #Abstract class
 class Translator:
