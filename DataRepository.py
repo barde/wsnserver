@@ -152,6 +152,7 @@ class DataRepository(object):
         return data
     
     '''
+    Saves data into the repository.
     id: should contain the wsn-id
     value: should contain the data.
     '''

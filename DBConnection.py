@@ -1,6 +1,7 @@
 '''
 Created on 09.10.2011
-
+The sole purpose of this class is to return an
+open database connection.
 @author: Kamil Wozniak
 '''
 import sqlite3
@@ -13,10 +14,11 @@ except ImportError:
     mysqlModExists = False
 
 class DBConnection(object):
+    
     '''
-    classdocs
-    '''
-        
+    Returns a database connection object, which can
+    be used to execute SQL-code.
+    '''   
     def getDBConnection(self):
         config = ConfigParser.RawConfigParser()
         config.read('wsn.cfg')
