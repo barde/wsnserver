@@ -30,11 +30,16 @@ class Controller(object):
         if wsnid and cmd:
             self.dataRepository.saveCMD(wsnid, cmd)
     
-    
+    '''
+    Clears the command-buffer (database) for all wsns.
+    '''
     def removeAllCMDAction(self):
         self.dataRepository.removeAllCMD()
     
-    
+    '''
+    This method should be used only by the SerialReader.
+    The data form the connected device will be saved into the database.
+    '''
     def saveDataAction(self, wsnid, value):
         if wsnid and value:
             self.dataRepository.saveData(wsnid, value)
