@@ -349,7 +349,9 @@ programming. It is the main component which must be started.\footnote{Also the d
 
 The \textit{Webserver} class can be seen as the \textit{View} part of the MVC pattern, as it allows and restricts the access and the requests of a user to this specified methods.
 
-The class uses the CherryPy web server framework.\footnote{The CherryPy web server is a open source project hosted on \url{http://www.cherrypy.org/}} A standalone web server written completely in Python. The advantage of this fact is that the dependency of project is reduced to Python instead of the use of a big and resource hungry web server like Apache2. Also the easy and fast development of methods/pages which comes with the framework.
+Before describing the \textit{Webserver} class further, we have to mention the goal and design of the class: to provide a RESTful API. A RESTful API is an interface, which can be called by the use of GET or POST to retrieve data. The RESTful API does not use any HTML tags for the layout, it just consists of formatted data.
+
+The class uses the CherryPy web server framework.\footnote{The CherryPy web server is a open source project hosted on \url{http://www.cherrypy.org/}} A standalone web server written completely in Python. The advantage of this fact is that the dependency of the project is reduced to Python instead of the use of a big and resource hungry web server like Apache2. Also the easy and fast development of methods/pages which comes with the framework.
 
 For demonstration of the simplicity of CherryPy an extract of the \textit{Webserver} class is presented. As it can be seen, it is already enough to define a method to receive a functional site. 
 \begin{lstlisting}[language=Python]
