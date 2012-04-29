@@ -87,7 +87,8 @@ By the power of SQL
 
 --
 
-Using RESTful access via http
+Using RESTful access via http and
+JSON as data format
 
 -- [yellow]
 
