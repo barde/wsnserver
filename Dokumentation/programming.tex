@@ -5,7 +5,7 @@ required for hands-on development. Main issue is a python interpreter and common
 CherryPy, pyserial and optionally a module for SQL-bindings in Python.}
 
 Figure~\ref{setupic} shows the last version of the used development system. The keyboard and monitor on the host machine
-is just used to monitor debug output and use the included \textsl{interactive} mode on the \textsc{WSN}.\footnote{So you can 
+are just used to monitor debug output and use the included \textsl{interactive} mode on the \textsc{WSN}.\footnote{So you can 
 type in commands meant for nodes on the host machine instead of using the RESTful http-access}
 
 \ref{nodepic} and \ref{hostpic} show the expected results after a clean startup. The controller identifies itself with a
@@ -48,7 +48,7 @@ For general x86-machine there are not specific demands
    \label{fig:nodepic}%
 \end{figure}
 
-For the setup we tried to not distract ourselves from the goal so we tested with just one client. The final version is not restricted
+For the setup we tried not to distract ourselves from the goal, so we tested with just one client. The final version is not restricted
 to any finite number by the translator but only by available hardware and lower protocol stack's requirements.
 
 \begin{figure}[H]
@@ -58,7 +58,7 @@ to any finite number by the translator but only by available hardware and lower 
    \label{fig:hostpic}%
 \end{figure}
 
-Figure~\ref{fig:hostpic} shows the state of the middleware after initialisation. On default a USB-FTDI adaptor is used to enable serial over USB.
+Figure~\ref{fig:hostpic} shows the state of the middleware after initialisation. On default a USB-FTDI adapter is used to enable serial over USB.
 In this test we used plain RS232 connections for accessing the controlling node. The parameters of the hardware part called \textit{SerialReader.py}
 are very extensive so use the code or see a console output by using the standard \textit{--help} parameter upon start.
 
@@ -82,13 +82,13 @@ where first tests have been written and afterwards the corresponding methods. Th
 the expansion of the \textit{DataRepository} class with a second database layer - MySQL - much easier and faster: each test case 
 created for the first database layer - SQLite - had also to work with the newly implemented layer for MySQL.
 
-The approach for the hardware backend was similar but more experimental due to the serial nature of communication between node and host machine. Only
+The approach for the hardware backend was similar, but more experimental due to the serial nature of communication between node and host machine. Only
 few tests were used as there were different approaches in the life-cycle of this project: a thread-based approach was not found optimal because 
-of error in the \textit{pySerial} module and hardware design flaws for threading. A buffer was inserted instead which will cache a limited amount of commands which
+of errors in the \textit{pySerial} module and hardware design flaws for threading. A buffer was inserted instead, which will cache a limited amount of commands which
 will be sent on the next cycle. The cycles were parted between reading and writing.
 
 \section{Desgin concept}
-The goal of the project was to create a middleware software, which can communicate with many different wireless sensor nodes connected to the computer. This requirement showed very clearly that the "reader" module communicating with the enddevices had to be separated from the rest of the logic, because each type of enddevices needs a specific implementation of the so called "reader" module. Another requirement was, that the system should be able to store information for the enddevices in a database until an external application requested the data. The last point emerged the need to provide an API for external application, which could be done with a web server.
+The goal of the project was to create a middleware software, which can communicate with many different wireless sensor nodes connected to the host machine. This requirement showed very clearly that the "reader" module communicating with the end devices had to be separated from the rest of the logic, because each type of end device needs a specific implementation of the so called "reader" module. Another requirement was, that the system should be able to store information for the end devices in a database until an external application requested the data. The last point emerged the need to provide an API for external application, which could be done with a web server.
 
 
 \begin{figure}[H]
@@ -102,8 +102,8 @@ The sum of the requirements points to the Model-View-Controller design pattern, 
 
 
 \newpage
-\section{The datamodel - database}
-This chapter explains the \textit{Model} and how it is represented in the database. The diagrams apply for for MySQL as well as SQLite.
+\section{The datamodel}
+This chapter explains the \textit{Model} and how it is represented in the database. The diagrams apply for MySQL as well as SQLite.
 
 \subsection{Data table}
 \begin{figure}[H]
@@ -119,7 +119,7 @@ The data table stores the data received from the \textit{SerialReader} in the da
 	\item[id] contains the wsn-id, for example \textit{wsn01}
 	\item[value] this field can be used universal as it can store every data type. In the test setup was a temperature value stored.
 	\item[read] represents if a stored value has been already read by a external application or if this data is still "\textit{fresh}".
-	\item[createdOn] contains the timestamp to make it easier to sort and analyse data afterwards.
+	\item[createdOn] contains the timestamps to make it easier to sort and analyse data afterwards.
 \end{description}
 
 \newpage
@@ -184,9 +184,9 @@ It is advisable to use a MySQL database if more than one wireless sensor node is
 
 The \textit{Controller} class is the central part of this project. It corresponds to the controller part of the Model-View-Controller design pattern.
 
-Like in any other MVC applications the controller receives and handles input and requests of the user and also of any other external modules. 
+Like in any other MVC application the controller receives and handles input and requests of the user and also of any other external modules. 
 It validates the input and decides what to do with the data passed to the controller, 
-for example if the controller should save it to the model or retrieve some data from the repository and return it as response.
+for example if the controller should save it into the database or retrieve some data from the repository and return it as response.
 
 Applied to this project the \textit{Controller} class receives requests from the web server to retrieve stored data for a 
 WSN and also to save commands for a WSN in the database, which is used as a queue. The second actor of this class is the 
@@ -202,15 +202,15 @@ The last possible user is the setup script, which accesses the controller for ma
 \begin{figure}[H]
    \centering
    \includegraphics[width=0.5\textwidth]{pic/ControllerTest.png}%
-   \caption{ControllerTest class, unittest for the Controller class}
+   \caption{ControllerTest class, unit test for the Controller class}
    \label{ControllerTestpic}%
 \end{figure}
 
-This unittest was written to test the \textit{Controller} class and their functionality. 
+This unit test was written to test the \textit{Controller} class and their functionality. 
 
 The \textit{setUp()} method creates fixtures, which will be stored in the database, before each test case will be run. This ensures that all "retrieving"-methods have something to read and all "remove"-methods have something to delete. At the end of each test case the expected and the actual values will be compared. 
 
-After each testrun the database will be cleared by the \textit{tearDown()} method. 
+After each test run the database will be cleared by the \textit{tearDown()} method. 
 
 \newpage
 \subsection{DataRepository class}
@@ -226,7 +226,7 @@ Their goal is to store and retrieve information and data from the database.
 Nearly all methods contain SQL instructions, 
 which will be executed by the use of an \textit{DBConnection} object, which again contains an actual database connection.
 
-In the first implementation the methods have been developed to run with SQLite so no other database system was needed. After running a few stresstests - by storing very much data in a very short time in the database - the database crashed. Therefore a second layer - MySQL - was developed to ensure proper function under high database usage.
+In the first implementation the methods have been developed to run with SQLite so no other database system was needed. After running a few stress tests - by storing many data in a very short time in the database - the database crashed. Therefore a second layer - MySQL - was developed to ensure proper function under high database usage.
 
 \newpage
 \subsection{DataRepositoryTest class}
@@ -278,7 +278,7 @@ It is a huge improvement in comparison to the default serial line communication 
 \end{figure}
 
 \textit{LazyData} is a singleton based on the work of Alan Felice. Mainly it serves as a data buffer for the serial output from the host to the node. 
-As mentioned by~\cite{GammaHelmJohnsonVlissides199711} the singleton only allows one instance which is accessible throughout every object. It was
+As mentioned by~\cite{GammaHelmJohnsonVlissides199711} the singleton allows only one instance, which is accessible throughout every object. It was
 heavily modified by us to enable the usage for the serial reader module.
 
 \newpage
@@ -290,7 +290,7 @@ heavily modified by us to enable the usage for the serial reader module.
    \label{Translatorpic}%
 \end{figure}
 
-The translation abstract class is the heart of the middleware. It enables the transition between the various language by providing a basis for further 
+The translation abstract class is the heart of the middleware. It enables the transition between the various languages by providing a basis for further 
 abstraction.
 
 \subsubsection{MedusaTranslator class}
@@ -301,7 +301,7 @@ abstraction.
    \label{MedusaTranslatorpic}%
 \end{figure}
 
-The Medusa is a node system with a lot of sonar-like \textit{heads} which are mainly used in localisation.\cite{Dispert}
+The Medusa is a node system with a lot of sonar-like \textit{heads}, which are mainly used in localisation.\cite{Dispert}
 This is just a symbolic help to insert also this very special node in the translation system.
 
 \begin{figure}[H]
@@ -320,10 +320,10 @@ This is just a symbolic help to insert also this very special node in the transl
    \label{RenesasTranslatorpic}%
 \end{figure}
 
-As the Renesas ZMD28-BRD is used as our main development board we included a full class for temperature sensing. It is a very 
+As the Renesas ZMD28-BRD is used as our main development board, we included a full class for temperature sensing. It is a very 
 basic hardware programming on the node to not complicate the whole project. It was provided by the laboratory assistant Stephan Ko\ss.
 
-The class itself is mainly a dictionary which is used for the translation process.
+The class itself is mainly a dictionary, which is used for the translation process.
 
 \newpage
 \subsection{SerialReader class}
@@ -336,7 +336,7 @@ The class itself is mainly a dictionary which is used for the translation proces
 
 \textit{SerialReader} is used for the hardware part. It is highly configurable through parameters and even more through code. As the
 serial RS232 connector utilizes a big amount of different configuration parameters a possible adaptor will surely have to look inside the
-programming. It is the main component which must be started.\footnote{Also the database is important if you don't want to rely on sqlite.}
+programming. It is the main component which must be started.\footnote{Also the database is important if you don't want to rely on SQLite.}
 
 \newpage
 \subsection{Webserver class}
@@ -369,7 +369,7 @@ class web server:
 To see if this method works, the user has to call \url{http://localhost:8080/index} and will receive the status of the web server.
 
 \newpage
-Some of the methods defined in this class need parameters to retrive or save data for a specific \textit{wsn-id}. To provide an example the \textit{readAll} method has been choosen. Its purpose is to retrieve all data for a specific \textit{wsn-id}.
+Some of the methods defined in this class need parameters to retrieve or save data for a specific \textit{wsn-id}. To provide an example the \textit{readAll} method has been chosen. Its purpose is to retrieve all data for a specific \textit{wsn-id}.
 \begin{lstlisting}[language=Python]
 @expose
     def readAll(self, id):
@@ -392,7 +392,7 @@ It is important to use the parameters specified in the method as url parameters,
 
 At each start of the \textit{SerialReader} the device id will be read and saved into the database. In this way the system knows which device is connected to the computer. This will be done only once.
 
-After the initialization the \textit{SerialReader} will run the following commands in a endless loop. On every pass it checks if there are new instructions saved in the database for the connected device. If it should be the case, the commands will be translated and send to the connected device. At last the data from the device will be read and stored to the database. If there are no commands for execution pending, the \textit{SerialReader} would only try to read the data from the device.
+After the initialization the \textit{SerialReader} will run the following commands in a endless loop. On every pass it checks if there are new instructions saved in the database for the connected device. If this should be the case, the commands will be translated and send to the connected device. At last the data from the device will be read and stored to the database. If there are no commands for execution pending, the \textit{SerialReader} would only try to read the data from the device.
 
 \newpage\
 \subsection{Save commands from user to the \textit{DataRepository}}
