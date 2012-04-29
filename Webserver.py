@@ -23,7 +23,20 @@ class Webserver:
     @expose
     def readAll(self, id):
         controller = Controller.Controller()
-        return format(controller.readAllAction(id))
+        data = controller.readAllAction(id)
+        
+        ''' Encode the response into JSON '''
+        string = "["
+        for row in data:
+            string += "{"
+            string += "\"data\" : " + "\"" + row[1] + "\", "
+            string += "\"createdOn\" : " + "\"" + row[3] + "\""
+            string += "}"
+            
+            if row != data[len(data) - 1] :
+                string += ","
+        string += "]"
+        return string
     
     @expose
     def readDeviceList(self):
