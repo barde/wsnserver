@@ -437,3 +437,35 @@ Finally, you change directory to the project and run \textit{python SerialReader
 
 If there is a need to make all the gathered data and informations available for further use, the \textit{web server} can be started by running \textit{python Webserver.py}. This will automatically start the 
 \textit{web server} and make all implemented methods immediately ready for use. To see which commands respectively methods are available, the user should take a look at the description of the \textit{Webserver} class.
+
+\newpage
+\section{Testing the development setup}
+This chapter shows a few pictures of administering the setup by the use of the RESTful API.
+
+\begin{figure}[H]
+   \centering
+   \includegraphics[width=0.8\textwidth]{pic/Web-server-index.png}%
+   \caption{Checking if the \textit{Webserver} is running.}
+   \label{web-server-indexpic}%
+\end{figure}
+
+\begin{figure}[H]
+   \centering
+   \includegraphics[width=0.8\textwidth]{pic/Web-server-readDeviceList.png}%
+   \caption{Retrieving the device list by calling \textit{readDeviceList()}}
+   \label{web-server-readdevicelist-pic}%
+\end{figure}
+
+\begin{figure}[H]
+   \centering
+   \includegraphics[width=0.8\textwidth]{pic/Web-server-sendCMD.png}%
+   \caption{Saving commands for "WSN/C13/R113.001" into the database}
+   \label{web-server-readdevicelist-pic}%
+\end{figure}
+
+\begin{figure}[H]
+   \centering
+   \includegraphics[width=0.9\textwidth]{pic/Web-server-readAll.png}%
+   \caption{Retrieving data for the connected WSN with the id "WSN/C13/R113.001"}
+   \label{web-server-readall-pic}%
+\end{figure}
