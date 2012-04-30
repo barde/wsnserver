@@ -40,7 +40,7 @@ class ControllerTest(unittest.TestCase):
     def testReadDeviceList(self):
         self.controller.saveDeviceAction("wsn01", "0xACE", "5")
         devices = self.controller.readDeviceList()
-        self.assertEqual("wsn01", devices[0], "Devices on the list failed.")
+        self.assertEqual("wsn01", devices[0][0], "Devices on the list failed.")
     
     def testSaveDataAction(self):
         self.controller.saveDataAction("wsn01", "15")

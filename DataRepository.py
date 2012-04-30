@@ -32,11 +32,9 @@ class DataRepository(object):
         connection = self.__returnConnection()        
         cursor = connection.cursor()
         
-        cursor.execute("SELECT id FROM devices")
+        cursor.execute("SELECT * FROM devices")
         
-        devices = []
-        for row in cursor:
-            devices.append(row[0])
+        devices = cursor.fetchall()
         
         connection.commit()        
         return devices

@@ -1,12 +1,12 @@
 Different communication languages exist for the big communication layers Bluetooth, ZigBee and active RFID.
 
 In~\cite[p. 407]{Akyildiz02wirelesssensor} a hardware query language for sensors called \textsc{SQTL}\footnote{Sensor Query and Tasking Language}
-is decribed. This language is, very similar to current \textsc{SQL}, supposed to give a subset of nodes querys as \textit{Which sensor does receive
+is described. This language is, very similar to current \textsc{SQL}, supposed to give a subset of nodes queries as \textit{Which sensor does receive
 something irregular(Temperature above some threshold or detection of dangerous chemicals in environment protection} and the nodes affected 
-will return their data if they match the query. Other possibilities are also described in the aforementioned article but they go into a technical
+will return their data, if they match the query. Other possibilities are also described in the aforementioned article, but they go into a technical
 dimension as reconfiguring the possible positions of nodes and general network configuration.
 
-Such tasks are generally meant to be solved by a versatile language. As the possibilities are just drafted and still discussed in a committee our 
+Such tasks are generally meant to be solved by a versatile language. As the possibilities are just drafted and still discussed in a committee, our 
 approach is a rapid iterative development cycle supported with automated tests to develop a fast solution.
 
 To overcome this problem and establish a user-defined set of generalized commands this project was started.
@@ -14,7 +14,7 @@ The original idea was to unify various communication level layers and their corr
 archive easy and centralized means of sending and receiving command, i.e. one typed command will result in 
 a multitude of different bit-wise packages and vendor specific communication languages.
 It is also suitable for managing heterogeneous node deployment.\footnote{Imagine a system where \(\subset(language)=project teams_{count} * platform \) 
-so either everybody uses some established language which does not exist(2012) or one project team is solely occupied with 
+so either everybody uses some established language, which does not exist(2012), or one project team is solely occupied with 
 making a translator - for every project!}
 
 The language from the nodes was a superset of a node project about distributed temperature measurement. This project was done by 
@@ -39,11 +39,9 @@ Enquiry & +WENQ \\
 \end{table}
 
 The description is self-descriptive.\footnote{Note that internal programming requires \textit{linefeed} and \textit{carriage return}. We did not find out 
-why but suppose Windows enthusiasts behind the original node project.}
+why, but suppose Windows enthusiasts behind the original node project.}
 
 Table contents were just chosen on decision of one members as they are customizable via a small dictionary in the \textsc{Python} programming language. We 
 suppose even a non-expert in node programming would be able to suit it to his or her needs.\footnote{But we doubt he would use our library anyway}
-The left side of~\ref{tab:nodecommands} is the customizable one while the right side was already given. First three commands are about the 
-custom localisation of one node while the next ones are self-explanatory.\footnote{We still research what Enquiry is doing but the flying spaghetti monster is not giving us the needed inspiration}
-
-[KAMIL ERKLAERT HIER DAS RESTFUL API]
+The left side of~\ref{tab:nodecommands} is the customizable one, while the right side was already given. First three commands are about the 
+custom localisation of one node, while the next ones are self-explanatory.\footnote{We still research what Enquiry is doing but the flying spaghetti monster is not giving us the needed inspiration}

@@ -23,14 +23,39 @@ class Webserver:
     @expose
     def readAll(self, id):
         controller = Controller.Controller()
-        string = format(controller.readAllAction(id))
+        data = controller.readAllAction(id)
+        
+        ''' Encode the response into JSON '''
+        string = "["
+        for row in data:
+            string += "{"
+            string += "\"data\" : " + "\"" + row[1] + "\", "
+            string += "\"createdOn\" : " + "\"" + row[3] + "\""
+            string += "}"
+            
+            if row != data[len(data) - 1] :
+                string += ","
+        string += "]"
         return string
     
     @expose
     def readDeviceList(self):
         controller = Controller.Controller()
-        devices = format(controller.readDeviceList())
-        return devices
+        devices = controller.readDeviceList()
+        
+        ''' Encode the response into JSON '''
+        string = "["
+        for row in devices:
+            string += "{"
+            string += "\"wsnid\" : " + "\"" + row[0] + "\", "
+            string += "\"panid\" : " + "\"" + row[1] + "\", "
+            string += "channel : " + "\"" + row[2] + "\""
+            string += "}"
+            
+            if row != devices[len(devices) - 1] :
+                string += ","
+        string += "]"
+        return string
     
     @expose
     def removeAll(self):

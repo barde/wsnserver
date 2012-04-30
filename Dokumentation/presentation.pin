@@ -1,0 +1,102 @@
+#!/usr/bin/env pinpoint
+
+[black]
+[font=Sans 50px]
+-- [pic/T-800.jpg]
+
+-- 
+      wsnserver 
+
+Unified Language for
+Wireless Sensor Nodes
+
+-- 
+Held by Kamil Wozniak &
+Bartholomäus Dedersen
+
+-- 
+Agenda:
+1) About WSN
+2) Existing Solutions
+3) Python as Solution
+4) Web-Based Interface
+5) Le Fin
+--
+What are Wireless Sensor Nodes?
+-- [pic/earlynode.png]
+
+-- [pic/controller.jpg]
+
+--
+Problems?
+
+-- [pic/problem.png]
+
+-- [command=iceweasel -new-window http://www.wiselib.org]
+
+Existing solution: www.wiselib.org
+
+-- 
+
+Their approach:
+make use of advanced C++-Features as Templates
+to provide access to various sensors for 
+different WSN-OSes
+
+-- 
+
+Possible Problems:
+
+1) Rapid changing environment
+2) Changing Compiler Infrastructure(GCC->LLVM)
+3) Heavy support needed for new gear
+
+
+-- [pic/python.png] [bottom]
+
+Let's use some high language instead!
+
+--
+
+It even runs on future's chips similar to
+JINI for Java!
+
+-- [pic/Concept.png]
+
+-- [pic/SerialReader-to-DataRepository.png]
+
+-- [pic/transtable.png] 
+
+-- 
+
+Don't forget: table allows dynamic content!
+
+--
+
+Retrieving data with external devices as Mobiles?
+
+--
+
+How to save the sensor's data? Where? 
+How retrieve? 
+How to retain compatibility?
+
+-- 
+
+By the power of SQL
+
+--
+
+Using RESTful access via http and
+JSON as data format
+
+-- [yellow]
+
+Plainly awesome.
+
+-- [pic/comic.png]
+
+-- 
+Image sources:
+phdcomics.com
+wikimedia
