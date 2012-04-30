@@ -38,6 +38,7 @@ class Webserver:
         controller.removeAllDataAction()
         return "All messeges removed"
 
+cherrypy.server.socket_host = "0.0.0.0"
 cherrypy.quickstart(Webserver())
 #http://localhost:8080/index
         
