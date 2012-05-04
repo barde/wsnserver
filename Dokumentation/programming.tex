@@ -8,7 +8,7 @@ Figure~\ref{setupic} shows the last version of the used development system. The 
 are just used to monitor debug output and use the included \textsl{interactive} mode on the \textsc{WSN}.\footnote{So you can 
 type in commands meant for nodes on the host machine instead of using the RESTful http-access}
 
-\ref{nodepic} and \ref{hostpic} show the expected results after a clean startup. The controller identifies itself with a
+\ref{fig:nodepic} and \ref{fig:hostpic} show the expected results after a clean startup. The controller identifies itself with a
 self-chosen name and exchanges basic data for database population.
  
 
@@ -98,7 +98,7 @@ The goal of the project was to create a middleware software, which can communica
     \label{Conceptpic}%
 \end{figure}
 
-The sum of the requirements points to the Model-View-Controller design pattern, where the \textit{Webserver} represents the \textit{View}, the \textit{Controller} the \textit{Controller} from the MVC and the \textit{DataRepository} the \textit{Model}.
+The sum of the requirements points to the Model-View-Controller design pattern where the \textit{Webserver} represents the \textit{View}, the \textit{Controller} equals itself from the MVC and the \textit{DataRepository} being the \textit{Model}.
 
 
 \newpage
@@ -226,7 +226,7 @@ Their goal is to store and retrieve information and data from the database.
 Nearly all methods contain SQL instructions, 
 which will be executed by the use of an \textit{DBConnection} object, which again contains an actual database connection.
 
-In the first implementation the methods have been developed to run with SQLite so no other database system was needed. After running a few stress tests - by storing many data in a very short time in the database - the database crashed. Therefore a second layer - MySQL - was developed to ensure proper function under high database usage.
+In the first implementation the methods have been developed to run with SQLite so no other database system was needed. After running a few stress tests - by storing much data in a very short time in the database - the database crashed. Therefore a second layer - MySQL - was developed to ensure proper function under high database usage.
 
 \newpage
 \subsection{DataRepositoryTest class}

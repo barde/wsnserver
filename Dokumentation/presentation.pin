@@ -4,6 +4,8 @@
 [font=Sans 50px]
 -- [pic/T-800.jpg]
 
+-- [pic/rs.JPG]
+
 -- 
       wsnserver 
 
@@ -61,19 +63,9 @@ Let's use some high language instead!
 It even runs on future's chips similar to
 JINI for Java!
 
--- [pic/Concept.png]
-
--- [pic/SerialReader-to-DataRepository.png]
-
--- [pic/transtable.png] 
-
--- 
-
-Don't forget: table allows dynamic content!
-
 --
 
-Retrieving data with external devices as Mobiles?
+Back to real world problems...
 
 --
 
@@ -81,14 +73,48 @@ How to save the sensor's data? Where?
 How retrieve? 
 How to retain compatibility?
 
+--
+
+Retrieving data with external devices as 
+Mobile phones?
+
+--
+
+
+iPhone? 
+Android? 
+Whatever with Internet Connectivity?
 -- 
 
-By the power of SQL
+By the power of 
+
+--
+SQL
 
 --
 
 Using RESTful access via http and
 JSON as data format
+
+-- [pic/Concept.png]
+
+-- [pic/SerialReader-to-DataRepository.png]
+
+-- [pic/transtable.png] 
+
+--
+
+Don't forget: table allows dynamic content!
+
+--
+
+Also: cherrypy is not using a Webserver as 
+Apache and acts as module!
+
+--
+
+But: it is a webserver on its own.
+
 
 -- [yellow]
 
