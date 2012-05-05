@@ -226,7 +226,7 @@ Their goal is to store and retrieve information and data from the database.
 Nearly all methods contain SQL instructions, 
 which will be executed by the use of an \textit{DBConnection} object, which again contains an actual database connection.
 
-In the first implementation the methods have been developed to run with SQLite so no other database system was needed. After running a few stress tests - by storing much data in a very short time in the database - the database crashed. Therefore a second layer - MySQL - was developed to ensure proper function under high database usage.
+In the first implementation the methods have been developed to run with SQLite so no other database system was needed. After running a few stress tests - by storing many data in a very short time in the database - the database crashed. Therefore a second layer - MySQL - was developed to ensure proper function under high database usage.
 
 \newpage
 \subsection{DataRepositoryTest class}
